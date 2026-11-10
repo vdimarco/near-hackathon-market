@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 description = "Sandbox escrow that follows the outcome of the jury contract."
-repository = "https://github.com/vdimarco/lock-jury"
+repository = "https://github.com/vdimarco/near-hackathon-market"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
