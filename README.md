@@ -2,7 +2,7 @@
 
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness and the viewer page are not built. No juror has read a market dispute yet. See "Not built".
+**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November. The viewer page is not built. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
@@ -164,12 +164,43 @@ ALL EXPECTED RESULTS MATCH
 
 The program exits with an error if a result differs from the expected result.
 
+### Step 4. Fresh run with new model calls (optional, needs a key)
+
+Copy `.env.example` to `.env` and put your Adaption key in it. Then run:
+
+```bash
+make fresh-one   # one dispute, about 2 minutes
+make fresh       # ten disputes, about 25 minutes
+```
+
+The default panel is six models on Adaption, the same six as the recorded panels. Pick other jurors with `--jurors`, for example `near:z-ai/glm-5.3` for a model on NEAR AI Cloud. A NEAR AI Cloud juror is not tested yet.
+
+In each case the harness opens the case, asks each juror for a first read, and sends the commits. After five of six commits it tries to release the first reads, and it stops with an error if that works. After the sixth commit each juror sees the first reads of its peers, writes one message, and gives a second read. The harness posts the second reads, then the reveals, then it settles a 2 NEAR sandbox deal.
+
+Result of the run on 10 November 2026 (`runs/fresh-2026-11-10/`):
+
+```
+   case                     expected        outcome       ruling          first reads     after talk       moved  audit  escrow
+   synthetic:dispute:01:v1  requester wins  DECIDED       requester wins  requester wins  requester wins    0.0%  6/6  RefundedRequester
+   synthetic:dispute:02:v1  worker wins     DECIDED       worker wins     worker wins     worker wins       2.2%  6/6  PaidWorker
+   synthetic:dispute:03:v1  requester wins  DECIDED       requester wins  requester wins  requester wins    5.8%  6/6  RefundedRequester
+   synthetic:dispute:04:v1  redo            DECIDED       redo            redo            redo             25.0%  6/6  Held
+   synthetic:dispute:05:v1  worker wins     DECIDED       worker wins     worker wins     worker wins       1.7%  6/6  PaidWorker
+   synthetic:dispute:06:v1  requester wins  DECIDED       requester wins  requester wins  requester wins   17.5%  6/6  RefundedRequester
+   synthetic:dispute:07:v1  worker wins     DECIDED       worker wins     worker wins     worker wins      20.8%  6/6  PaidWorker
+   synthetic:dispute:08:v1  redo            DECIDED       redo            redo            redo             15.8%  6/6  Held
+   synthetic:dispute:09:v1  redo            INCONCLUSIVE  no ruling       requester wins  redo             18.3%  6/6  Held
+   synthetic:dispute:10:v1  worker wins     DECIDED       requester wins  requester wins  worker wins      15.0%  6/6  RefundedRequester
+```
+
+The contract decided 8 cases with the expected ruling. Case 09 has a hidden submission, and the panel reached no majority, which is the outcome that the fixture expects. Case 10 is late delivery of correct work: the first reads gave "requester wins" 56%, and the fixture expects "worker wins". After the discussion the top option equals the expected ruling in all 10 cases. This is one run of ten cases that one person wrote. It is not evidence for or against locked first reads. The model answers change from run to run.
+
 ## What each mode shows
 
 | Mode | What it shows | Status |
 |---|---|---|
 | Recorded replay | The contract accepts valid inputs, refuses invalid inputs, and computes the expected outcome. The model calls and the discussion happened before the replay. The replay does not show when they happened. | Built |
-| Fresh run | New model calls go through the harness. The harness waits for the commit transactions to finish before it shares a juror message with a peer. | Not built |
+| Fresh run | New model calls go through the harness. The harness waits for the commit transactions to finish before it shares a juror message with a peer. | Built. One run of ten disputes is in `runs/fresh-2026-11-10/`. |
 
 The contract records each first-read commitment before it opens the next phase. Model execution and communication outside the harness are outside this proof.
 
@@ -181,7 +212,7 @@ The panel is operator-run. One operator holds all six keys in the demo. Six acco
 |---|---|---|
 | Recorded puzzle panel | Contract and decision-rule tests on real model outputs with a known answer | 47 in `cases/pushJ/` |
 | Synthetic panel with a stated expected outcome | Attack tests and escrow tests | 4, in `demo/src/main.rs` |
-| Synthetic dispute with a stated expected outcome | A fresh run with real jurors | 10 in `cases/synthetic-disputes/`. No juror has read them yet. |
+| Synthetic dispute with a stated expected outcome | A fresh run with real jurors | 10 in `cases/synthetic-disputes/`. One fresh run has read them. |
 | Partial public case | A picture of the market's dispute workflow | 158 in `cases/market-legacy/index.json` |
 | Complete authorized market case | Comparison with the market's ruling | None |
 
@@ -200,7 +231,6 @@ The 47 panels come from the Apart experiment (`runs/pushJ.jsonl`, condition C2, 
 
 ## Not built
 
-- **The fresh-run harness** with new model calls. The ten synthetic disputes wait for it.
 - **A complete market case.** It needs an export from a buyer or a worker who allows public use.
 - **The one-page viewer.**
 - **Split rulings.** The market can split a payment. This contract has no split outcome.
@@ -214,6 +244,9 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `contract/src/lib.rs`: the jury contract and 27 unit tests.
 - `escrow/src/lib.rs`: the sandbox escrow and 3 unit tests.
 - `demo/src/main.rs`: the sandbox replay, the attack tests, and the escrow tests.
+- `demo/src/bin/fresh.rs`: the fresh-run harness.
+- `demo/src/lib.rs`: sandbox helpers that both programs use.
+- `runs/fresh-2026-11-10/`: the records of one fresh run, one file for each dispute.
 - `scripts/fetch_market_cases.py`: reads public dispute records from the legacy market.
 - `cases/market-legacy/index.json`: 158 partial public cases.
 - `cases/synthetic-disputes/disputes.json`: 10 synthetic disputes.

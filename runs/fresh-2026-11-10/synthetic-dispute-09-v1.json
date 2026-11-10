@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:09:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": null,
+    "audit_sums": [
+      11500,
+      27000,
+      21500
+    ],
+    "case_id": 8,
+    "case_key": "synthetic:dispute:09:v1",
+    "deadline_ns": 1794333999311323963,
+    "evidence_hash": "7a9914ab967f9e5aba750a26d1d0f38a23e6a5c0458e7fbac13b171395493273",
+    "first_sums": [
+      13500,
+      17000,
+      29500
+    ],
+    "jurors": [
+      {
+        "audit": [
+          0,
+          6000,
+          4000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          2000,
+          8000
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 4000,
+        "rationale_hash": "eb9c3e9395b51167b7dfdfa564b3e89f1f2bd51fed8453c68c08689f26fdc1bb"
+      },
+      {
+        "audit": [
+          500,
+          6000,
+          3500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          1500,
+          2000,
+          6500
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 4000,
+        "rationale_hash": "006bf8c37318f4bf1d1d34e9ebe35f68c6732c4ab2396933c758356c6d46ef83"
+      },
+      {
+        "audit": [
+          1000,
+          6000,
+          3000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          2000,
+          6000,
+          2000
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "02c853a8a35f3f54af74e9851b9475615542c9b8f5e7ae713b56c5c8f07ab3db"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "59840e91bf84ec1a5f1aa940137fe79bad7fe6b64d4a207b7002afeaee038798"
+      },
+      {
+        "audit": [
+          0,
+          6000,
+          4000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          5000,
+          5000
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "3461b1adb6864895dbfe2fe2e5a43268c6365a8224924d7084dff09b12028226"
+      },
+      {
+        "audit": [
+          0,
+          3000,
+          7000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          2000,
+          8000
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "73ddf219191704f5e95220b50951e9635ba8b8b26db816fc45ea871f66d626ac"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Inconclusive",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": null
+  },
+  "chain_case_id": 8,
+  "comparison": {
+    "contract_ruling": null,
+    "expected_ruling": "redo",
+    "note": "No juror saw this object.",
+    "reason": "Neither claim can be checked without the submission. A hidden submission is not missing work. No party should be paid on this record. The expected jury outcome is no majority for either party.",
+    "top_after_discussion": "redo",
+    "top_of_first_reads": "requester wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 8,
+    "status": "Held"
+  },
+  "evidence": {
+    "messages": [
+      "Worker: Submitted a 14-page report.",
+      "Requester: The report is copied from a public source."
+    ],
+    "requirements": "Produce a market analysis report of at least 10 pages on home care software. Budget 20 NEAR.",
+    "submission": "The submission is not available to this review. The market shows it only to the buyer and the worker."
+  },
+  "evidence_hash": "7a9914ab967f9e5aba750a26d1d0f38a23e6a5c0458e7fbac13b171395493273",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          6000,
+          4000
+        ],
+        "text": "\n\nPlagiarism voids value, but the panel cannot verify the hidden submission. The worker met page count but failed to rebut the originality claim. A full refund lacks proof, yet payment risks fraud. A redo balances these risks: it requires verifiable, original analysis before payment. This protects the requester from copied content without penalizing the worker solely on an unverified allegation. Given the evidentiary gap, compelling corrected work is the most equitable solution.\n\n{\"worker wins\": 0, \"redo\": 60, \"requester wins\": 40}"
+      },
+      "discussion_message": "\n\nI agree with those leaning toward the requester that plagiarism allegations strike at the contract's core. If copied, the work holds no value. I disagree with the view that payment is due without verification. We cannot ignore fraud claims simply because the submission is hidden. The worker defended length but ignored originality, shifting the burden to them. While some suggest a redo, plagiarized material usually requires complete replacement, akin to non-delivery. Protecting the buyer from unoriginal content is paramount when the worker offers no proof of authenticity. A refund is justified over correction because the fundamental deliverable was compromised. We must prioritize marketplace integrity over unverified submissions.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "97840dff4a77a6420f90756fc4bc1e0086c4e0f274e80a5d9230bf0d658ca940",
+        "probs": [
+          0,
+          2000,
+          8000
+        ],
+        "rationale_hash": "eb9c3e9395b51167b7dfdfa564b3e89f1f2bd51fed8453c68c08689f26fdc1bb",
+        "salt": "f65f88592657984bf3307fe39dfaa53e74bd39b2f967226a56d3ab957dbdec29",
+        "text": "\n\nThe worker met the page count (14 vs. 10). However, the requester alleges plagiarism, violating the implicit requirement of originality. Although I cannot view the submission, delivering copied work is a material breach, rendering the deliverable valueless. A \"redo\" implies salvageable work, but plagiarized content requires complete rewriting, akin to non-delivery. Without proof of originality from the worker, the fraud claim outweighs the page count. The worker failed to provide unique analysis. Protecting the buyer from unoriginal content is paramount. Thus, a refund is justified over correction, as the core value was compromised.\n\n{\"worker wins\": 0, \"redo\": 20, \"requester wins\": 80}"
+      },
+      "provider_model": "adaption:qwen3.5-397b"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          500,
+          6000,
+          3500
+        ],
+        "text": "The discussion confirms the key tension: the worker met the page count but failed to address the plagiarism allegation, while the panel cannot independently verify the copying claim. The worker's silence on originality is damaging, but a full refund without the panel seeing the work feels premature. A redo best balances these concerns—requiring the worker to produce verifiable, original work before payment while protecting the requester from paying for potentially copied content.\n\n{\"worker wins\": 5, \"redo\": 60, \"requester wins\": 35}"
+      },
+      "discussion_message": "I agree with j1 and j6 that plagiarism, if proven, is a material breach rendering the work valueless. The worker's failure to rebut the specific allegation—only citing page count—is concerning.\n\nHowever, j4 raises a valid point: we cannot verify the submission ourselves. j3 and j5's redo position addresses this gap best. A redo shifts the burden back to the worker to produce verifiable, original work while protecting the requester from paying for potentially copied content.\n\nMy reservation about jumping straight to requester wins is that the allegation remains unverified by the panel. Redo strikes the right balance—giving the worker a chance to correct while not rewarding potentially plagiarized work. I'm moving toward redo as the fairest outcome given our evidentiary limits.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "6b971119fe363776240537c8250f5e429a09cfa9c5036b4503ce39a625778060",
+        "probs": [
+          1500,
+          2000,
+          6500
+        ],
+        "rationale_hash": "006bf8c37318f4bf1d1d34e9ebe35f68c6732c4ab2396933c758356c6d46ef83",
+        "salt": "abd97e06cc27e789f9ebf4f40f86fe90c8bdcf6ac30bea0e32f40072bc7caef8",
+        "text": "Looking at this dispute, I need to weigh the available information carefully.\n\nThe requirements were clear: a market analysis report of at least 10 pages on home care software. The worker claims to have submitted 14 pages, which would meet the length requirement. However, the requester alleges the report is copied from a public source.\n\nPlagiarism is a serious issue that undermines the fundamental purpose of the contract. If the report is indeed copied, it fails to meet the implied requirement of original work product, regardless of page count. The worker hasn't directly rebutted the plagiarism allegation—only stating they submitted a 14-page document.\n\nSince I cannot review the submission myself, I must consider the credibility of each party's claims. The requester has made a specific allegation about the content's origin, while the worker's response focuses only on length, not originality.\n\nGiven the seriousness of plagiarism and the worker's lack of defense against the specific allegation, I lean toward the requester, though some uncertainty remains due to the limited information.\n\n{\"worker wins\": 15, \"redo\": 20, \"requester wins\": 65}"
+      },
+      "provider_model": "adaption:glm-5.2"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          1000,
+          6000,
+          3000
+        ],
+        "text": "\n\nThe stated deliverable is a market analysis report, which implies original work, not copied material. The worker asserts 14 pages, but does not address the requester’s specific copying allegation. Because the submission is unavailable, the panel cannot confirm length or originality. A full refund is not supported without proof of copying, and full payment would ignore a serious unaddressed quality concern. The fairest ruling is redo: worker must provide a verifiable, original report or sufficient evidence before payment.\n\n{\"worker wins\": 10, \"redo\": 60, \"requester wins\": 30}"
+      },
+      "discussion_message": "\n\nI agree that a market analysis report must be original, not merely copied, and that the page count alone is insufficient. I also agree that the panel cannot directly verify the allegation because the submission is unavailable.\n\nI disagree with paying in full, because that would ignore a serious originality concern. I also disagree with a full refund, because the record does not establish copying with enough certainty to treat the work as worthless.\n\nA redo is the fairest path: the worker should provide a verifiable, original report or evidence supporting originality before payment. This protects the requester while preserving a chance to salvage the work.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "57ebe09ce216ea50383287d1a32501c214cfc03ddfb2a4db8baf31c177632de5",
+        "probs": [
+          2000,
+          6000,
+          2000
+        ],
+        "rationale_hash": "02c853a8a35f3f54af74e9851b9475615542c9b8f5e7ae713b56c5c8f07ab3db",
+        "salt": "3d9282aa9df1afe77f9054c488fd937d4adc6d8d67cf383ce450597224d35a10",
+        "text": "\n\nThe stated requirement is a market analysis report of at least 10 pages on home care software. The worker claims submission of a 14-page report, which appears to meet the length requirement. However, the requester alleges the report was copied from a public source, which would undermine the value and likely breach the implied expectation of original work. The submission is unavailable to the panel, so the report cannot be directly verified. On this first read, the safest ruling is that the worker must provide a corrected, verifiable, and non-plagiarized report before payment. A full refund is not clearly warranted without evidence of copying, and full payment is risky given the unresolved originality claim.\n\n{\"worker wins\": 20, \"redo\": 60, \"requester wins\": 20}"
+      },
+      "provider_model": "adaption:qwen3.8-27b"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The submission is unavailable, so the plagiarism allegation cannot be independently verified. The worker met the stated page requirement with 14 pages, exceeding the 10-page minimum. A bare, unsupported assertion of copying is not sufficient to deny payment or force a redo on this record. If the requester provides concrete evidence, I would revisit. For now, the worker should be paid in full.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with j1, j2, j3, j5, and j6 that originality matters in a market analysis report. However, I disagree that we can find against the worker here. The submission is unavailable to us, and the only concrete evidence in the record is that the worker delivered a 14-page report, exceeding the 10-page requirement. The requester’s plagiarism allegation is a bare assertion with no supporting document, link, or comparison. Without that evidence, penalizing the worker would be speculative. A redo is not warranted because there is no confirmed defect to correct. If the requester produces proof of copying, I would revisit; on this record, payment in full is the fair outcome.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "b681b116eff7fe1a9583f97ffdb29ab036ae350e2f25459540f9c4739c514232",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "59840e91bf84ec1a5f1aa940137fe79bad7fe6b64d4a207b7002afeaee038798",
+        "salt": "16886eb3575884bd91f42f70e816a2450096b36cf836e97f912a3ba55e9d1120",
+        "text": "The submission itself is not available for inspection, so I cannot verify the requester’s allegation of copying. The stated requirement was a report of at least 10 pages, and the worker says they submitted 14 pages. A bare assertion of plagiarism, without supporting evidence or the document, is not enough to reject the work. Therefore, the worker should be paid in full.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:deepseek-v4-flash"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          6000,
+          4000
+        ],
+        "text": "The dispute centers on an allegation of plagiarism in a market analysis report. While the worker met the quantitative requirement (14 pages vs. 10), they failed to address the qualitative allegation of plagiarism, responding only with the page count. In a market analysis task, originality is an implicit and fundamental requirement; copied content is valueless.\n\nWhile the panel cannot verify the plagiarism due to the submission being hidden, the worker's failure to rebut the claim weakens their position. However, since the evidence is limited to a \"bare assertion\" by the requester, a full refund is harsh, but full payment is unjustified. A redo is the most equitable resolution, requiring the worker to prove originality or provide a new, authentic report.\n\n{\"worker wins\": 0, \"redo\": 60, \"requester wins\": 40}"
+      },
+      "discussion_message": "I agree with j1, j2, and j6 that plagiarism is a material breach of the implied requirement for original analysis. However, I disagree with j4's stance that a bare assertion is insufficient; the worker's failure to rebut the specific plagiarism claim, focusing only on page count, undermines their credibility. While j3 suggests a redo, I believe that if the work was indeed copied from a public source, the trust is broken and the deliverable is valueless. Since the worker did not defend the originality of their work, I lean toward the requester winning, though I maintain that a redo is a possible alternative given the lack of direct evidence.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "afb5a7b42048b1165b933463bacbfa54e8865751b86a3f19bfd20463fbf2c821",
+        "probs": [
+          0,
+          5000,
+          5000
+        ],
+        "rationale_hash": "3461b1adb6864895dbfe2fe2e5a43268c6365a8224924d7084dff09b12028226",
+        "salt": "7563e5ba34dfa4881ceb7afa9e461b9992778f56d2ecdada74b1f69360b769dc",
+        "text": "The requester alleges that the worker's submission was plagiarized (\"copied from a public source\"). In a market analysis report, originality and synthesis of data are critical; presenting copied content as original work is a breach of professional standards and typically violates the implicit requirement of creating a report. However, because the actual submission is not available for review by the jurors, there is no direct evidence to prove the plagiarism or to verify if the report met the length requirement (14 pages claimed vs 10 required). Since the requester has explicitly flagged a quality failure (plagiarism) and the worker has not provided a rebuttal or evidence to the contrary, the burden of proof usually shifts. However, without seeing the work, a \"redo\" is a safer path to verify originality, but plagiarism usually warrants a refund. Given the lack of evidence, a redo is the most fair initial step.\n\n{\"worker wins\": 0, \"redo\": 50, \"requester wins\": 50}"
+      },
+      "provider_model": "adaption:gemma-4-31b-it"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          3000,
+          7000
+        ],
+        "text": "The consensus among the panel is that originality is an implicit and essential requirement of a \"market analysis report.\" While the worker met the quantitative requirement (14 pages), they failed to address the qualitative allegation of plagiarism. The worker's response focused solely on length, which ignores the core of the dispute. Since the panel cannot verify the plagiarism directly, a \"redo\" provides a fair mechanism to demand original, verifiable work, while a \"requester wins\" ruling is supported by the potential for a material breach of contract/fraud. Given the worker's lack of rebuttal regarding originality, the requester's claim is heavily weighted.\n\n{\"worker wins\": 0, \"redo\": 30, \"requester wins\": 70}"
+      },
+      "discussion_message": "I agree with most jurors that the allegation of plagiarism is a critical issue. If the report is indeed copied, the worker has failed to provide any value, making a win for the requester appropriate. I agree with juror j4 that we cannot definitively prove plagiarism without the document, but I disagree that we should automatically reward the worker. A bare assertion of length does not address the core quality complaint. I lean toward a redo or a refund. A redo is a middle ground, but plagiarism is often a breach of contract rather than a simple error. Given the worker did not address the originality claim in their response, the requester's claim deserves significant weight.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "f262fd138fb28740c007daf34df5532b99d97c2b9b70a8870342d83405ba6b58",
+        "probs": [
+          0,
+          2000,
+          8000
+        ],
+        "rationale_hash": "73ddf219191704f5e95220b50951e9635ba8b8b26db816fc45ea871f66d626ac",
+        "salt": "1b7655b42ba4d9a17793f167afae28736d139c8558d45d9d37cbf9d6a8b947d8",
+        "text": "The worker claims to have met the length requirement (14 pages vs. 10 required). However, the requester has raised a critical allegation: that the report is copied from a public source. In market analysis tasks, originality is an implicit requirement; submitting plagiarized content violates the basic principle of professional service and intellectual property standards. While I cannot see the report to verify the plagiarism myself, a report that is merely \"copied from a public source\" fails to provide the value of a \"market analysis\" and does not constitute original work produced by the worker. If the allegation is true, the work is fundamentally flawed. However, without proof of the plagiarism in the record, a \"redo\" (requiring original content) or a \"requester wins\" (due to breach of contract/fraud) is appropriate. Given the severity of the claim, I lean toward the requester's side.\n\n{\"worker wins\": 0, \"redo\": 20, \"requester wins\": 80}"
+      },
+      "provider_model": "adaption:gemma-4-26b-a4b-it"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "submission hidden from the review",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 137
+}

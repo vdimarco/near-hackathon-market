@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:05:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 0,
+    "audit_sums": [
+      60000,
+      0,
+      0
+    ],
+    "case_id": 4,
+    "case_key": "synthetic:dispute:05:v1",
+    "deadline_ns": 1794333498551675219,
+    "evidence_hash": "fda50abd9cae70fb7c3b44b335e3b3fbe52f417405acc3a3c230714fd51ad175",
+    "first_sums": [
+      59000,
+      700,
+      300
+    ],
+    "jurors": [
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "4e8571c5ccac5b37c7208d83a2a438f724afb5534ef52a79d19c584146d8ecf3"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          9500,
+          300,
+          200
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "585faf683f76c47bf60a9de2e322187f552f1dfd9764ebcba9903f19cb678706"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          9500,
+          400,
+          100
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "0c2a270c017370f621560dec0646c2d754d6693967035cb5e732e1e6e4c5e7e3"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "24d5b0506990124113236ba5f4440f835672f5f0dbaa50b8ba5decf70c9073cb"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "0ecf7ee37480159945ac0e36b9702c122389baa6c5287a7e7bb0485b4308c753"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "04c525354172066b0d321b7894be859e1f9b878015fb55d3b6c949a091a0a95f"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 0
+  },
+  "chain_case_id": 4,
+  "comparison": {
+    "contract_ruling": "worker wins",
+    "expected_ruling": "worker wins",
+    "note": "No juror saw this object.",
+    "reason": "The submission meets the requirements that applied at the award. The Spanish version is a new requirement.",
+    "top_after_discussion": "worker wins",
+    "top_of_first_reads": "worker wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 4,
+    "status": "PaidWorker"
+  },
+  "evidence": {
+    "messages": [
+      "Requester, after the submission: I also need a Spanish version. I will not accept without it.",
+      "Worker: The job asked for French only."
+    ],
+    "requirements": "Translate a 600-word product page from English to French. Budget 4 NEAR.",
+    "submission": "A French translation of the complete page, 640 words. Section order and headings match the source."
+  },
+  "evidence_hash": "fda50abd9cae70fb7c3b44b335e3b3fbe52f417405acc3a3c230714fd51ad175",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "\n\nThe original contract specified an English-to-French translation. The worker delivered a complete French translation matching the source structure. The requester's demand for a Spanish version arose only after submission, constituting unagreed scope creep. Translation word count variation is normal and not a defect. All jurors agree the worker fulfilled the contractual obligations. Withholding payment based on post-submission demands is unjustified. There is no basis for a redo or refund since the delivered work meets the initial requirements. The worker deserves full payment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI align with the panel that the worker satisfied the original agreement. The task required translating content from English to French, which the worker completed accurately with proper structure. I disagree with any inclination toward a redo. The requester's request for a Spanish version appeared only after submission and represents an expansion of scope beyond the initial budget. Withholding payment for completed work based on new, unagreed demands is unfair. The worker delivered exactly what was promised in the requirements. Consequently, the worker merits full payment without further conditions or corrections.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "28640ea112160836c1cfeb4ae2dac25dff3afabc8702b0bc697c60616b89e46f",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "4e8571c5ccac5b37c7208d83a2a438f724afb5534ef52a79d19c584146d8ecf3",
+        "salt": "51af83bc3f73eab1bce8ad88780fe1c46a6e253beb8121c13c5c33d857e09efd",
+        "text": "\n\nThe original requirements explicitly stated a translation from English to French. The worker submitted a complete French translation that adhered to the structure and content expectations (headings match, word count appropriate for translation expansion). The requester's demand for a Spanish version was introduced after the submission was completed and was not part of the initial agreement or budget. A worker cannot be held to deliverables outside the original scope without a mutual agreement to modify the contract. The worker fulfilled their obligation based on the posted requirements. The requester's refusal to accept based on an unagreed addition is unjustified. Therefore, the worker deserves full payment for the completed French translation.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:qwen3.5-397b"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The panel unanimously agrees. The requirements clearly specified an English-to-French translation. The worker delivered a complete French translation with matching structure and headings. The 640-word count is normal translation expansion, not a defect. The requester's Spanish demand appeared only after submission and was never part of the agreed scope or budget. The worker fulfilled all stated requirements and deserves full payment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the panel's consensus. The requirements were unambiguous: translate a product page from English to French. The worker delivered a complete French translation with matching section order and headings. The slight word count increase is normal translation expansion, not a defect. The requester's demand for a Spanish version appeared only after submission and was never part of the original scope or budget. Workers cannot be held to deliverables outside the agreed terms. My only minor hesitation was the word count difference, but that's standard in translation and not a stated defect. The worker fulfilled the contract and deserves full payment.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "e4ab6f74f8ce56c0031a860c0c0462a558a3dab01d8038c054754913f7e87709",
+        "probs": [
+          9500,
+          300,
+          200
+        ],
+        "rationale_hash": "585faf683f76c47bf60a9de2e322187f552f1dfd9764ebcba9903f19cb678706",
+        "salt": "4389444f6482241ea78deedf39934ef2acbcc7cb8d825c9111b242a09679dd19",
+        "text": "The requirements clearly specified translating a 600-word product page from English to French. The worker delivered a complete French translation (640 words, slightly longer which is normal for translation) with matching section order and headings. The requester's demand for a Spanish version came only after submission and was never part of the original requirements. The worker correctly noted the job was for French only. The work meets the stated requirements.\n\n{\"worker wins\": 95, \"redo\": 3, \"requester wins\": 2}"
+      },
+      "provider_model": "adaption:glm-5.2"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "\n\nThe requirements requested only a French translation of the product page. The submission is described as complete, preserving section order and headings. The 640-word count versus 600 is not a stated defect and is typical translation variation. The requester’s later demand for a Spanish version is a post-submission scope change, not part of the original agreement or budget. Absent evidence that the French translation is defective, the worker fulfilled the stated requirements. Full payment is appropriate; a redo or refund is unsupported.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI agree with the panel that the worker should be paid. The stated requirement was a French translation of the product page, and the submission is described as complete, with matching section order and headings. The requester’s later demand for a Spanish version is not part of the original scope. That new request cannot defeat payment for work already delivered, unless the record showed a defect in the French translation itself. The word count variation is not enough to reject the submission. I disagree with any view that the late Spanish request justifies withholding payment or a redo.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c199ac2325bb4a116afc669389ea6367773382edab9d2882fca1538cf41cf6fa",
+        "probs": [
+          9500,
+          400,
+          100
+        ],
+        "rationale_hash": "0c2a270c017370f621560dec0646c2d754d6693967035cb5e732e1e6e4c5e7e3",
+        "salt": "6d906feb821d00b1771e03f851b7603282e30d23c2ae8be581ee2842b5656b89",
+        "text": "\n\nThe stated requirement was a French translation of a 600-word product page, with no mention of Spanish. The submission is described as a complete French translation, preserving section order and headings. The word count difference is not a stated defect and is consistent with normal translation variation. The requester’s later demand for a Spanish version was not part of the original requirements and cannot defeat payment for the completed French work absent further defects.\n\n{\"worker wins\": 95, \"redo\": 4, \"requester wins\": 1}"
+      },
+      "provider_model": "adaption:qwen3.8-27b"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The task specified French only, and the worker delivered a complete French translation with matching sections and headings. The requester’s Spanish demand came after submission and was outside the original scope. The word count difference is normal for translation and not a defect. The worker fulfilled the contract, so payment in full is warranted.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the panel: the worker fulfilled the posted task—a French translation with matching structure and headings. The requester’s Spanish demand arrived after submission and was never part of the original scope or budget. That is a unilateral change, not a valid reason to withhold payment.\n\nI also agree with jurors who note the slight word-count difference is normal for translation and not a defect. There is no substantive disagreement in the panel. The only difference is confidence level, but the conclusion is the same: the worker completed the agreed work and should be paid in full.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "1e65513c2852cb8cdbbbcef71a14723678618416ae4211a4b8673f2d37445f2c",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "24d5b0506990124113236ba5f4440f835672f5f0dbaa50b8ba5decf70c9073cb",
+        "salt": "0b1b7e1063658d392eeb6caf2f19030db1fb30cc29380455ba7041dd093d5770",
+        "text": "The original task specified French only. The worker delivered a complete French translation that matches the source structure and length. The requester’s later demand for a Spanish version changes the scope after completion, so it is not a valid basis to withhold payment. The worker fulfilled the stated requirements.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:deepseek-v4-flash"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The worker successfully fulfilled the original requirements by providing a complete French translation that maintained the structure and headings of the source text. The requester's demand for a Spanish translation was introduced only after the work was submitted and was not part of the agreed-upon scope or budget. Such a post-submission request is an attempt at scope creep and cannot be used as a basis to withhold payment for work already completed according to the original specifications. There is a clear consensus among the panel that the worker is entitled to full payment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with all other jurors. The worker fully satisfied the original requirements by providing the requested French translation. The requester's demand for a Spanish version is a post-submission scope change and cannot be used to justify withholding payment for the completed work. There is a clear consensus that the worker wins.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "57ee0910da9a66eaa9baa7a4c3b36c4d0b5dafc4e5fe0203592d5d94f497c48f",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "0ecf7ee37480159945ac0e36b9702c122389baa6c5287a7e7bb0485b4308c753",
+        "salt": "056659a5d4bbbf2825c80fb8ef6ca255b3bdd4c9c96edd5346a0210ff55026b8",
+        "text": "The worker fulfilled the original requirements specified in the job posting: they translated the 600-word product page from English to French, maintaining the structure and headings. The requester is now attempting to introduce a new requirement (a Spanish translation) after the work has already been submitted. In a dispute over payment for a completed task, additional requirements added post-submission cannot be used as grounds to withhold payment for the original agreed-upon scope of work. The worker has delivered exactly what was requested.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:gemma-4-31b-it"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The worker fulfilled the explicit requirements: translating the 600-word English product page into French. The submission met all structural criteria, including headings and section order. The requester's demand for a Spanish version is a clear case of scope creep, introduced only after the work was submitted. Since Spanish was never part of the original contract or budget, the worker is not obligated to provide it. There is no evidence of defects in the French translation provided, making a redo or refund unjustified. The worker has completed the agreed-upon task in full.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the majority that the worker wins. The scope of work was explicitly defined as a translation from English to French. The worker fulfilled this by providing a French translation that preserved the original structure and headings. The requester's demand for a Spanish version is an attempt at scope creep, as it was not part of the original requirements or the agreed budget. I disagree with the slight allocations for redo or requester wins suggested by some jurors; since the French translation was completed as requested, there is no basis for a redo or a refund. The worker met all contractual obligations.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c534ae74aa291671358af4393512e1aef7bce62716d1b0c499eef1f116fd9870",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "04c525354172066b0d321b7894be859e1f9b878015fb55d3b6c949a091a0a95f",
+        "salt": "f6f664ba14548b9c12b2741b2f949c46bfbb4725630851c9273db428adf3960b",
+        "text": "The worker was tasked with a specific scope: translating a 600-word product page from English to French. The worker fulfilled this requirement, providing a 640-word French translation that maintained the correct structure and headings.\n\nThe requester's demand for a Spanish version constitutes an expansion of the original scope (scope creep). Since the original contract and budget (4 NEAR) only specified French, the worker is not contractually obligated to provide additional languages. The worker correctly identified that the job requirement was limited to French. Therefore, the worker has completed the agreed-upon task successfully.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:gemma-4-26b-a4b-it"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "requirement added after the award",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 249
+}
