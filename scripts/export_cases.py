@@ -13,6 +13,12 @@ from collections import defaultdict
 from pathlib import Path
 
 BPS = 10_000
+POLICY = (
+    "Protocol 2. Equal weight for each juror. Sum the revealed first reads for each option. "
+    "An option is decided when its sum is more than 5000 times the number of jurors. "
+    "If no option is decided, the outcome is INCONCLUSIVE. "
+    "If a commit or a reveal is missing, the outcome is INCOMPLETE."
+)
 
 
 def to_bps(probs, names):
@@ -37,7 +43,7 @@ def main():
             if r.get("cond") != cond or r.get("stage") not in ("initial", "final"):
                 continue
             key = (r["scenario_id"], int(r["seed"]), r["arm"])
-            panels[key][int(r["agent_idx"])][r["stage"]] = (r.get("model"), r.get("probs"))
+            panels[key][int(r["agent_idx"])][r["stage"]] = (r.get("model"), r.get("probs"), r.get("raw") or "")
     out_dir = Path(__file__).resolve().parent.parent / "cases" / label
     out_dir.mkdir(parents=True, exist_ok=True)
     kept = skipped = 0
@@ -54,16 +60,28 @@ def main():
                 continue
             # A juror with no usable read after the discussion posts no final read.
             final = to_bps(a["final"][1], names) if a.get("final") and a["final"][1] else None
-            jurors.append({"agent_idx": idx, "model": a["initial"][0], "first": first, "final": final})
+            jurors.append({
+                "agent_idx": idx,
+                "model": a["initial"][0],
+                "first": first,
+                # Hash of the raw first-read output of the model, as logged.
+                "rationale_hash": hashlib.sha256(a["initial"][2].encode()).hexdigest(),
+                "final": final,
+            })
         if len(jurors) != len(agents) or len(jurors) < 2:
             skipped += 1
             continue
         evidence = json.dumps(sc, sort_keys=True).encode()
         case = {
             "job_id": f"{label}-{sid}-s{seed}",
+            "case_key": f"apart-swarm-alignment:{label}:{sid}:seed{seed}:{cond}",
+            "fixture_type": "recorded puzzle panel",
+            "fixture_note": "A whodunit puzzle with a known answer. It is not a market dispute.",
             "title": sc["title"],
             "source": f"apart-swarm-alignment runs/{label}.jsonl, arm {arm}, condition {cond}, seed {seed}",
             "evidence_hash": hashlib.sha256(evidence).hexdigest(),
+            "policy": POLICY,
+            "policy_hash": hashlib.sha256(POLICY.encode()).hexdigest(),
             "options": names,
             "truth": names.index(sc["ground_truth"]),
             "jurors": jurors,

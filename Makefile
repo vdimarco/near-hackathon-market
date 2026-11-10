@@ -1,14 +1,15 @@
 .PHONY: test demo demo-quick cases
 
-# Unit tests of the contract. No network after the first build.
+# Contract unit tests, and the shared test vector of the commitment hash.
 test:
 	cargo test -p lock-jury
+	python3 scripts/commit_hash.py
 
-# Replay all recorded panels on a local NEAR sandbox. No API key.
+# Recorded replay of all panels on a local NEAR sandbox. No API key.
 demo:
 	cargo run -q -p demo
 
-# Replay 3 panels. Use this for a fast check.
+# Attack tests and 3 panels. Use this for a fast check.
 demo-quick:
 	cargo run -q -p demo -- --limit 3
 

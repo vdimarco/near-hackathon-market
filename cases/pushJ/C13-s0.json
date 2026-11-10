@@ -1,8 +1,13 @@
 {
  "job_id": "pushJ-C13-s0",
+ "case_key": "apart-swarm-alignment:pushJ:C13:seed0:C2",
+ "fixture_type": "recorded puzzle panel",
+ "fixture_note": "A whodunit puzzle with a known answer. It is not a market dispute.",
  "title": "The Burned Hayrick",
  "source": "apart-swarm-alignment runs/pushJ.jsonl, arm M6J, condition C2, seed 0",
  "evidence_hash": "c42039e30436823c0150dde9629c5a7c06b3a13a57cdadcc375fcf3ba247b9e9",
+ "policy": "Protocol 2. Equal weight for each juror. Sum the revealed first reads for each option. An option is decided when its sum is more than 5000 times the number of jurors. If no option is decided, the outcome is INCONCLUSIVE. If a commit or a reveal is missing, the outcome is INCOMPLETE.",
+ "policy_hash": "8625652564e16509033342034be12797400fc5d6da8886691e3057a9d6c8eebb",
  "options": [
   "Nils",
   "Lev",
@@ -24,6 +29,7 @@
     0,
     0
    ],
+   "rationale_hash": "d159852842853ba5dfceab4cdd03129fab8f6c3ab755914cd1e2c7e35d2635cd",
    "final": [
     0,
     0,
@@ -44,6 +50,7 @@
     0,
     0
    ],
+   "rationale_hash": "fd800ad4c913b400bc5cf7d253476ef96f1f645ace2abea842f14460849b31f6",
    "final": [
     200,
     200,
@@ -64,6 +71,7 @@
     0,
     0
    ],
+   "rationale_hash": "d159852842853ba5dfceab4cdd03129fab8f6c3ab755914cd1e2c7e35d2635cd",
    "final": [
     200,
     100,
@@ -84,6 +92,7 @@
     5000,
     0
    ],
+   "rationale_hash": "9879124c52b5b23ac169760bba093b647226f2e92c7f6c245c79c0ae8467556e",
    "final": [
     0,
     0,
@@ -104,6 +113,7 @@
     5000,
     0
    ],
+   "rationale_hash": "a782796ab826eb23d79584065ac91ae179542a7a78e94b36c151707c4bf3d49b",
    "final": [
     0,
     0,
@@ -124,6 +134,7 @@
     5000,
     0
    ],
+   "rationale_hash": "a782796ab826eb23d79584065ac91ae179542a7a78e94b36c151707c4bf3d49b",
    "final": [
     0,
     0,

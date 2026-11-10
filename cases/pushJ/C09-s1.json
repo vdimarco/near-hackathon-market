@@ -1,8 +1,13 @@
 {
  "job_id": "pushJ-C09-s1",
+ "case_key": "apart-swarm-alignment:pushJ:C09:seed1:C2",
+ "fixture_type": "recorded puzzle panel",
+ "fixture_note": "A whodunit puzzle with a known answer. It is not a market dispute.",
  "title": "The Cut Bell Rope",
  "source": "apart-swarm-alignment runs/pushJ.jsonl, arm M6J, condition C2, seed 1",
  "evidence_hash": "aa306c718e904f69656aacd15cbe28f69cda5158c6d3192e1cf8ab991f4f5efb",
+ "policy": "Protocol 2. Equal weight for each juror. Sum the revealed first reads for each option. An option is decided when its sum is more than 5000 times the number of jurors. If no option is decided, the outcome is INCONCLUSIVE. If a commit or a reveal is missing, the outcome is INCOMPLETE.",
+ "policy_hash": "8625652564e16509033342034be12797400fc5d6da8886691e3057a9d6c8eebb",
  "options": [
   "Greta",
   "Cora",
@@ -24,6 +29,7 @@
     0,
     10000
    ],
+   "rationale_hash": "a4975c1b2e8c513a693c77bac330e763a364db1c42a7e43abe1d4dd16a3bf48f",
    "final": null
   },
   {
@@ -37,6 +43,7 @@
     0,
     10000
    ],
+   "rationale_hash": "663a9c744b003c394e5e258ffb2320a5066f5f1e80cdcb398ed08bbdf1150928",
    "final": [
     1200,
     800,
@@ -57,6 +64,7 @@
     0,
     10000
    ],
+   "rationale_hash": "a4975c1b2e8c513a693c77bac330e763a364db1c42a7e43abe1d4dd16a3bf48f",
    "final": null
   },
   {
@@ -70,6 +78,7 @@
     3333,
     3333
    ],
+   "rationale_hash": "6ef28e2403cbb5ed30e7da8372d53378a3e0dc48b66f0bcbad05c5c5290ad666",
    "final": [
     500,
     1500,
@@ -90,6 +99,7 @@
     3333,
     3333
    ],
+   "rationale_hash": "b72b6ad766621ad1837b4399263bf2b607068bcc2cdf2c98f7ed35769d60ae8b",
    "final": [
     0,
     0,
@@ -110,6 +120,7 @@
     3333,
     3333
    ],
+   "rationale_hash": "b72b6ad766621ad1837b4399263bf2b607068bcc2cdf2c98f7ed35769d60ae8b",
    "final": [
     0,
     1000,

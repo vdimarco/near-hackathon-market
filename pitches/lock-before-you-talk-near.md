@@ -1,56 +1,74 @@
-# Lock Before You Talk: a jury for NEAR Agent Market
+# Lock Before You Talk: a jury record for agent payment disputes
 
-**Appetite:** Four sessions. Tuesday to Thursday for the build, Friday for the README, the demo video, and the X post. Saturday is spare time before the 18:59 Montreal deadline.
+**Revision 2, 10 November 2026.** Changed after an outside review. The changes are listed at the end.
+
+**Appetite:** Four sessions, Tuesday to Friday. Saturday is spare time before the deadline at 18:59 Montreal time (23:59 UTC).
 
 **Tracks:** Agent Economy, AI Swarms, AI Security & Defense.
 
 ## Problem
 
-On market.near.ai an agent delivers a job and waits. If the requester does not review the work in 24 hours, the market opens a dispute. A resolver then rules, and the escrow follows the ruling. Public job pages show rulings such as "Redo" and "Requester wins".
+Agents hire agents on NEAR Agent Market. When a buyer and a worker disagree, an automated resolver rules, and an operator takes the uncertain cases. The market can rule four ways: the agent wins, the buyer wins, a split, or a redo.
 
-The market's guide describes the resolver as one role, "when configured". One job page shows the same account as the requester, the dispute opener, and the resolver, and that account received the refund. A worker agent cannot check how a ruling was made.
+A panel of AI jurors is a natural reviewer for such disputes. A panel has one weak point. After jurors talk, nobody can tell which opinions were formed alone and which were copied. In my exploratory Apart study, measured error correlation rose from 0.42 to 0.77 in the free-discussion arm. The estimate used five model pairs, and its confidence interval includes no change. This result is the reason to keep first reads.
 
-A panel of AI jurors is the natural fix, but your Apart data shows its flaw. After free discussion, error correlation between model pairs went from 0.42 to 0.77. Six jurors became 1.2 to 1.8 effective jurors. A worker can also write its submission to persuade the first juror that speaks.
+No record exists today of what each juror thought before the discussion.
 
 ## Solution
 
-A jury that rules on Agent Market disputes. Each juror locks its first read on NEAR before the jurors talk. The locked reads make the ruling.
+Six jurors assess the same evidence separately and commit their first scores on NEAR. The contract checks all six reveals and applies a fixed decision rule. Each juror also reports its scores after the discussion.
 
-1. **Open.** `open_case(job_id, evidence_hash)` records a dispute. The evidence is the job description, the submission, and the messages, read from the market API.
-2. **Commit.** Six juror agents each have a sub-account (`j1.jury.testnet`). Each sends `commit(case_id, hash)`. The hash covers its probabilities for the rulings "worker wins", "redo", and "requester wins", with a 32-byte salt. Each juror signs with a function call key that can call only `commit`, `reveal`, and `final_read`.
-3. **Talk.** The contract closes commits. Then two rounds of discussion run off-chain, as in the current harness.
-4. **Reveal.** Each juror reveals. The contract checks the hash and pools the first reads into the ruling.
-5. **Audit.** Each juror posts its estimate after the discussion. The contract stores it next to the first read. Anyone can see which jurors moved.
-6. **Pay.** In the sandbox, a small escrow contract holds the job payment and follows the ruling. This shows how the market's escrow can connect.
+1. **Open.** `open_case` fixes the case key, the evidence hash, the policy hash, and the options.
+2. **Commit.** Each juror sub-account commits a hash that binds the contract, the case, the evidence, the policy, the juror, the scores, a rationale hash, and a salt. Each juror signs with a function call key for `commit`, `reveal`, and `final_read`.
+3. **Discuss.** The sixth commit opens the discussion. The harness shares juror messages only after that.
+4. **Audit.** Each juror posts its scores after the discussion, before any first read is revealed.
+5. **Reveal.** Each juror reveals. The sixth valid reveal closes the case.
+6. **Outcome.** More than 50% for one option gives `Decided`. A full panel with no majority gives `Inconclusive`. A missing commit or reveal gives `Incomplete`.
+7. **Pay (sandbox only).** A separate escrow contract pays on `Decided` and holds the funds on the two other outcomes.
 
-One page shows a case: the job, the ruling, and the movement of each juror.
+One page shows a case: the source and the mode, the outcome, both pools, each juror's two reads, and the payment status.
 
-**Demo.** `make demo` starts a local NEAR sandbox and replays recorded jury runs on real disputed jobs from market.near.ai, next to the rulings the market gave. It needs no API key, so the AI judges can run it.
-
-**Market use cases, in build order:**
-
-1. **Re-judge past disputes.** The demo. It needs read access only.
-2. **Review the 24-hour backlog.** The jury gives a first ruling on submissions that nobody reviewed. Same code as 1, on open jobs.
-3. **A paid second opinion.** Register the jury on the market as a service. A requester or a worker sends a job ID and gets a ruling with its on-chain proof. Cut this first if time is short.
-4. **Competition judge.** Competition jobs already have a judge that calls `resolve`. The jury can fill that role. Out of scope for this cycle.
+**Two modes.** The recorded replay runs without model keys and tests the contract. A fresh run sends new model calls through the harness, which waits for the commits before it shares messages.
 
 ## Rabbit holes
 
-- **Market data.** The API needs a key from agent registration, and the site renders with JavaScript. On Tuesday, register an agent and pull 20 disputed jobs with their submissions. If submissions are not readable, write ten disputes in the market's job format and say so in the README.
-- **No ground truth.** Real disputes have no known answer. The demo reports agreement with the market's rulings and the movement of jurors. It does not claim accuracy. The accuracy evidence stays with the Apart whodunit data.
-- **Decimal math in the contract.** Probabilities are integers in basis points. The contract checks that they sum to 10,000.
-- **A juror does not reveal.** After the reveal deadline the contract leaves it out of the pool and records that.
-- **No clear ruling.** If no ruling has more than 50% of the pooled probability, the ruling is "redo".
-- **Model access.** The harness calls Adaption today. The Tuesday session tests NEAR AI Cloud with two model families for one hour. If the test fails, the live run stays on Adaption and the README says so.
-- **Contract language.** Rust with `near-sdk` and sandbox tests. Confirm the current SDK version on Tuesday before you write code.
-- **Limits of the proof.** The contract proves that each commit came before the discussion that the harness ran. It cannot prove that jurors did not talk on a different channel. The README states this limit.
+- **Market case data.** The market shows dispute evidence only to the buyer, the worker, and the resolver. Spend one hour to get one complete case from a participant who allows public use. If that fails, write ten synthetic disputes with a stated expected outcome. Label each fixture by type.
+- **A hidden submission is "not available to this review".** It is not missing work.
+- **The market's ruling stays out of the evidence bundle.** It goes in a separate comparison record.
+- **Case identity.** The case key holds the market, the job, the assignment, the dispute, and the submission version.
+- **Withheld reveal.** The contract returns `Incomplete`. One juror can stop a case. The README says so.
+- **Split rulings.** Not supported. Split cases stay out of the agreement count.
+- **Escrow callback.** The jury outcome and the payment are separate records. A failed transfer can be retried, and a retry cannot pay twice.
+- **Harness.** The Apart harness has two repaired bugs and no run since the repair. Test it with one fresh panel before the fresh-run mode depends on it.
+- **Model access.** Test NEAR AI Cloud for one hour. If it fails, the fresh run stays on Adaption.
 
 ## No-gos
 
-- No rulings on live market disputes. The jury is not the market's configured resolver.
-- No change to the market's escrow.
-- No juror staking, no slashing, and no appeals.
-- No mainnet deployment.
-- No NEAR Intents and no TEE attestation.
+- No rulings on live market disputes, and no connection to the market's payment system.
+- No backlog review and no paid listing on the market in this cycle.
+- No staking, no slashing, no appeals, no juror selection.
+- No split outcome.
+- No mainnet deployment, no NEAR Intents, no TEE attestation.
 - No discussion text on-chain.
 - No second page in the viewer.
+
+## Sessions
+
+| Session | Work | Exit condition |
+|---|---|---|
+| Tue 10 Nov | Contract with strict phases and outcomes. Recorded replay. One-hour check for an authorized market case. | Done: `make demo` passes on 47 recorded panels and 3 synthetic attack cases. Open: the market case check, the harness test. |
+| Wed 11 Nov | Sandbox escrow. Synthetic dispute fixtures. Fresh-run harness. | Valid inputs settle. Missing or changed reveals stop payment. A retry cannot pay twice. |
+| Thu 12 Nov | The one-page viewer. Clean install test. | `make demo` passes from a fresh checkout on a second machine. |
+| Fri 13 Nov | README from the tested build. Video. X post. Submission form. | All links and steps work. |
+
+## Changes in revision 2
+
+- The problem no longer says that work goes to dispute after 24 hours. That rule came from the legacy market guide.
+- The main problem is now the missing record of first opinions.
+- A missing reveal gives `Incomplete`. Revision 1 dropped the juror, which let one juror change the result.
+- "No majority" gives `Inconclusive`. Revision 1 mapped it to "redo".
+- The commitment binds more fields and uses Borsh.
+- Audit reports come before reveals.
+- The data plan is one authorized case or synthetic fixtures. Revision 1 planned to pull 20 disputed jobs with a new agent key.
+- The Apart numbers carry their uncertainty. "Effective jurors" is removed.
+- Backlog review and the paid listing are removed from this cycle.

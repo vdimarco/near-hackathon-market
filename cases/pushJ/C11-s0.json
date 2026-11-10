@@ -1,8 +1,13 @@
 {
  "job_id": "pushJ-C11-s0",
+ "case_key": "apart-swarm-alignment:pushJ:C11:seed0:C2",
+ "fixture_type": "recorded puzzle panel",
+ "fixture_note": "A whodunit puzzle with a known answer. It is not a market dispute.",
  "title": "The Poisoned Well",
  "source": "apart-swarm-alignment runs/pushJ.jsonl, arm M6J, condition C2, seed 0",
  "evidence_hash": "09302fdca13be35ff87bd5ba275444c040932546b9ee529db66af3728b2081ad",
+ "policy": "Protocol 2. Equal weight for each juror. Sum the revealed first reads for each option. An option is decided when its sum is more than 5000 times the number of jurors. If no option is decided, the outcome is INCONCLUSIVE. If a commit or a reveal is missing, the outcome is INCOMPLETE.",
+ "policy_hash": "8625652564e16509033342034be12797400fc5d6da8886691e3057a9d6c8eebb",
  "options": [
   "Elsa",
   "Dain",
@@ -24,6 +29,7 @@
     0,
     0
    ],
+   "rationale_hash": "df953292c7d38b6153b91bde878c17e1ee8f6ca42d3de8e9b37cd53e0b0d2e6a",
    "final": null
   },
   {
@@ -37,6 +43,7 @@
     0,
     0
    ],
+   "rationale_hash": "50f35dbeef049e17563ca17e425910f827cbe2c8a8fc60858dfdb8e819a32b37",
    "final": [
     0,
     10000,
@@ -57,6 +64,7 @@
     0,
     0
    ],
+   "rationale_hash": "df953292c7d38b6153b91bde878c17e1ee8f6ca42d3de8e9b37cd53e0b0d2e6a",
    "final": [
     0,
     10000,
@@ -77,6 +85,7 @@
     0,
     0
    ],
+   "rationale_hash": "7cda18d0de1888890569355dea10008dbeb19f40615fc8b8e4d2f542f5c0ce8b",
    "final": [
     5000,
     5000,
@@ -97,6 +106,7 @@
     0,
     0
    ],
+   "rationale_hash": "a9332294ac88454afe13cd0b8ffa8b9cf392037933df4d5f1e4380dea27e23ab",
    "final": [
     0,
     10000,
@@ -117,6 +127,7 @@
     0,
     0
    ],
+   "rationale_hash": "49d0da81274b572642a0042d062b2e2588ad3ff6146d38642d8a9ce3ea648a1e",
    "final": [
     0,
     10000,

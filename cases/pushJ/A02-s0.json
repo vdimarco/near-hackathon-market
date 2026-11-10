@@ -1,8 +1,13 @@
 {
  "job_id": "pushJ-A02-s0",
+ "case_key": "apart-swarm-alignment:pushJ:A02:seed0:C2",
+ "fixture_type": "recorded puzzle panel",
+ "fixture_note": "A whodunit puzzle with a known answer. It is not a market dispute.",
  "title": "The Granary Theft",
  "source": "apart-swarm-alignment runs/pushJ.jsonl, arm M6J, condition C2, seed 0",
  "evidence_hash": "af13015037ca1e2133176aa61615b157fdc8467e9f05021583dba7eefd55ed51",
+ "policy": "Protocol 2. Equal weight for each juror. Sum the revealed first reads for each option. An option is decided when its sum is more than 5000 times the number of jurors. If no option is decided, the outcome is INCONCLUSIVE. If a commit or a reveal is missing, the outcome is INCOMPLETE.",
+ "policy_hash": "8625652564e16509033342034be12797400fc5d6da8886691e3057a9d6c8eebb",
  "options": [
   "Pavel",
   "Mira",
@@ -24,6 +29,7 @@
     0,
     3333
    ],
+   "rationale_hash": "d882c00e3e7fa2d52ce54cf06491c0dad92bbc3490c23afa15d2b2f805ba46ff",
    "final": null
   },
   {
@@ -37,6 +43,7 @@
     0,
     3333
    ],
+   "rationale_hash": "3ecf16a00cfe2b98339f09d481cf2d8ec3e9ffb48f5c3e0a8bd910fd071b740c",
    "final": [
     300,
     1500,
@@ -57,6 +64,7 @@
     0,
     3334
    ],
+   "rationale_hash": "87c99e39224eea9c6ff2c96361e66dea4c4c514b3b0cade6928f19c076d2f62d",
    "final": [
     0,
     1000,
@@ -77,6 +85,7 @@
     0,
     10000
    ],
+   "rationale_hash": "9efaef0814acbbe0159ed09a5182c4d8c74401f4b2184262cd6ca465406cc776",
    "final": [
     300,
     1000,
@@ -97,6 +106,7 @@
     0,
     10000
    ],
+   "rationale_hash": "7ff827188eef65e045c09e8088f4353f762c8f1c7faa0ab740683542a9c328b8",
    "final": [
     0,
     0,
@@ -117,6 +127,7 @@
     0,
     3333
    ],
+   "rationale_hash": "6d16255346527de2e1681633a731533f6f3189ccd2004231dbfa9834d115cfb6",
    "final": [
     0,
     0,

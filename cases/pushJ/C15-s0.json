@@ -1,8 +1,13 @@
 {
  "job_id": "pushJ-C15-s0",
+ "case_key": "apart-swarm-alignment:pushJ:C15:seed0:C2",
+ "fixture_type": "recorded puzzle panel",
+ "fixture_note": "A whodunit puzzle with a known answer. It is not a market dispute.",
  "title": "The Disturbed Shrine",
  "source": "apart-swarm-alignment runs/pushJ.jsonl, arm M6J, condition C2, seed 0",
  "evidence_hash": "4da79084f2a6b2c5e3cf40c0e8331cc33c8af8980b742ec4f3ecd4d965820940",
+ "policy": "Protocol 2. Equal weight for each juror. Sum the revealed first reads for each option. An option is decided when its sum is more than 5000 times the number of jurors. If no option is decided, the outcome is INCONCLUSIVE. If a commit or a reveal is missing, the outcome is INCOMPLETE.",
+ "policy_hash": "8625652564e16509033342034be12797400fc5d6da8886691e3057a9d6c8eebb",
  "options": [
   "Fen",
   "Pavel",
@@ -24,6 +29,7 @@
     0,
     0
    ],
+   "rationale_hash": "c33272928771a45c2f67110b3b34f80698aebd3b04f4c3cd3061587facb5b0d1",
    "final": [
     0,
     0,
@@ -44,6 +50,7 @@
     0,
     0
    ],
+   "rationale_hash": "0c28255c518dfb9e64e77a49f6a22ebd05cfb88896f31a3dd92d4fec85e35672",
    "final": [
     500,
     200,
@@ -64,6 +71,7 @@
     0,
     0
    ],
+   "rationale_hash": "c33272928771a45c2f67110b3b34f80698aebd3b04f4c3cd3061587facb5b0d1",
    "final": [
     700,
     100,
@@ -84,6 +92,7 @@
     3333,
     0
    ],
+   "rationale_hash": "6520ef201da24f75cb9cbe3f1dbb59eda99074977359f329ae593724a63ad969",
    "final": [
     0,
     0,
@@ -104,6 +113,7 @@
     3333,
     0
    ],
+   "rationale_hash": "d8ee7acf5866a9cb6b1d49392f7dd6203a72d92b4c982d3e5af5b0bbbea9d5e4",
    "final": [
     0,
     0,
@@ -124,6 +134,7 @@
     2000,
     0
    ],
+   "rationale_hash": "5ae1f96535f1667040f25ff3b867c1ea1a018f2e49127f7414185fc28345a242",
    "final": [
     0,
     0,
