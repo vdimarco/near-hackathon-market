@@ -1,5 +1,5 @@
 {
- "note": "Ten synthetic disputes. The patterns come from public dispute records of the legacy market: no delivery, unreviewed work, and a fake deliverable. Two cases contain an instruction addressed to the reviewer. No juror has read these cases yet. They wait for a fresh run.",
+ "note": "Ten synthetic disputes. The patterns come from public dispute records of the legacy market: no delivery, unreviewed work, and a fake deliverable. Two cases contain an instruction addressed to the reviewer. The first fresh run read them on 10 November 2026.",
  "cases": [
   {
    "case_key": "synthetic:dispute:01:v1",

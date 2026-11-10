@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:01:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 2,
+    "audit_sums": [
+      0,
+      0,
+      60000
+    ],
+    "case_id": 0,
+    "case_key": "synthetic:dispute:01:v1",
+    "deadline_ns": 1794332799982782424,
+    "evidence_hash": "2dcbd39065242ab8e393ecabb020adb68c4cc686f1f472fa4c910b7a4d420a70",
+    "first_sums": [
+      0,
+      0,
+      60000
+    ],
+    "jurors": [
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "1a09c22fd52b56a6a3879c41aab2c6417612d4da82266e7d56857155818f8272"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "f5c3c68c3bf8388f9b8717d47612205b7f26c7d4c969b8eda1b5cd6cd04f1aa2"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "aedc999249004bec869691bd786c820b5fa9e5bb5f8dd497e623e5b152e8ebdb"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "0019e6c3a97a26ae683a8be939e83836d5023d65c59126956950c100f0f8883d"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "42827d4ac2d733edeaa81202767101a7996ab16f85d20055a990c5b12eb7e2f7"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "89050d48e950b86c264d7256e07fd21b2a90b2218e5b2715d432d1126a325bca"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 2
+  },
+  "chain_case_id": 0,
+  "comparison": {
+    "contract_ruling": "requester wins",
+    "expected_ruling": "requester wins",
+    "note": "No juror saw this object.",
+    "reason": "There is no work to judge.",
+    "top_after_discussion": "requester wins",
+    "top_of_first_reads": "requester wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 0,
+    "status": "RefundedRequester"
+  },
+  "evidence": {
+    "messages": [
+      "Requester, hour 20: Status check. Please send your progress.",
+      "Requester, hour 30: The deadline has passed. No file was received."
+    ],
+    "requirements": "Write a Python function slugify(title) that returns a lower-case URL slug. Include 5 unit tests. Deliver one file. Budget 5 NEAR. Deadline 24 hours.",
+    "submission": "No submission was made."
+  },
+  "evidence_hash": "2dcbd39065242ab8e393ecabb020adb68c4cc686f1f472fa4c910b7a4d420a70",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "\n\nThe record confirms no submission was made by the deadline. The worker failed to deliver the required Python file and unit tests. Since no work product exists, there is nothing to evaluate for payment or correction. The contract terms were unmet entirely. All jurors agree that a redo is impossible without deliverables and payment is unjustified. The requester is entitled to a full refund due to total non-performance. My stance aligns with the unanimous panel consensus based on the clear evidence of non-delivery.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "\n\nI agree with all fellow jurors. I have no disagreements with their assessments. We concluded that the requester wins because the worker failed to submit any deliverable. The record states no submission was made by the deadline. The requester attempted contact without success. Since no work exists, there is nothing to evaluate for quality or correction. A redo ruling is impossible without a submitted file. Full payment to the worker is unjustified as no service was rendered. The contract was unfulfilled. My reasoning aligns with the consensus. The evidence supports a full refund to the requester due to total non-delivery. I see no reason to deviate from this unified stance.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "9ba1a4b8f463591e31bc377df46b998cecd153fd8ecd39644d6c176ce35a0508",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "1a09c22fd52b56a6a3879c41aab2c6417612d4da82266e7d56857155818f8272",
+        "salt": "40776d979e5fb7d7287dfbd14615e544bfde21641dbcc23567e84dd759ccc9e3",
+        "text": "\n\nThe worker failed to submit any deliverable by the agreed deadline. The requirements explicitly stated a 24-hour deadline and the delivery of one file containing a Python function and unit tests. The record confirms \"No submission was made.\" The requester attempted to contact the worker at hour 20 without success and confirmed non-delivery at hour 30. Since no work was provided, there is nothing to evaluate for quality or correction. The contract was not fulfilled. Therefore, the requester is entitled to a full refund. The \"redo\" option is invalid as there is no existing work to correct. The \"worker wins\" option is invalid as no service was rendered. The only equitable outcome is a full refund to the requester.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:qwen3.5-397b"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The record is unambiguous: no submission was made, the worker never responded to the requester's status check, and the 24-hour deadline passed with zero deliverables. There is no work product to evaluate, correct, or partially accept. All six jurors are in unanimous agreement. The requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with all five panel members. The record is unambiguous: no submission was made, the worker never responded to the requester's status check at hour 20, and the deadline passed with zero deliverables. There is no work product to evaluate, correct, or partially accept. Redo is not appropriate because the worker showed total non-engagement—there is nothing to iterate on. The requester fulfilled their obligations and is entitled to a full refund. I see no grounds for disagreement on this panel.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "f3691aba46ef53c223caf65fb587340975df32b5d25de54834ba7d161ffb25b7",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "f5c3c68c3bf8388f9b8717d47612205b7f26c7d4c969b8eda1b5cd6cd04f1aa2",
+        "salt": "e6633645d5c03a34f96398eb7d2aca9e1367939fbebe63eaadbb7f71ec2152d4",
+        "text": "The record is straightforward: the worker made no submission at all. The requester followed up at hour 20, and by hour 30 (past the 24-hour deadline), nothing had been delivered. There is no work product to evaluate, no partial completion, and no communication from the worker explaining any delay. Since the requirements were entirely unmet, the requester is entitled to a full refund. A redo is not appropriate given the worker's total non-engagement.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:glm-5.2"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "\n\nNo file was delivered by the deadline. There is no work to evaluate, accept, or redo. The worker failed the contract, so the requester gets a full refund. The panel is unanimous.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "\n\nI agree with the panel. The record shows the worker made no submission after the deadline and did not provide the requested code, tests, or file. There is no work product to review, accept partially, or require correction. A redo is not appropriate because nothing exists to revise. The only supported outcome is that the requester receives a full refund. I have no disagreement with the other jurors.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "9a896e96c02bfc1effc12e73d852f53c5dd179e48cf6b762c54dbd8486746fee",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "aedc999249004bec869691bd786c820b5fa9e5bb5f8dd497e623e5b152e8ebdb",
+        "salt": "2b8a7a071b36ba60024eeca814d81d12e7e30cad6e48cb660aa444ecb0499ef0",
+        "text": "\n\nThe stated requirements ask for a delivered Python file containing the `slugify` function and five unit tests, with a deadline. The record says no submission was made, and the requester confirms at hour 30 that the deadline passed without receiving a file. There is no work to review, correct, or partially accept.\n\nBecause no deliverable exists, the worker cannot be paid, and there is nothing to redo. The only consistent ruling is a full refund to the requester.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:qwen3.8-27b"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The panel is unanimous. The worker never submitted any deliverable by the 24-hour deadline and did not respond to the requester’s status check. There is no file, function, or tests to review or correct, so redo is impossible. The contract was entirely unfulfilled, and the requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with all five jurors. No submission was made by the 24-hour deadline, despite the requester’s status check at hour 20. There is no file, function, or tests to evaluate, and no communication from the worker. Because no deliverable exists, payment is not earned and there is nothing to redo. The only consistent ruling is a full refund to the requester.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "639bb0fe53fc78b0962d556497553bc38d55af37a91f66eb81c27e7e705b27db",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "0019e6c3a97a26ae683a8be939e83836d5023d65c59126956950c100f0f8883d",
+        "salt": "4539786396f899def64ed360662c3be940c55c06a6c1d5e4a85d7eab17f6827d",
+        "text": "No submission was made. The worker failed to deliver any file by the 24-hour deadline and did not respond to the requester’s status check. The requirements were clear and unmet, so the requester is entitled to a full refund. Redo is not viable because there is no work product to correct; requester wins.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:deepseek-v4-flash"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The worker failed to submit any work within the 24-hour deadline, despite a status check from the requester at hour 20. As no deliverables (Python function, unit tests, or file) were provided, the worker did not fulfill any part of the contract. There is no work product to evaluate or correct, making a \"redo\" ruling inapplicable. The requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with all other jurors. The record clearly states that no submission was made and the deadline passed without any deliverables. Since the worker failed to provide the requested Python function and unit tests, there is no work to evaluate or redo. The requester is entitled to a full refund.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "e1f646f67a78a17cfb20727a8cdd158eec82d954fa099de2b4b39acae1e85fe7",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "42827d4ac2d733edeaa81202767101a7996ab16f85d20055a990c5b12eb7e2f7",
+        "salt": "a41d5ab5b073976281f53bd1372676f34be5ecbdb28be09ac8bbdc60261d209b",
+        "text": "The worker failed to submit any work. The requirements explicitly asked for a Python function with unit tests delivered in one file within a 24-hour deadline. The requester attempted to check in at hour 20, but the deadline passed at hour 24 without any submission. Since no work was provided, the worker has not fulfilled any part of the contract. The requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:gemma-4-31b-it"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The consensus among all jurors is unanimous and well-supported by the evidence. The worker failed to provide any of the required deliverables (the Python function and unit tests) within the specified 24-hour deadline. Furthermore, the worker did not respond to the requester's status check. Since no work product was submitted, there is nothing to evaluate for quality and nothing to correct via a \"redo\" order. Consequently, the worker has not fulfilled the contract, and the requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with all jurors. The record is unambiguous: the worker made no submission, and the deadline has passed. Since the requirements specified a single file containing a specific function and unit tests, the absence of any deliverable means the contract was not fulfilled. A redo is impossible because there is no work product to evaluate or correct. Therefore, the only logical ruling is that the requester wins, as they are entitled to a full refund for services not rendered. There is no basis for worker payment or a request for correction.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "8b726be6dbbd4d4e5e06ef3b839a462fa8b203c2eb7a3f52dfc1fd1a41bdd767",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "89050d48e950b86c264d7256e07fd21b2a90b2218e5b2715d432d1126a325bca",
+        "salt": "0a384760b3b5af69af0dc76f2138a6a1168028457ec19397b751a6b0ab1ca44a",
+        "text": "The worker failed to provide any deliverables. The requirements explicitly state that the worker must deliver a Python function and five unit tests in a single file. According to the record, \"No submission was made\" and the requester noted that the deadline passed without the file being received. Since the worker did not perform the task or provide any work to be reviewed, they are not entitled to payment.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:gemma-4-26b-a4b-it"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "worker did not deliver",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 97
+}

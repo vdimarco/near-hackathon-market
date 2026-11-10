@@ -4,11 +4,14 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 publish = false
+default-run = "demo"
 
 [dependencies]
 anyhow = "1"
 futures = "0.3"
+getrandom = "0.2"
 borsh = { version = "1", features = ["derive"] }
+reqwest = { version = "0.12", features = ["json"] }
 near-workspaces = { version = "0.24", features = ["unstable"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

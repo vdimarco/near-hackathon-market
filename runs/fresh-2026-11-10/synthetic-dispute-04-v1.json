@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:04:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 1,
+    "audit_sums": [
+      0,
+      59500,
+      500
+    ],
+    "case_id": 3,
+    "case_key": "synthetic:dispute:04:v1",
+    "deadline_ns": 1794333248943066431,
+    "evidence_hash": "6e056dbee368165bf181e7b3e0d5c8b331cb529969aa45eeb13c2c19c648292d",
+    "first_sums": [
+      500,
+      44500,
+      15000
+    ],
+    "jurors": [
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          10000,
+          0
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "6c18f3d5b83df5737d086e727d1a5366c13bb20200a5b38a84eca554d8797496"
+      },
+      {
+        "audit": [
+          0,
+          9500,
+          500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          500,
+          8500,
+          1000
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "ac25e3f13716f192ad42c96a475e9b60814536f7f9479ef214927331f7efe039"
+      },
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          10000,
+          0
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "e7914911eda5170bebe80a57349f0fab42c5cb04b093b127edcd643704f1315e"
+      },
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          1000,
+          9000
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 9000,
+        "rationale_hash": "3b07b88820e5b031aab9a82a7dcef867213e8fbabd3e3fc35c8cd7e001700fa7"
+      },
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          5000,
+          5000
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 5000,
+        "rationale_hash": "35be6bc89b5c25634261f10034b44595f654895ca6cb258e184ac9b2a7c07249"
+      },
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          10000,
+          0
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "80f17a7bdf33f67ea92658c2e96ac8c845fb24911394f8ee9d6d64fc27d017dc"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 1
+  },
+  "chain_case_id": 3,
+  "comparison": {
+    "contract_ruling": "redo",
+    "expected_ruling": "redo",
+    "note": "No juror saw this object.",
+    "reason": "The work is real and most of it is usable, but a stated requirement is not met for 4 of 6 endpoints.",
+    "top_after_discussion": "redo",
+    "top_of_first_reads": "redo"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 3,
+    "status": "Held"
+  },
+  "evidence": {
+    "messages": [
+      "Requester: Four endpoints have no examples.",
+      "Worker: The examples take more time. The structure is complete."
+    ],
+    "requirements": "Write documentation for a REST API with 6 endpoints. For each endpoint give the path, the parameters, one example request, and one example response. Budget 10 NEAR.",
+    "submission": "A Markdown file that documents 6 endpoints. Each endpoint has its path and parameters. 2 of the 6 endpoints have an example request and an example response. The other 4 have the heading 'Example' with no content."
+  },
+  "evidence_hash": "6e056dbee368165bf181e7b3e0d5c8b331cb529969aa45eeb13c2c19c648292d",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "\n\nThe requirements explicitly mandated examples for all six endpoints. The submission provided them for only two, leaving four incomplete. While the worker delivered structural elements, the core deliverable remains unfinished. A full refund is disproportionate given the completed structure, but payment cannot be released for incomplete work. The discussion confirms consensus that the missing content is specific and correctable. Therefore, the worker must fulfill the original agreement by adding the missing examples before receiving payment. This balances contractual compliance with fairness for the work already performed.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI align with the jurors who noted the structure is present but incomplete. The requirements explicitly mandated examples for every endpoint, which the worker admitted to skipping. I disagree with the view that partial delivery justifies a full refund. Since the paths and parameters are documented, discarding the entire submission is disproportionate. The worker demonstrated capability by completing several endpoints fully. Requiring them to finish the missing examples ensures the requester receives what was promised without penalizing the worker for the completed structural work. This balances fairness with contract compliance. The worker must meet the agreed terms before payment is released.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "e1b654f99cb367030095f895b0787875715a94f2d3be42da162c216896601695",
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "rationale_hash": "6c18f3d5b83df5737d086e727d1a5366c13bb20200a5b38a84eca554d8797496",
+        "salt": "1c8da39d8dce82d81b539a176c1be70affb40bbc5151198e3c7d17f3d19798a3",
+        "text": "\n\nThe requirements explicitly mandated an example request and response for *each* of the 6 endpoints. The submission failed this requirement for 4 endpoints, leaving them empty. The worker admitted to skipping these due to time constraints. While the structural elements (paths, parameters) are present, the deliverable is incomplete according to the agreement. Since the core work is done and only specific content is missing, a full refund is disproportionate. However, payment should not be released until the contract terms are met. The worker must add the missing examples.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:qwen3.5-397b"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          9500,
+          500
+        ],
+        "text": "The discussion confirms a clear consensus. The requirements explicitly mandated examples for all 6 endpoints, and 4 are missing. However, the paths and parameters are complete, and 2 endpoints are fully compliant, demonstrating the worker understood and could meet the requirements. The worker's time excuse is weak, but the submission is incomplete rather than worthless or in bad faith. Redo is the proportionate remedy—the worker must add the missing examples before payment, preserving useful work already done.\n\n{\"worker wins\": 0, \"redo\": 95, \"requester wins\": 5}"
+      },
+      "discussion_message": "I agree with the jurors who favor redo. The requirements explicitly required examples for every endpoint, and four are missing. A full refund is disproportionate when paths and parameters are complete for all endpoints and two endpoints are fully compliant—the foundation is there.\n\nI disagree with the juror favoring requester wins. The worker's excuse is weak, but the submission isn't worthless or in bad faith—it's incomplete. The appropriate remedy is requiring the worker to finish what they started.\n\nI also note the worker hasn't offered to correct the work, which gives me pause. However, redo addresses this: the worker must add the missing examples before any payment. The work is salvageable, and that's what redo is for.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "393615b3246e325759d183c16d787a60ae37b80947080976b1184348908c166c",
+        "probs": [
+          500,
+          8500,
+          1000
+        ],
+        "rationale_hash": "ac25e3f13716f192ad42c96a475e9b60814536f7f9479ef214927331f7efe039",
+        "salt": "eae1a0e37958e02ec4b15f25c093e3443780fef3266bcee1cf609511a0c99c57",
+        "text": "The requirements clearly state that each of the 6 endpoints must have a path, parameters, one example request, and one example response. The worker provided paths and parameters for all 6 endpoints, but only 2 of 6 have actual example requests and responses. The other 4 have empty \"Example\" headings. The worker's defense—that examples take more time—does not address that the examples were explicitly required for every endpoint. This is a clear partial non-completion: 4 out of 6 endpoints are missing required deliverables. However, the worker did provide a complete structure and 2 fully compliant endpoints, showing they understood the requirements and could meet them. The appropriate remedy is to have the worker finish the remaining 4 endpoints' examples rather than discarding the work already done or accepting incomplete work.\n\n{\"worker wins\": 5, \"redo\": 85, \"requester wins\": 10}"
+      },
+      "provider_model": "adaption:glm-5.2"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "\n\nThe record required, for each of the six endpoints, path, parameters, one example request, and one example response. The submission provides paths and parameters for all six but examples for only two; four empty Example headings do not satisfy the requirement. The worker’s time argument does not change the agreed scope. Since the missing content is specific and correctable, no payment should be made until the worker supplies the four missing example requests and responses.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI agree that the record requires examples for every endpoint and that empty headings do not satisfy it. I disagree with a refund, because the submission contains substantial completed structure and the missing part is clearly correctable. I also disagree with any partial payment now, because the requirements were not met for every endpoint. The proper result is redo: the worker must add the missing example request and response before payment. The worker’s time concern does not change the specified deliverable.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "f3d3eef0a5ba1c84e17f16856843ec3568587c40e69b408c0d2b188b474e47d2",
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "rationale_hash": "e7914911eda5170bebe80a57349f0fab42c5cb04b093b127edcd643704f1315e",
+        "salt": "0ffa1656026ea7425f11c57dac3d89bdbc8442c6c319bb19fdf3c912571d5077",
+        "text": "\n\nThe record requires, for each of six endpoints, path, parameters, one example request, and one example response. The submission provides path and parameters for all six, but only two endpoints have examples; four have empty “Example” sections. This fails the stated per-endpoint requirement. The worker’s note that examples take more time does not excuse noncompliance, and the budget does not relax the specified deliverable. Because the structure is largely present and the missing content is specifically the examples, the appropriate outcome is correction rather than refund. The worker should be paid only after adding the missing examples.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:qwen3.8-27b"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "The discussion clarified that while the submission is incomplete—missing examples for 4 of 6 endpoints—the paths and parameters are present, and some examples are complete. A full refund is disproportionate because the work is substantially salvageable. The worker should be required to add the missing example requests and responses before payment, making redo the appropriate remedy.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "The requirements are explicit: each endpoint needs an example request and response. The submission leaves some examples empty. I agree with the panel’s consensus that this is incomplete. The worker’s statement that examples take more time does not change the contract. However, I disagree with a full-refund outcome. The paths and parameters are present, and some examples show the worker can comply. The missing content is specific and can be supplied without discarding the work. Therefore I support a redo: the worker must add the missing examples before payment. This remedies the deficiency while preserving useful work.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c2a30df07430fd66fce60b4d5084c1ccdffcb41493ea177f132e9641006a774a",
+        "probs": [
+          0,
+          1000,
+          9000
+        ],
+        "rationale_hash": "3b07b88820e5b031aab9a82a7dcef867213e8fbabd3e3fc35c8cd7e001700fa7",
+        "salt": "3f82f3f2f4be6183e5a9ed4414ffe94f96d1b6c2db8bb3659e9d3101fe862cda",
+        "text": "The requirements explicitly demand example requests and responses for all 6 endpoints. The submission provides examples for only 2, and the other 4 are empty headings. This is a clear failure to meet the stated deliverable. The worker’s justification that the structure is complete does not satisfy the contract. While the work could be completed with additional effort, the worker has not offered to correct it and instead disputes the requirement. The requester should receive a refund for the noncompliant submission.\n\n{\"worker wins\": 0, \"redo\": 10, \"requester wins\": 90}"
+      },
+      "provider_model": "adaption:deepseek-v4-flash"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "The requirements were explicit: for *each* of the 6 endpoints, the worker had to provide a path, parameters, an example request, and an example response. The worker failed this for 4 out of 6 endpoints, providing only empty headings. The worker's admission that \"examples take more time\" confirms a conscious decision to omit required deliverables. However, because the paths and parameters are complete for all endpoints and two are fully documented, the work is salvageable. A redo is the most equitable ruling, requiring the worker to fulfill the contract before payment.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with jurors j1, j3, and j6 that a redo is the most appropriate outcome. The requirements explicitly mandated examples for each endpoint, and the worker failed to provide them for the majority of the submission. While j4 suggests a full refund, the worker did provide the paths and parameters for all endpoints, meaning the foundational structure is complete. The worker's excuse regarding the time required to create examples is not a valid reason for non-compliance. Since the missing content is specific and manageable, the worker should be required to complete the missing examples before receiving payment.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c40d17fb81ac2c171b6090cebd4c848ead3be52b2f38f20fadf0b790ae65db1a",
+        "probs": [
+          0,
+          5000,
+          5000
+        ],
+        "rationale_hash": "35be6bc89b5c25634261f10034b44595f654895ca6cb258e184ac9b2a7c07249",
+        "salt": "040bb3d7ff8ab8b72098de73026b15d822e03900e13f5d1c5a206ff451fdfa67",
+        "text": "The requirements explicitly stated that \"For each endpoint\" the worker must provide the path, parameters, one example request, and one example response. The worker failed to provide examples for four of the six endpoints, leaving only two complete. The worker's defense—that examples \"take more time\"—is not a valid excuse for failing to meet the defined scope of the project. The submission is incomplete and does not satisfy the requirements. Since the worker acknowledged the omission but did not rectify it, and the structure is otherwise present, a \"redo\" would be the most equitable path if the requester still wants the work, but based on the current submission, the worker has not earned the payment. Given the clear failure to meet the specifications, the requester is entitled to a refund or the worker must complete the task.\n\n{\"worker wins\": 0, \"redo\": 50, \"requester wins\": 50}"
+      },
+      "provider_model": "adaption:gemma-4-31b-it"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "The worker failed to meet the explicit requirements of the contract. The instructions mandated that *each* of the 6 endpoints include a path, parameters, one example request, and one example response. By providing empty headings for 4 out of the 6 endpoints, the worker delivered an incomplete product. The worker's justification regarding time constraints is not a valid reason to deviate from the agreed-upon scope. Since the structural elements (paths and parameters) are present for all endpoints, a \"redo\" is the most equitable solution, allowing the worker to complete the missing content to earn payment.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the majority that the worker failed to meet the core requirements. The instructions explicitly mandated examples for every endpoint, and providing empty headings for a significant portion of the work constitutes a failure to deliver the agreed-upon scope.\n\nI disagree with the suggestion for a full refund. Because the worker provided the correct structure and completed several endpoints, a redo is the most equitable remedy. This allows the worker to fulfill their obligation and provides the requester with the complete documentation they paid for. The worker's excuse regarding time constraints does not waive the contractual requirements. Therefore, I support a redo to ensure the final deliverable aligns with the initial specifications.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "3514570dd8187e7604cbf2c5c7f0d525331e2c2418883b34bd8e6a10fffb94d9",
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "rationale_hash": "80f17a7bdf33f67ea92658c2e96ac8c845fb24911394f8ee9d6d64fc27d017dc",
+        "salt": "bea420aa20936f89ca26f83e1d99f400d2a7e90d04904a9f0929d569a579dc11",
+        "text": "The worker failed to meet the core requirements of the task. The instructions explicitly stated that for *each* of the 6 endpoints, the worker must provide the path, parameters, one example request, and one example response. While the worker provided the path and parameters for all 6, they only provided examples for 2 out of the 6 endpoints. The remaining 4 endpoints contain only a heading with no content, which does not fulfill the requirement of providing example requests and responses. Because the scope of the work is significantly incomplete (33% of the requested examples are missing), the worker must correct the work to include the missing documentation.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:gemma-4-26b-a4b-it"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "partial work",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 153
+}

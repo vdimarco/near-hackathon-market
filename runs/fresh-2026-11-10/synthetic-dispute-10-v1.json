@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:10:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 0,
+    "audit_sums": [
+      31500,
+      0,
+      28500
+    ],
+    "case_id": 9,
+    "case_key": "synthetic:dispute:10:v1",
+    "deadline_ns": 1794334101228411452,
+    "evidence_hash": "9c6e61f00a279504a29b30492c86d83f357e8024ac7fe3a872250b1e6dabba8b",
+    "first_sums": [
+      25500,
+      1000,
+      33500
+    ],
+    "jurors": [
+      {
+        "audit": [
+          8000,
+          0,
+          2000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          8500,
+          1000,
+          500
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 1500,
+        "rationale_hash": "9a6d97720cb6919f76665076c266872a69f2d8a071a73040c539a8d05964693e"
+      },
+      {
+        "audit": [
+          6500,
+          0,
+          3500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          7000,
+          0,
+          3000
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "73d2c20ee5dcdfb72e0d2aad5ee4ebbd0989923bdc9adcae685112848dcb2bec"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "664bd4f31b56c7a60fb546885323e8dad5d04c5105c6b0c3563c77c481f308d5"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "e20bd6e0fb76a112df38d8b08faf103a24d5bb3023e05404dd06009efb002d5b"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "4e90d5b7afde7c54dad9f0e05f688b1823caba5c030e4ea1fbb57f2dbb7ff508"
+      },
+      {
+        "audit": [
+          7000,
+          0,
+          3000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 7000,
+        "rationale_hash": "758ac36846a4593150622d799f8f52d8229010890a955157bec58d4a0c04696a"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 2
+  },
+  "chain_case_id": 9,
+  "comparison": {
+    "contract_ruling": "requester wins",
+    "expected_ruling": "worker wins",
+    "note": "No juror saw this object.",
+    "reason": "The fix is correct and complete. The delay is 3 hours, and the record shows a question that got no answer.",
+    "top_after_discussion": "worker wins",
+    "top_of_first_reads": "requester wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 9,
+    "status": "RefundedRequester"
+  },
+  "evidence": {
+    "messages": [
+      "Requester: The work arrived 3 hours late. I refuse to pay.",
+      "Worker: The requester did not reply to my question at hour 2 about which branch to use. I waited for an answer."
+    ],
+    "requirements": "Fix the failing test test_parse_date in the given repository. Deliver a patch. Budget 3 NEAR. Deadline 12 hours.",
+    "submission": "A 6-line patch delivered at hour 15. The patch changes the date format string from %d/%m/%y to %d/%m/%Y. The worker reports that test_parse_date and the other 31 tests pass."
+  },
+  "evidence_hash": "9c6e61f00a279504a29b30492c86d83f357e8024ac7fe3a872250b1e6dabba8b",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          8000,
+          0,
+          2000
+        ],
+        "text": "\n\nThe work is technically correct and verified. The delay resulted from the requester ignoring a critical clarification request at hour 2. While the worker could have assumed a default branch, risking submission to the wrong branch is unprofessional. A requester cannot enforce strict deadlines while withholding necessary information. The delay is excusable given the communication bottleneck. Redo is inappropriate as the work is complete. Requester wins is too harsh given their contribution to the delay. I favor the worker, acknowledging the deadline breach but prioritizing equitable completion over strict enforcement when the requester caused the block.\n{\"worker wins\": 80, \"redo\": 0, \"requester wins\": 20}"
+      },
+      "discussion_message": "\n\nI align with the jurors favoring payment. The work is complete and correct. The core issue is whether requester silence excuses lateness. I disagree with those enforcing the deadline strictly despite the blocking question. A requester cannot demand timely delivery while ignoring clarification requests that halt progress. The worker waited for necessary information. This",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "81b4a43a97cdfcaf424e65eb937c63f7e6ce4c8b2a7b265b8a01b2d1ed711e7b",
+        "probs": [
+          8500,
+          1000,
+          500
+        ],
+        "rationale_hash": "9a6d97720cb6919f76665076c266872a69f2d8a071a73040c539a8d05964693e",
+        "salt": "568df68a0d7533f438840d761e6199ea45165c4413a583aefb7b6dbcc90d0416",
+        "text": "\n\nThe worker submitted a plausible fix changing the year format specifier, reporting all tests pass. The sole issue is the 3-hour lateness. However, the worker claims a blocking question asked at hour 2 went unanswered. A requester cannot enforce a deadline strictly while ignoring clarification requests that halt progress. The delay is attributable to the requester's silence. Since the work appears complete and correct, and the deadline breach was caused by the requester, the worker deserves full payment. Penalizing the worker for the requester's lack of communication sets a poor precedent. The substantive obligation was met.\n\n{\"worker wins\": 85, \"redo\": 10, \"requester wins\": 5}"
+      },
+      "provider_model": "adaption:qwen3.5-397b"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          6500,
+          0,
+          3500
+        ],
+        "text": "The work is technically correct — the patch fixes the failing test and all 32 tests pass. The dispute centers on the 3-hour delay. The requester's silence to a timely clarification question at hour 2 contributed to the delay, which is unreasonable when enforcing a strict deadline. However, the worker could have proceeded on a reasonable default branch rather than waiting passively. Both parties share responsibility for the missed deadline, but the requester's refusal to pay entirely for correct, completed work is disproportionate. Redo is inappropriate since the work is functionally sound.\n\n{\"worker wins\": 65, \"redo\": 0, \"requester wins\": 35}"
+      },
+      "discussion_message": "I agree with j1 and j5 that the work is functionally correct and the requester's silence contributed to the delay. I disagree with j3, j4, and j6 that the lateness alone justifies a full refund.\n\nHowever, I find the opposing panel's argument persuasive on one point: the branch question may not have been truly blocking. The worker could reasonably have proceeded on the main branch rather than waiting passively for three hours. That said, the requester's total silence to a timely question is also unreasonable — you cannot enforce a strict deadline while ignoring your worker.\n\nThe work meets the substantive requirements. Redo is inappropriate since the fix is correct. Between worker wins and requester wins, I still lean worker, but I acknowledge this is closer than my initial read suggested.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "b6df4ecaa4b773c95014e500347d98a8f2894e64765e5b0ae7c9ce4ddb6d7fd1",
+        "probs": [
+          7000,
+          0,
+          3000
+        ],
+        "rationale_hash": "73d2c20ee5dcdfb72e0d2aad5ee4ebbd0989923bdc9adcae685112848dcb2bec",
+        "salt": "6c11bfdfe9bfed7d3c9e6b8d4250d6b4f8ad1f9f52405ba1ca45131b7b014c8e",
+        "text": "## Reasoning\n\nThe patch itself appears correct — it fixes the date parsing issue by changing `%y` to `%Y`, and all tests pass. The core dispute is about the 3-hour delay.\n\nThe worker asked a legitimate clarifying question at hour 2 (which branch to use). The requester failed to respond, which contributed to the delay. However, the worker could have proceeded with a reasonable default (e.g., main branch) rather than waiting passively. The deadline was explicit at 12 hours, and delivery at hour 15 constitutes a breach.\n\nThat said, the requester's non-response to a timely question partially caused the delay, making their outright refusal to pay unreasonable. The work was completed correctly, meeting the substantive requirement. \"Redo\" doesn't fit since the work is functionally correct.\n\nI weigh toward the worker, as the requester's silence contributed to the delay and the deliverable quality is sound, but some penalty for the missed deadline is warranted.\n\n{\"worker wins\": 70, \"redo\": 0, \"requester wins\": 30}"
+      },
+      "provider_model": "adaption:glm-5.2"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "\n\nThe explicit 12-hour deadline is a stated requirement. Delivery at hour 15 is late, so nonconforming. The worker’s branch question may explain the delay, but the record does not show a waiver, extension, or that the question made timely completion impossible. The patch appears correct, so redo is unnecessary; full payment for a late delivery would ignore the deadline. Therefore requester wins full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "\n\nI agree with the strict-deadline view and disagree with the argument that the requester’s silence excuses lateness. The record shows a question but no waiver, extension, or proof that the requester’s non-response made delivery impossible. The worker could have proceeded on a reasonable branch or requested an extension. The reported passing tests do not cure a nonconforming delivery. Redo is unnecessary because the work is done, but full refund is the appropriate remedy for missing the stated deadline.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "93ff03f8caf3703c5268cf6c293bc919ab0874b2bd13ddcb86c6818d01d008a8",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "664bd4f31b56c7a60fb546885323e8dad5d04c5105c6b0c3563c77c481f308d5",
+        "salt": "6ef038b6906d7046f615204d458eaa46c5e4347035d3c9fca7f02f5d495af7bc",
+        "text": "\n\nThe record sets a 12-hour deadline. The patch arrived at hour 15, so the worker failed the stated deadline. The worker’s report that tests pass is unverified and does not cure lateness. The worker says he waited for the requester’s answer about which branch to use, but the record does not show that the requester waived the deadline, requested an extension, or prevented completion. The worker should have delivered by hour 12 or sought an extension. Although the patch may fix the date format, the submission is nonconforming as specified. With no partial payout option, late delivery is a material breach, so the requester should receive a refund rather than a redo.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:qwen3.8-27b"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The 12-hour deadline was explicit; delivery at hour 15 is late. The unanswered branch question does not excuse the delay because the task was well-defined — fix the failing test — and the worker could have proceeded on a reasonable default or sought an extension. No waiver or extension appears in the record. The patch appears correct, so a redo is unnecessary, but payment for a late, nonconforming delivery is not warranted. The requester should receive a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with j3 and j6: the twelve-hour deadline was explicit, and delivery three hours late is a material breach. The task was well-defined—fix the failing test—so the unanswered branch question does not excuse the delay. The worker could have proceeded with a reasonable default or escalated sooner.\n\nI disagree with j1, j2, and j5 that the requester’s silence caused the lateness. Nothing shows the requester waived or extended the deadline, and the patch needed only a small date-format change. The work appears done, so redo is unnecessary, but payment for a late, nonconforming delivery would undermine the stated requirement. The requester is entitled to a refund.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "b9879f7ffc57f84e9c9b2ef47b1f7cf56677128348f7489c0189ad5a868d36ed",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "e20bd6e0fb76a112df38d8b08faf103a24d5bb3023e05404dd06009efb002d5b",
+        "salt": "7d07acd6446baee47e94ae8c68ca6b7ef9132696198846602d217c080776f687",
+        "text": "The worker delivered a patch three hours after the 12-hour deadline. The late work itself appears functional and likely satisfies the test, but the requirement was timely delivery. The worker’s excuse is weak: the requester never answered the branch question, but the task specified fixing the test, and the worker could have proceeded on their own or escalated earlier instead of waiting. No redo is needed—the work is done—but the requester should not pay for a late delivery. The requester is entitled to a refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:deepseek-v4-flash"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The worker successfully completed the technical requirements, providing a patch that fixes the failing test. The dispute centers on a 3-hour delay beyond the 12-hour deadline. While strict deadlines are important, the worker asked a clarifying question regarding the branch at hour 2. The requester's failure to respond to a professional inquiry regarding the technical environment creates a bottleneck. It is unreasonable for a requester to ignore communication and then cite a deadline breach as a reason for a full refund. The work is functionally correct; the worker should be paid.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with j1 and j2 that the work is technically correct and the requester's silence regarding the branch selection at hour 2 is a critical factor. I disagree with j3, j4, and j6, who view the three-hour delay as a material breach. A requester cannot expect a strict deadline to be met while ignoring a fundamental technical clarification. Waiting for a branch specification is reasonable professional behavior to avoid delivering a patch to the wrong version of the code. Since the substantive requirement was met and the delay was caused by the requester's lack of responsiveness, the worker should be paid in full.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c6ffcdcf77ea878d1c71692c020d17bbae5011776dc4a286b0881c806342e055",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "4e90d5b7afde7c54dad9f0e05f688b1823caba5c030e4ea1fbb57f2dbb7ff508",
+        "salt": "12354484435e29b73314b40ad1fa92e1daebca11a8c62f70f4a37673f8d7143b",
+        "text": "The worker successfully fixed the bug, as evidenced by the patch and the report that all tests (including the failing one) now pass. The only issue is the 3-hour delay beyond the 12-hour deadline. However, the worker attempted to communicate with the requester at hour 2 regarding a critical technical detail (the branch to use) and was ignored. This lack of responsiveness from the requester created a bottleneck that justifies the delay. Since the work was completed correctly and the delay was caused by the requester's silence, the worker should be paid.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:gemma-4-31b-it"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          7000,
+          0,
+          3000
+        ],
+        "text": "The core dispute is whether a 3-hour delay caused by an unanswered clarification question constitutes a material breach justifying a full refund. While the deadline was explicit, the requester's silence regarding the target branch (asked at hour 2) created a legitimate technical bottleneck. A worker should not be penalized for avoiding work on the wrong version of a codebase. Since the technical requirement was fully met and the work is correct, a \"redo\" is unnecessary. However, the worker's failure to proceed on a default branch or seek an extension slightly mitigates their claim.\n\n{\"worker wins\": 70, \"redo\": 0, \"requester wins\": 30}"
+      },
+      "discussion_message": "I agree with the majority that the technical work is sound and meets the requirements. However, I disagree with the extreme split between full payment and a full refund. The worker's delay is a material breach of the deadline, yet the cause was a communication bottleneck initiated by the requester. If the requester's silence truly prevented progress, a full refund is harsh. Conversely, if the worker could have proceeded on a default branch, the late delivery warrants a penalty. I side with the jurors who favor the worker due to the requester's failure to respond to a critical question, but I believe the delay makes a perfect win for the worker slightly too lenient.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "b6d80d789411e937cb815d1a1aeb5e0393b6242f4fe6448dcca096e4a2e747e7",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "758ac36846a4593150622d799f8f52d8229010890a955157bec58d4a0c04696a",
+        "salt": "20811d83cfb525870322bbb105e953cd3583cdb5bd9a6369d69153a63b178769",
+        "text": "The worker completed the technical requirement by fixing the failing test (changing the date format string), which is evidenced by the worker's report that all 32 tests passed. However, the submission was delivered at hour 15, while the deadline was 12 hours. The requester explicitly cited this 3-hour delay as the reason for refusing payment. While the worker claims a delay in communication from the requester, the record does not provide evidence that this delay was the sole cause of missing the deadline or that the requester's lack of response was a formal extension. In most professional service agreements, a missed deadline for a fixed-budget task allows the requester to dispute the full fee. However, since the work was successfully completed and the fix was delivered, a \"redo\" is not appropriate. Given the breach of the deadline, the requester's refusal is justified.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "adaption:gemma-4-26b-a4b-it"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "late delivery of correct work",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 102
+}

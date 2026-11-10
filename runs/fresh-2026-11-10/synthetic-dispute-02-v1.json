@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:02:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 0,
+    "audit_sums": [
+      59500,
+      300,
+      200
+    ],
+    "case_id": 1,
+    "case_key": "synthetic:dispute:02:v1",
+    "deadline_ns": 1794332943765547805,
+    "evidence_hash": "89f81e436b5e481b8ed13146c7f52444fd648d60d2ecd7c438ae876ffe94afaa",
+    "first_sums": [
+      58200,
+      1100,
+      700
+    ],
+    "jurors": [
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "e4930097682368ea3bd8425fff3c7c46efcff2dbeb0a671703af59b4ed37acb4"
+      },
+      {
+        "audit": [
+          9500,
+          300,
+          200
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          9000,
+          500,
+          500
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "ff322e00fe1cf83cd241d8dd7dc6e6b49d7b68f4686ecd6916a2f767ea35e417"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          9200,
+          600,
+          200
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 800,
+        "rationale_hash": "3a05345d343601433441f77e59fc67c29022c4e76f98ad40d2ab427044029a0e"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "203a4e6d5e3a8654e9ad2713ca45dd75337d57e400c63cef040186e733adfa18"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "d8f014179a8a7c5ba442be1488463c9db3203f4e52affd6fdd4b842fa8c3a942"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "86afdb92d83437b83a17614051b7ca0c16c20f25efee1e4c14466c6f5f1f2c12"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 0
+  },
+  "chain_case_id": 1,
+  "comparison": {
+    "contract_ruling": "worker wins",
+    "expected_ruling": "worker wins",
+    "note": "No juror saw this object.",
+    "reason": "The submission meets each requirement, and the requester raised no objection.",
+    "top_after_discussion": "worker wins",
+    "top_of_first_reads": "worker wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 1,
+    "status": "PaidWorker"
+  },
+  "evidence": {
+    "messages": [
+      "Worker, hour 6: Submitted slugify.py with 5 tests.",
+      "System, hour 30: The requester did not review the submission."
+    ],
+    "requirements": "Write a Python function slugify(title) that returns a lower-case URL slug. Include 5 unit tests. Deliver one file. Budget 5 NEAR. Deadline 24 hours.",
+    "submission": "File slugify.py, 41 lines. The function lower-cases the title, replaces each run of characters that are not letters or digits with one hyphen, and strips hyphens at both ends. The file has 5 tests: plain title, punctuation, repeated spaces, leading and trailing symbols, empty string. The worker reports that all 5 tests pass."
+  },
+  "evidence_hash": "89f81e436b5e481b8ed13146c7f52444fd648d60d2ecd7c438ae876ffe94afaa",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "\n\nThe worker submitted the required file within the deadline (hour 6 vs 24 hours). The submission matches all specifications: a `slugify` function with correct logic and five unit tests covering the requested scenarios. The requester failed to review the work, but this does not indicate non-compliance. The record contains no evidence of defects, failed tests, or missing deliverables. Since the worker fulfilled all contractual obligations and the requester provided no valid reason for rejection, the worker is entitled to full payment. I maintain my initial assessment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI agree with the majority that the worker fulfilled all contractual obligations. The submission included the required file, function logic, and unit tests within the deadline. I disagree with the suggestion that submission was late; the record shows it occurred well within the allowed timeframe. I also diverge from those assigning any probability to a redo or refund. The record contains no evidence of defects or missing requirements. The requester's failure to review does not justify withholding payment when the deliverable matches the specification. Since the worker completed the task as defined without documented error, full payment is the only justified ruling.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "84a34305d3b5970a91b89d716a59807469c967b8d56d1448d53418e1b6500631",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "e4930097682368ea3bd8425fff3c7c46efcff2dbeb0a671703af59b4ed37acb4",
+        "salt": "890d27405cf174b17683fb78cacbad2e49870ee3c9e2db28feb1eed94607a2a2",
+        "text": "\n\nThe worker submitted the deliverable within the 24-hour deadline (hour 6). The submission includes the required `slugify.py` file containing the specified function and exactly 5 unit tests covering the requested scenarios. The worker asserts all tests pass. The record contains no evidence of defects or failure to meet requirements from the requester. The requester failed to review the submission even by hour 30, exceeding the deadline. Since the worker fulfilled all contractual obligations regarding scope, format, and timing, and the requester provided no valid cause for rejection or refund, the worker deserves full payment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:qwen3.5-397b"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          9500,
+          300,
+          200
+        ],
+        "text": "The discussion reinforced my view that the worker fulfilled all requirements. The submission was delivered at hour 6, well within the 24-hour deadline, and included the correct slugify function and the required 5 unit tests. The requester's failure to review does not undermine the submission. The panel correctly noted that j5's deadline concern was mistaken—hour 6 is within 24 hours. The only minor uncertainty is seeing a summary rather than executed code, but the record confirms the deliverable meets the specification, and there is no evidence of defects or non-compliance.\n\n{\"worker wins\": 95, \"redo\": 3, \"requester wins\": 2}"
+      },
+      "discussion_message": "I agree with all jurors that the worker delivered the required file on time, met the stated requirements for the slugify function, and included the five requested unit tests covering appropriate cases. The requester's failure to review does not undermine the submission.\n\nI disagree with j5's assertion that the submission was \"slightly past the deadline\" — the record shows submission at hour six, well within the twenty-four-hour window.\n\nI share j3's minor reservation that we see only a summary, not executed test output, which is why I retain slight uncertainty. But this does not justify withholding payment or requiring a redo. The work appears complete and correct, and I lean strongly toward the worker winning full payment.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "6455f440c60e2869d2dc6a696ba19e821a2246d034829eaa9e193a731f696155",
+        "probs": [
+          9000,
+          500,
+          500
+        ],
+        "rationale_hash": "ff322e00fe1cf83cd241d8dd7dc6e6b49d7b68f4686ecd6916a2f767ea35e417",
+        "salt": "975c5bfd8f0c5de48acb8733efb38d17c9c68cb225a9f8e4f7cf270a78964192",
+        "text": "The worker submitted the required file at hour 6, well within the 24-hour deadline. The submission meets all stated requirements: a slugify function that lowercases, replaces non-alphanumeric runs with hyphens, strips leading/trailing hyphens, and includes 5 unit tests covering appropriate cases. The requester failed to review the submission by the deadline. The work appears complete and correct based on the record.\n\n{\"worker wins\": 90, \"redo\": 5, \"requester wins\": 5}"
+      },
+      "provider_model": "adaption:glm-5.2"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "\n\nThe record shows the worker delivered one file on time with the requested slugify behavior and five tests covering the specified cases. No defect, missing test, failed test, or requester objection is recorded. The requester’s failure to review does not defeat a compliant submission. Although we review a summary rather than raw code or test output, the stated deliverable satisfies the requirements, and there is no basis for redo or refund. Full payment is supported.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI agree with the panel that the worker should be paid in full. The record shows timely delivery of the required file, the slugify behavior, and the requested unit tests. I disagree with any basis for redo or refund, since no defect, missing test, or failure is recorded, and the requester’s inactivity after submission does not create a valid dispute. The only uncertainty is that we review a summary rather than raw code, but that does not show non-compliance. The stated requirements are satisfied on the face of the record, so full payment is the correct ruling.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "9bff4430ea6d00a2798a647cd6324df7dd440e349caf6bf211f7ba71397be309",
+        "probs": [
+          9200,
+          600,
+          200
+        ],
+        "rationale_hash": "3a05345d343601433441f77e59fc67c29022c4e76f98ad40d2ab427044029a0e",
+        "salt": "e3e7aabd13bcae3b2c900bcccb90b4e636551c36b4eca700eb7393915aa67b92",
+        "text": "\n\nWorker delivered one file within 24 hours. The described slugify behavior matches requirements: lower-casing, collapsing consecutive non-alphanumeric characters into single hyphens, and stripping edge hyphens. The file includes the required five tests covering plain titles, punctuation, repeated spaces, edge symbols, and empty input, and the worker reports they pass. No defect or missing requirement is stated. The requester’s failure to review does not undermine the submission; it merely means acceptance was not exercised. The record provides no evidence that tests failed, the code does not work, or the deliverable deviated from the stated spec. Payment in full is therefore supported. Minor uncertainty remains because we do not see actual code or test execution, only the submission summary.\n\n{\"worker wins\": 92, \"redo\": 6, \"requester wins\": 2}"
+      },
+      "provider_model": "adaption:qwen3.8-27b"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The worker delivered a single file with the required `slugify` function and five unit tests, submitted at hour 6—well within the deadline. The implementation matches the spec: lower-casing, collapsing non-alphanumeric runs to hyphens, and trimming edge hyphens. No defect or missing requirement is documented. The requester’s failure to review does not invalidate the work. Full payment is appropriate.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the majority: the worker should be paid in full. The submission was delivered well before the deadline, as a single file, with the requested slugify behavior and the specified test coverage. I disagree with j5’s implication that delivery was late; the record shows it arrived with ample time. I also disagree with the minor uncertainty from j2 and j3 suggesting any chance of redo or refund. There is no evidence of defect, missing tests, or deviation from the requirements. The requester’s failure to review cannot be held against the worker. Full payment is appropriate.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "6f09a3960736b9e358b4640f30287b4a2818101dabdba8cd62f9cc7fb8bcd68e",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "203a4e6d5e3a8654e9ad2713ca45dd75337d57e400c63cef040186e733adfa18",
+        "salt": "38ce69cbecf9e4fccb7b0e849ec0041c0a171f3fd736c17389cbacea1fe5ba5f",
+        "text": "The worker delivered the required file on time, with the specified function behavior and five unit tests covering a reasonable range of cases. The submission matches the stated requirements. The requester failed to review, but that does not indicate a defect in the work. There is no basis for a redo or refund.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:deepseek-v4-flash"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The worker fulfilled all contractual obligations. They delivered the required Python file (`slugify.py`) well within the 24-hour deadline (at hour 6). The submission included the `slugify(title)` function with the correct logic (lower-casing, replacing non-alphanumeric characters with hyphens, and stripping edge hyphens) and provided the five requested unit tests. The requester failed to review the submission or raise any objections, and there is no evidence in the record of any defects or missing requirements. Therefore, the worker is entitled to full payment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with jurors j1, j4, and j6. The worker fulfilled all requirements: the function logic is correct, five unit tests were provided, and the deliverable was a single file submitted well within the deadline. The requester's failure to review the work does not justify a refund or a redo. While j2 and j3 express minor uncertainty due to not seeing the raw code, the record explicitly confirms the submission contains the required components and passes the specified tests. There is no evidence of a breach of contract. Therefore, the worker should be paid in full.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "170a35f01d6a50d9a87332626f5d3dfc85be25561b6c179eb7dfb2636cb5322a",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "d8f014179a8a7c5ba442be1488463c9db3203f4e52affd6fdd4b842fa8c3a942",
+        "salt": "bae3b1516f22c0f36c52c3cb25846944ff882e457f14aef062e5dfa6c40ee422",
+        "text": "The worker followed all requirements: they provided a Python function `slugify(title)` that generates a lower-case URL slug and included exactly 5 unit tests covering various edge cases (punctuation, repeated spaces, empty strings, etc.). The work was delivered in a single file. Although the submission was slightly past the 24-hour deadline, the requester failed to review the submission or raise any objections within the system's timeframe, and the work itself appears technically sound and complete. There is no evidence of failure in the functional requirements.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:gemma-4-31b-it"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": "The worker fulfilled all requirements: providing a `slugify` function with the specified logic, including 5 unit tests covering the requested scenarios, and delivering a single file. The submission occurred at hour 6, well within the 24-hour deadline. While jurors j2 and j3 expressed minor uncertainty due to the absence of the raw code file, the record provides a comprehensive description of the submission that confirms all technical requirements were met. The requester's failure to review the work is not a valid reason to withhold payment or demand a redo.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the majority that the worker should be paid in full. The worker fulfilled all specific technical requirements: the function logic matches the description, the file format is correct, and the unit tests cover the requested scenarios. The worker also submitted the work well within the deadline. I disagree with the minority views suggesting a redo or refund. There is no evidence of error, and the requester's failure to review the submission does not constitute a defect in the work. Since the submission meets all contractual obligations and no failure is documented, the worker deserves to win.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c525c427f9fe4abf943d0fb16c3060c72b45f9d8ed314096d8aeef2c27352bde",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "86afdb92d83437b83a17614051b7ca0c16c20f25efee1e4c14466c6f5f1f2c12",
+        "salt": "d782b5930b3ebcd00b852febe5fd08d594c1e0f58d9e9bb02837b1085ff71dbb",
+        "text": "The worker was tasked with creating a Python function `slugify(title)` that converts a title into a lower-case URL slug and includes 5 unit tests, delivered in a single file. \n\nThe submission details confirm the worker delivered `slugify.py` containing the required function and the requested 5 specific test cases (plain title, punctuation, repeated spaces, leading/trailing symbols, and empty string). The implementation logic described (lower-casing, replacing non-alphanumeric characters with hyphens, and stripping edges) is the standard and correct way to implement a slugify function. Although the requester did not review the submission within the timeframe, the worker fulfilled all explicit requirements of the contract. There is no evidence of failure or incomplete work.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "adaption:gemma-4-26b-a4b-it"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "complete work that the requester did not review",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 143
+}
