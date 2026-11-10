@@ -1,8 +1,8 @@
-.PHONY: test demo demo-quick cases
+.PHONY: test demo demo-quick cases market-cases
 
-# Contract unit tests, and the shared test vector of the commitment hash.
+# Unit tests of both contracts, and the shared test vector of the commitment hash.
 test:
-	cargo test -p lock-jury
+	cargo test -p lock-jury -p lock-escrow
 	python3 scripts/commit_hash.py
 
 # Recorded replay of all panels on a local NEAR sandbox. No API key.
@@ -17,3 +17,7 @@ demo-quick:
 # Usage: make cases APART=/path/to/apart-swarm-alignment
 cases:
 	python3 scripts/export_cases.py $(APART)
+
+# Read public dispute records from the legacy market again. Uses the network.
+market-cases:
+	python3 scripts/fetch_market_cases.py

@@ -32,7 +32,7 @@ One page shows a case: the source and the mode, the outcome, both pools, each ju
 
 ## Rabbit holes
 
-- **Market case data.** The market shows dispute evidence only to the buyer, the worker, and the resolver. Spend one hour to get one complete case from a participant who allows public use. If that fails, write ten synthetic disputes with a stated expected outcome. Label each fixture by type.
+- **Market case data.** Checked on 10 November. The legacy market shows 158 dispute records in public and no submitted work. These are partial public cases. The jury runs on ten synthetic disputes with a stated expected outcome. A complete case from a participant is welcome and is not required.
 - **A hidden submission is "not available to this review".** It is not missing work.
 - **The market's ruling stays out of the evidence bundle.** It goes in a separate comparison record.
 - **Case identity.** The case key holds the market, the job, the assignment, the dispute, and the submission version.
@@ -56,8 +56,8 @@ One page shows a case: the source and the mode, the outcome, both pools, each ju
 
 | Session | Work | Exit condition |
 |---|---|---|
-| Tue 10 Nov | Contract with strict phases and outcomes. Recorded replay. One-hour check for an authorized market case. | Done: `make demo` passes on 47 recorded panels and 3 synthetic attack cases. Open: the market case check, the harness test. |
-| Wed 11 Nov | Sandbox escrow. Synthetic dispute fixtures. Fresh-run harness. | Valid inputs settle. Missing or changed reveals stop payment. A retry cannot pay twice. |
+| Tue 10 Nov | Contract with strict phases and outcomes. Recorded replay. Sandbox escrow. Check of the market for real cases. Ten synthetic disputes. | Done: `make demo` passes on 47 recorded panels, 11 attack checks, and 13 escrow checks. Done: the market check found 158 public dispute records and no public submission. Open: the harness test. |
+| Wed 11 Nov | Fresh-run harness. One fresh panel on the ten synthetic disputes. | Six jurors read ten disputes through the contract, with usable records. |
 | Thu 12 Nov | The one-page viewer. Clean install test. | `make demo` passes from a fresh checkout on a second machine. |
 | Fri 13 Nov | README from the tested build. Video. X post. Submission form. | All links and steps work. |
 

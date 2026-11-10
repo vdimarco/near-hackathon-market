@@ -67,6 +67,11 @@ struct CaseFile {
 
 struct Panel {
     contract: Contract,
+    escrow: Contract,
+    root: Account,
+    /// These two accounts never sign a transaction, so a balance change is a payment.
+    worker: Account,
+    buyer: Account,
     requester: Account,
     jurors: Vec<Account>,
     ids: Vec<String>,
@@ -98,10 +103,10 @@ fn commit_hash(panel: &Panel, case_id: u64, evidence: &str, policy: &str, j: usi
     sha_hex(&borsh::to_vec(&c).expect("encoding cannot fail"))
 }
 
-/// Build the contract with plain cargo. No extra build tool is needed.
-fn build_contract() -> Result<Vec<u8>> {
+/// Build a contract with plain cargo. No extra build tool is needed.
+fn build_contract(package: &str) -> Result<Vec<u8>> {
     let status = std::process::Command::new("cargo")
-        .args(["build", "-q", "-p", "lock-jury", "--target", "wasm32-unknown-unknown", "--release"])
+        .args(["build", "-q", "-p", package, "--target", "wasm32-unknown-unknown", "--release"])
         // `cargo near build` sets this flag. It selects the on-chain host functions.
         .env("RUSTFLAGS", "--cfg near")
         .status()
@@ -109,8 +114,8 @@ fn build_contract() -> Result<Vec<u8>> {
     if !status.success() {
         bail!("contract build failed. Run: rustup target add wasm32-unknown-unknown");
     }
-    let path = "target/wasm32-unknown-unknown/release/lock_jury.wasm";
-    std::fs::read(path).with_context(|| format!("cannot read {}", path))
+    let path = format!("target/wasm32-unknown-unknown/release/{}.wasm", package.replace('-', "_"));
+    std::fs::read(&path).with_context(|| format!("cannot read {}", path))
 }
 
 fn first_line(text: &str) -> String {
@@ -178,10 +183,11 @@ fn expect(ok: bool, what: &str) -> Result<()> {
 }
 
 async fn setup(worker: &Worker<Sandbox>, n: usize) -> Result<Panel> {
-    let wasm = build_contract()?;
+    let wasm = build_contract("lock-jury")?;
+    let escrow_wasm = build_contract("lock-escrow")?;
     let root = worker.root_account()?;
     let jury_account = root.create_subaccount("jury").initial_balance(NearToken::from_near(40)).transact().await?.into_result()?;
-    let requester = root.create_subaccount("requester").initial_balance(NearToken::from_near(10)).transact().await?.into_result()?;
+    let requester = root.create_subaccount("requester").initial_balance(NearToken::from_near(30)).transact().await?.into_result()?;
     let mut jurors = Vec::new();
     for j in 0..n {
         let full = jury_account
@@ -204,7 +210,12 @@ async fn setup(worker: &Worker<Sandbox>, n: usize) -> Result<Panel> {
     let ids: Vec<String> = jurors.iter().map(|a| a.id().to_string()).collect();
     let contract = jury_account.deploy(&wasm).await?.into_result()?;
     contract.call("new").args_json(json!({ "jurors": ids })).transact().await?.into_result()?;
-    Ok(Panel { contract, requester, jurors, ids })
+    let escrow_account = root.create_subaccount("escrow").initial_balance(NearToken::from_near(10)).transact().await?.into_result()?;
+    let escrow = escrow_account.deploy(&escrow_wasm).await?.into_result()?;
+    escrow.call("new").args_json(json!({ "jury": contract.id() })).transact().await?.into_result()?;
+    let worker_account = root.create_subaccount("worker").initial_balance(NearToken::from_near(1)).transact().await?.into_result()?;
+    let buyer = root.create_subaccount("buyer").initial_balance(NearToken::from_near(1)).transact().await?.into_result()?;
+    Ok(Panel { contract, escrow, root, worker: worker_account, buyer, requester, jurors, ids })
 }
 
 /// Commit, post "no report", and return the salts. The case is then in the reveal phase.
@@ -236,7 +247,93 @@ async fn reveal(panel: &Panel, id: u64, j: usize, probs: &[u32], rationale: &str
     Ok(r.is_success())
 }
 
-async fn attack_tests(panel: &Panel) -> Result<()> {
+/// Fund a 2 NEAR deal for a jury case. Option 0 pays the worker, option 2 refunds the buyer.
+async fn fund(panel: &Panel, case_id: u64, worker: &str) -> Result<u64> {
+    Ok(panel
+        .requester
+        .call(panel.escrow.id(), "fund")
+        .args_json(json!({ "jury_case_id": case_id, "worker": worker, "requester": panel.buyer.id(),
+            "worker_option": 0, "requester_option": 2 }))
+        .deposit(NearToken::from_near(2))
+        .transact()
+        .await?
+        .into_result()?
+        .json()?)
+}
+
+/// Returns true if the escrow accepted the settle call.
+async fn settle(panel: &Panel, deal: u64) -> Result<bool> {
+    let r = panel.requester.call(panel.escrow.id(), "settle").args_json(json!({ "deal_id": deal })).max_gas().transact().await?;
+    Ok(r.is_success())
+}
+
+async fn deal_view(panel: &Panel, deal: u64) -> Result<Value> {
+    Ok(panel.escrow.view("get_deal").args_json(json!({ "deal_id": deal })).await?.json()?)
+}
+
+async fn yocto(account_id: &near_workspaces::AccountId, worker: &Worker<Sandbox>) -> Result<u128> {
+    Ok(worker.view_account(account_id).await?.balance.as_yoctonear())
+}
+
+async fn escrow_tests(panel: &Panel, worker: &Worker<Sandbox>, deals: [u64; 3], decided_case: u64) -> Result<()> {
+    let two = NearToken::from_near(2).as_yoctonear();
+    let [inconclusive, incomplete, decided] = deals;
+    let worker_before = yocto(panel.worker.id(), worker).await?;
+    let buyer_before = yocto(panel.buyer.id(), worker).await?;
+    let escrow_before = yocto(panel.escrow.id(), worker).await?;
+
+    settle(panel, inconclusive).await?;
+    let d = deal_view(panel, inconclusive).await?;
+    expect(d["status"] == "Held" && d["last_jury_outcome"] == "Inconclusive", "INCONCLUSIVE case: settle leaves 2 NEAR held")?;
+    settle(panel, incomplete).await?;
+    let d = deal_view(panel, incomplete).await?;
+    expect(d["status"] == "Held" && d["last_jury_outcome"] == "Incomplete", "INCOMPLETE case: settle leaves 2 NEAR held")?;
+    expect(yocto(panel.worker.id(), worker).await? == worker_before, "worker balance did not change")?;
+
+    settle(panel, decided).await?;
+    let d = deal_view(panel, decided).await?;
+    expect(d["status"] == "PaidWorker", "DECIDED worker wins: deal status is PaidWorker")?;
+    expect(yocto(panel.worker.id(), worker).await? == worker_before + two, "worker received exactly 2 NEAR")?;
+    expect(!settle(panel, decided).await?, "second settle on the paid deal: refused")?;
+    expect(yocto(panel.worker.id(), worker).await? == worker_before + two, "worker balance is still plus 2 NEAR after the retry")?;
+
+    // A case where the buyer wins.
+    let options: Vec<String> = RULINGS.iter().map(|s| s.to_string()).collect();
+    let (evidence, policy, rationale) = (sha_hex(b"synthetic evidence"), sha_hex(b"synthetic policy"), sha_hex(b"synthetic rationale"));
+    let buyer_reads: Vec<Vec<u32>> = (0..6).map(|_| vec![1000, 1000, 8000]).collect();
+    let case = open_case(panel, "synthetic:requester-panel", &evidence, &policy, &options, 600).await?;
+    let refund_deal = fund(panel, case, panel.worker.id().as_str()).await?;
+    let salts = commit_and_skip_audit(panel, case, &evidence, &policy, &buyer_reads, &rationale).await?;
+    for j in 0..6 {
+        reveal(panel, case, j, &buyer_reads[j], &rationale, &salts[j]).await?;
+    }
+    settle(panel, refund_deal).await?;
+    let d = deal_view(panel, refund_deal).await?;
+    expect(d["status"] == "RefundedRequester", "DECIDED requester wins: deal status is RefundedRequester")?;
+    expect(yocto(panel.buyer.id(), worker).await? == buyer_before + two, "buyer received exactly 2 NEAR")?;
+
+    // A transfer that fails. The worker account of this deal does not exist yet.
+    let ghost_id = format!("ghost.{}", panel.root.id());
+    let ghost_deal = fund(panel, decided_case, &ghost_id).await?;
+    settle(panel, ghost_deal).await?;
+    let d = deal_view(panel, ghost_deal).await?;
+    expect(d["status"] == "Held" && d["failed_transfers"] == 1, "transfer to a missing account fails: deal returns to Held")?;
+    let ghost = panel.root.create_subaccount("ghost").initial_balance(NearToken::from_near(1)).transact().await?.into_result()?;
+    let ghost_before = yocto(ghost.id(), worker).await?;
+    settle(panel, ghost_deal).await?;
+    let d = deal_view(panel, ghost_deal).await?;
+    expect(d["status"] == "PaidWorker" && d["settle_calls"] == 2, "retry after the account exists: PaidWorker")?;
+    expect(yocto(ghost.id(), worker).await? == ghost_before + two, "that worker received exactly 2 NEAR, one time")?;
+
+    // 5 deals of 2 NEAR came in. 3 were paid out. 2 are held.
+    let escrow_after = yocto(panel.escrow.id(), worker).await?;
+    let held_change = escrow_after as i128 - escrow_before as i128;
+    let near = NearToken::from_near(1).as_yoctonear() as i128;
+    expect((held_change - (-2 * near)).abs() < near / 10, "escrow balance: 3 deals paid out, 2 deals still held")?;
+    Ok(())
+}
+
+async fn attack_tests(panel: &Panel) -> Result<([u64; 3], u64)> {
     let options: Vec<String> = RULINGS.iter().map(|s| s.to_string()).collect();
     let evidence = sha_hex(b"synthetic evidence");
     let policy = sha_hex(b"synthetic policy");
@@ -246,6 +343,7 @@ async fn attack_tests(panel: &Panel) -> Result<()> {
 
     // A. The complete split panel.
     let a = open_case(panel, "synthetic:split-panel:complete", &evidence, &policy, &options, 600).await?;
+    let deal_a = fund(panel, a, panel.worker.id().as_str()).await?;
     let salts = commit_and_skip_audit(panel, a, &evidence, &policy, &split, &rationale).await?;
     for j in 0..6 {
         reveal(panel, a, j, &split[j], &rationale, &salts[j]).await?;
@@ -255,6 +353,7 @@ async fn attack_tests(panel: &Panel) -> Result<()> {
 
     // B. The same panel. One juror that favors the requester withholds its reveal.
     let b = open_case(panel, "synthetic:split-panel:one-withholds", &evidence, &policy, &options, 8).await?;
+    let deal_b = fund(panel, b, panel.worker.id().as_str()).await?;
     let salts = commit_and_skip_audit(panel, b, &evidence, &policy, &split, &rationale).await?;
     for j in 0..5 {
         reveal(panel, b, j, &split[j], &rationale, &salts[j]).await?;
@@ -280,6 +379,7 @@ async fn attack_tests(panel: &Panel) -> Result<()> {
 
     // C. Changed values at reveal, and repeated calls.
     let c = open_case(panel, "synthetic:worker-panel:tamper", &evidence, &policy, &options, 600).await?;
+    let deal_c = fund(panel, c, panel.worker.id().as_str()).await?;
     let again = refused(&panel.jurors[0], &panel.contract, "final_read", json!({ "case_id": c, "probs": null })).await;
     expect(again, "audit report before the discussion phase: refused")?;
     let salts = commit_and_skip_audit(panel, c, &evidence, &policy, &worker, &rationale).await?;
@@ -294,7 +394,7 @@ async fn attack_tests(panel: &Panel) -> Result<()> {
     expect(!reveal(panel, c, 0, &worker[0], &rationale, &salts[0]).await?, "second reveal from one juror: refused")?;
     let v = view_case(panel, c).await?;
     expect(v["outcome"] == "Decided" && v["ruling"] == 0, "correct reveals from all 6: DECIDED, worker wins")?;
-    Ok(())
+    Ok(([deal_a, deal_b, deal_c], c))
 }
 
 #[tokio::main]
@@ -334,10 +434,11 @@ async fn main() -> Result<()> {
     println!("the expected outcome. The model calls and the discussion happened before this run. This mode");
     println!("does not show when they happened.");
     println!();
-    println!("== 1. Start the sandbox, deploy the contract, create 6 juror accounts");
+    println!("== 1. Start the sandbox, deploy the jury and escrow contracts, create 6 juror accounts");
     let worker = near_workspaces::sandbox().await?;
     let panel = setup(&worker, n_jurors).await?;
-    println!("   contract: {}  (protocol {})", panel.contract.id(), PROTOCOL_VERSION);
+    println!("   jury:     {}  (protocol {})", panel.contract.id(), PROTOCOL_VERSION);
+    println!("   escrow:   {}", panel.escrow.id());
     println!("   jurors:   {}", panel.ids.join(", "));
 
     println!("== 2. Juror key limits");
@@ -365,9 +466,12 @@ async fn main() -> Result<()> {
     expect(open_refused, "juror key calls open_case: refused")?;
 
     println!("== 3. Attack tests on synthetic cases (fixture type: synthetic, expected outcome stated)");
-    attack_tests(&panel).await?;
+    let (deals, decided_case) = attack_tests(&panel).await?;
 
-    println!("== 4. Replay {} recorded panels (fixture type: {})", cases.len(), cases[0].fixture_type);
+    println!("== 4. Sandbox escrow: payment follows the jury outcome (each deal holds 2 NEAR)");
+    escrow_tests(&panel, &worker, deals, decided_case).await?;
+
+    println!("== 5. Replay {} recorded panels (fixture type: {})", cases.len(), cases[0].fixture_type);
     println!("   {:<14} {:<7} {:<13} {:<15} {:<15} {:>6}  {}", "case", "truth", "outcome", "first reads", "after talk", "moved", "audit reports");
     let (mut decided_ok, mut decided_wrong, mut inconclusive) = (0, 0, 0);
     let (mut first_ok, mut audit_ok, mut audit_wrong) = (0, 0, 0);
@@ -459,7 +563,7 @@ async fn main() -> Result<()> {
     }
 
     let n = cases.len();
-    println!("== 5. Result of the recorded replay");
+    println!("== 6. Result of the recorded replay");
     println!("   contract result equals the offline calculation:    {} of {}", n, n);
     println!("   contract outcome: {} decided and correct, {} decided and wrong, {} inconclusive", decided_ok, decided_wrong, inconclusive);
     println!("   top option of the first reads is correct:          {} of {}", first_ok, n);
