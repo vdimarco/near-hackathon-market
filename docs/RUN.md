@@ -4,6 +4,8 @@ Every step states the command and the expected result. `make check` runs steps 1
 
 You need Rust (rustup) and Python 3. The file `rust-toolchain.toml` selects Rust 1.97.0 and the `wasm32-unknown-unknown` target. You do not need an API key, a wallet, or a NEAR account.
 
+GitHub runs Steps 1, 2, 3, 5, and 7 on a clean machine for each change to `main` and for each pull request. The workflow is `.github/workflows/checks.yml`, and [the runs are public](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml). Step 2 runs two times there. The second time has a limit of 20,000 open files, which is the limit of a small container.
+
 ## Step 1. Run the contract tests
 
 ```bash
@@ -65,6 +67,14 @@ ALL EXPECTED RESULTS MATCH
 ```
 
 The withheld-reveal test waits for an 8-second deadline.
+
+**On a machine that allows fewer than 65,535 open files.** The NEAR sandbox asks the system for 65,535 open files when it starts. Some containers have a lower hard limit and do not let a process raise it. To see the hard limit, run `ulimit -Hn`. A direct `cargo run -p demo` stops on such a machine with this error:
+
+```
+Error: couldn't set the file descriptor limit to (65535, 65535), current limit = (20000, 20000)
+```
+
+The `make` targets handle this case. `scripts/with_sandbox.sh` reads the hard limit. If the limit is under 65,535 on Linux, the script builds `scripts/nofile_clamp.c` with the C compiler and preloads it. The library lowers the request of the sandbox to the hard limit of the machine and changes nothing else. The run then starts with two lines that begin with `note:`. On other machines the script runs the command unchanged. `make sandbox-limit-check` tests the script and the library on Linux.
 
 ## Step 3. Replay all 47 recorded panels
 

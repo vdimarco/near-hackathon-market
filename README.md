@@ -1,6 +1,6 @@
 # Lock Before You Talk: a jury on NEAR
 
-[![check](https://github.com/vdimarco/near-hackathon-market/actions/workflows/check.yml/badge.svg)](https://github.com/vdimarco/near-hackathon-market/actions/workflows/check.yml)
+[![checks](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml/badge.svg)](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml)
 
 Built at NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
@@ -58,6 +58,8 @@ More steps:
 | `make evaluator-live` | A live run on NEAR testnet. The testnet faucet funds the accounts. |
 
 Each program exits with an error if a result differs from the expected result. [docs/RUN.md](docs/RUN.md) lists every step with its full expected output.
+
+GitHub runs these steps on a clean machine for each change, and [the runs are public](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml). The NEAR sandbox asks for 65,535 open files. On a machine that allows fewer, the `make` targets lower that request, so use `make` and not `cargo run`.
 
 ## What the checks show
 
@@ -133,7 +135,7 @@ The viewer shows both fresh runs. Case 10 of the Adaption run is a case where th
 | `cases/` | 47 recorded panels, 10 synthetic disputes, and 158 public dispute records |
 | `runs/` | The records of the two fresh runs |
 | `fixtures/evaluator/` | The signatures of the live testnet run |
-| `scripts/` | The commitment hash and the ruling digest in Python, and the data scripts |
+| `scripts/` | The commitment hash and the ruling digest in Python, the data scripts, and the sandbox start script |
 | `docs/` | Design, run steps, evaluator, market data, and limits |
 | `pitches/`, `cycles/` | The shaped pitches and the record of the second bet |
 
