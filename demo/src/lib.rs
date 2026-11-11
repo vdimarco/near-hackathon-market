@@ -77,8 +77,18 @@ pub fn build_contract(package: &str) -> Result<Vec<u8>> {
     if !status.success() {
         bail!("contract build failed. Run: rustup target add wasm32-unknown-unknown");
     }
-    let path = format!("target/wasm32-unknown-unknown/release/{}.wasm", package.replace('-', "_"));
-    std::fs::read(&path).with_context(|| format!("cannot read {}", path))
+    let build_folder = std::env::var("CARGO_TARGET_DIR").ok();
+    let path = wasm_path(build_folder.as_deref(), package);
+    std::fs::read(&path).with_context(|| format!("cannot read {}", path.display()))
+}
+
+/// The file that cargo writes for a contract.
+/// `build_folder` is the value of `CARGO_TARGET_DIR`. Cargo writes into `target` when it is not set.
+pub fn wasm_path(build_folder: Option<&str>, package: &str) -> std::path::PathBuf {
+    std::path::Path::new(build_folder.unwrap_or("target"))
+        .join("wasm32-unknown-unknown")
+        .join("release")
+        .join(format!("{}.wasm", package.replace('-', "_")))
 }
 
 pub fn first_line(text: &str) -> String {
@@ -182,4 +192,23 @@ pub async fn settle(panel: &Panel, deal: u64) -> Result<bool> {
 
 pub async fn deal_view(panel: &Panel, deal: u64) -> Result<Value> {
     Ok(panel.escrow.view("get_deal").args_json(json!({ "deal_id": deal })).await?.json()?)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::Path;
+
+    #[test]
+    fn the_wasm_file_is_in_target_when_cargo_has_no_other_build_folder() {
+        assert_eq!(wasm_path(None, "lock-jury"), Path::new("target/wasm32-unknown-unknown/release/lock_jury.wasm"));
+    }
+
+    #[test]
+    fn the_wasm_file_follows_cargo_target_dir() {
+        assert_eq!(
+            wasm_path(Some("/tmp/build"), "lock-escrow"),
+            Path::new("/tmp/build/wasm32-unknown-unknown/release/lock_escrow.wasm")
+        );
+    }
 }
