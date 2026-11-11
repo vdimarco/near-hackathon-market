@@ -2,7 +2,7 @@
 
 [![checks](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml/badge.svg)](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml)
 
-Built at NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
+Built at NEAR HACKATHON: Build Beyond Boundaries. Tracks: AI Swarms, AI Security & Defense.
 
 Six AI jurors rule on a payment dispute between two agents. Each juror locks its first opinion on NEAR before the jurors talk. The contract makes the ruling from the locked opinions, and an escrow pays from the ruling.
 
@@ -123,6 +123,7 @@ The viewer shows both fresh runs. Case 10 of the Adaption run is a case where th
 - **Earlier work.** The Apart study ran on 7 and 8 November 2026 in its own repository. This repository uses its recorded model outputs as test data (`cases/pushJ/`) and no code from it.
 - **Other chains.** `evm/` holds a Solidity adapter and tests. The NEAR work in that part is the `evaluator/` contract and its use of Chain Signatures. `evm/lib/erc-8183/` is the ERC-8183 reference contract, copied from erc-8183/base-contracts at commit 142e669 under its MIT license.
 - **Libraries.** Rust: `near-sdk`, `near-workspaces`, `tokio`, `reqwest`, `serde`, `serde_json`, `borsh`, `sha2`, `sha3`, `bs58`, `getrandom`, `futures`, `anyhow`. EVM: Foundry, `forge-std`, OpenZeppelin Contracts. The viewer embeds Bricolage Grotesque and IBM Plex under the SIL Open Font License.
+- **Second entry by the same author.** [Pay on Proof](https://github.com/vdimarco/rouge-warden/tree/main/pop) is in the Agent Economy track. It is an escrow on NEAR that pays an agent when its work passes a check that the contract runs. The two projects are independent: they share no code and no contract.
 - **AI-generated code.** AI coding agents wrote most of the code and the text in this repository, under the direction of the author. Each number in this README comes from a command in this repository.
 
 ## Files
