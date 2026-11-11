@@ -2,7 +2,7 @@
 
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November. The viewer page is not built. No juror has read a real market dispute yet. See "Not built".
+**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. The viewer page is not built. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
@@ -52,6 +52,32 @@ The rule compares integer sums: `option_sum > 5000 * juror_count`. Exactly 50% i
 - The jury outcome and the payment are separate records. If a transfer fails, the deal returns to `Held`, and `settle` can run again. A paid deal refuses a second `settle`.
 - Held funds have no exit in this demo. A real service needs a policy for them.
 
+## Rulings for escrows on other chains
+
+`evaluator/` is a third NEAR contract, and `evm/` holds a Solidity adapter. Together they let a ruling of the jury settle a job on an EVM chain. The job follows [ERC-8183](https://eips.ethereum.org/EIPS/eip-8183), a draft standard for escrowed agent jobs. An ERC-8183 job names one evaluator address, and only that address can pay the provider or refund the client.
+
+1. The client names the adapter as the evaluator of the job.
+2. The jury case key holds the chain id, the escrow contract, the job id, the adapter, and the hash of the job description.
+3. The jury rules. No method of the jury contract changed for this.
+4. Anyone calls `sign_ruling` on `evaluator/`. It reads the closed case with `get_case`. For a `Decided` case with the ruling "worker wins" or "requester wins" it builds a 32-byte digest and asks the NEAR signer network to sign it. The signer contract is `v1.signer-prod.testnet`. The key belongs to the account of `evaluator/` and the path `erc8183-1`, and no person holds it.
+5. Anyone sends the signature to `settle` on the adapter. The adapter builds the same digest from the job on its own chain and checks the signer. Then it calls `complete` or `reject` on the escrow.
+
+The digest binds the chain id, the adapter, the escrow contract, the job id, the description hash, the verdict, and a reason. The reason is a hash of the jury account, the case id, the evidence hash, and the policy hash. Three programs compute the digest and share one test vector: `scripts/ruling_digest.py`, `evaluator/src/lib.rs`, and `evm/src/LockJuryEvaluator.sol`.
+
+**The live run on 11 November 2026 (UTC).** `make evaluator-live` put the jury and `evaluator/` on NEAR testnet and deleted the full access key of each contract account. It replayed the recorded reads of synthetic disputes 02 and 01 from `runs/fresh-2026-11-10/`. The testnet jury gave the rulings of the recorded run: "worker wins" and "requester wins". The signer network signed each ruling, and each `sign_ruling` call burnt 18.6 Tgas.
+
+| Record | Value |
+|---|---|
+| Jury contract | `dev-20261111042208-14186395012630.testnet` |
+| Evaluator contract | `dev-20261111042213-22311744102799.testnet` |
+| Signer address of the evaluator | `0x25a45bb5ae64a52d940e28ac510706d9f3cb7fb0` |
+| `sign_ruling` for "worker wins" | [8sYBBt...GEk48](https://testnet.nearblocks.io/txns/8sYBBtB3APXufNL4pA3p73Sbaw6wo7txxR6DHNpGEk48) |
+| `sign_ruling` for "requester wins" | [6xEw5S...ca6PF](https://testnet.nearblocks.io/txns/6xEw5SePD5pDiBov3xsXvXZ1ozNB3CZ4iiCfvJkca6PF) |
+
+`fixtures/evaluator/testnet-rulings.json` holds the signatures and every value of the run. Testnet can remove old history, so that file is the record.
+
+**The recorded check.** `make evaluator-check` replays the two signatures against the adapter and the ERC-8183 reference contract on a local EVM. Each digest binds a chain id, an escrow address, and an adapter address, so the test sets the local EVM to those values: the chain id of Arc Testnet and the address of the reference contract there. No transaction went to Arc Testnet. The signer address in the file comes from the `derived_public_key` view of the signer contract, and each signature recovers to that address.
+
 ## What the public market data shows
 
 `scripts/fetch_market_cases.py` read 259 public job pages of the legacy market (market-legacy.near.ai) on 10 November 2026. `cases/market-legacy/index.json` has the result.
@@ -71,8 +97,9 @@ No page shows the submitted work. The API gives the submission only to the buyer
 
 ## NEAR tools used
 
-- **Two Rust contracts** with `near-sdk` 5.30: the jury (`contract/`) and the escrow (`escrow/`).
-- **A cross-contract call with callbacks** from the escrow to the jury.
+- **Three Rust contracts** with `near-sdk` 5.30: the jury (`contract/`), the escrow (`escrow/`), and the evaluator (`evaluator/`).
+- **Cross-contract calls with callbacks** from the escrow to the jury, and from the evaluator to the jury and to the signer contract.
+- **Chain Signatures.** The evaluator asks `v1.signer-prod.testnet` for a secp256k1 signature. The key comes from the contract account, so an EVM contract can check a ruling with `ecrecover`.
 - **Sub-accounts.** The jurors are `j1.jury.<root>` to `j6.jury.<root>`.
 - **Function call keys.** Each juror account keeps one key. The key names the jury contract as receiver and lists `commit`, `reveal`, and `final_read`. A call with this key cannot attach NEAR. The demo deletes the full access key of each juror. The contract finds the caller with `predecessor_account_id()` and checks it against the panel.
 - **NEAR sandbox** through `near-workspaces` 0.24 (`demo/`).
@@ -195,6 +222,54 @@ Result of the run on 10 November 2026 (`runs/fresh-2026-11-10/`):
 
 The contract decided 8 cases with the expected ruling. Case 09 has a hidden submission, and the panel reached no majority, which is the outcome that the fixture expects. Case 10 is late delivery of correct work: the first reads gave "requester wins" 56%, and the fixture expects "worker wins". After the discussion the top option equals the expected ruling in all 10 cases. This is one run of ten cases that one person wrote. It is not evidence for or against locked first reads. The model answers change from run to run.
 
+### Step 5. Check the EVM adapter with the recorded testnet signatures
+
+You need Node.js for this step. The run on 11 November used Node.js 22. `npm ci` puts Foundry and the Solidity libraries into `evm/node_modules`. You do not need a key or a NEAR account.
+
+```bash
+make evaluator-check
+```
+
+Expected result, in the last lines of each part:
+
+```
+test result: ok. 16 passed; 0 failed
+test result: ok. 5 passed; 0 failed
+5737b69b4a81013128480187cd99686dc83320a88040ba11cdd3ea0389392f41
+test vector ok: this script, the contract, and the adapter agree
+[PASS] test_recorded_signature_for_the_worker_pays_the_provider()
+[PASS] test_recorded_signature_for_the_requester_refunds_the_client()
+[PASS] test_each_recorded_signature_recovers_to_the_derived_signer_address()
+[PASS] test_the_near_contract_and_the_adapter_compute_the_same_digest()
+[PASS] test_recorded_signature_with_a_changed_verdict_is_refused()
+[PASS] test_recorded_signature_for_another_job_is_refused()
+[PASS] test_adapter_with_another_signer_refuses_the_recorded_signature()
+[PASS] test_second_call_with_a_recorded_signature_is_refused()
+Ran 2 test suites in 15.12ms (16.91ms CPU time): 19 tests passed, 0 failed, 0 skipped (19 total tests)
+```
+
+The first two lines are the unit tests of `evaluator/` and of the signature conversion. Each Foundry line also shows a gas amount, and the times change from run to run. The 11 other Foundry tests sign with a local test key.
+
+### Step 6. Live run on NEAR testnet (optional, uses the network)
+
+```bash
+make evaluator-live
+```
+
+The testnet faucet funds the new accounts, so you need no account and no key. The run takes about 3 minutes. It writes new signatures to `fixtures/evaluator/testnet-rulings.json`. Each run makes new contract accounts, so the signer address changes. Expected result:
+
+```
+   jury account: full access key deleted, 0 keys left   ok
+   evaluator account: full access key deleted, 0 keys left   ok
+   synthetic-dispute-02-v1: jury case 0 on testnet is DECIDED, worker wins, as in the recorded run   ok
+   synthetic-dispute-02-v1: the signer network signed the ruling (18.6 Tgas burnt)   ok
+   synthetic-dispute-01-v1: jury case 1 on testnet is DECIDED, requester wins, as in the recorded run   ok
+   synthetic-dispute-01-v1: the signer network signed the ruling (18.6 Tgas burnt)   ok
+LIVE RUN COMPLETE
+```
+
+Run `make evaluator-check` again after a live run. It then checks the new signatures.
+
 ## What each mode shows
 
 | Mode | What it shows | Status |
@@ -228,9 +303,16 @@ The 47 panels come from the Apart experiment (`runs/pushJ.jsonl`, condition C2, 
 - **One juror can stop a case** by withholding a commit or a reveal.
 - **The replay uses fixed salts** so that each run prints the same result. A live juror must use 32 random bytes. `scripts/commit_hash.py` has `new_salt()`.
 - **The panel is fixed** when the contract starts.
+- **The EVM side of the evaluator runs on a local EVM.** No job on a public EVM chain is settled yet.
+- **The live run on testnet is a replay.** It used the recorded reads of two synthetic disputes. It shows the signing path. It is not a new jury run.
+- **The adapter does not check the deliverable.** The ERC-8183 reference contract emits the deliverable hash in an event and does not store it. The adapter checks the hash of the job description. A reader compares the deliverable with the evidence off-chain.
+- **Only a ruling for the worker or the requester gets a signature.** With a "redo" ruling or no decision, the job expires, and then ERC-8183 lets anyone call `claimRefund` for the client.
+- **`evaluator/` signs only the cases that one opener account opened.** In the live run that account is the operator, and the operator also runs the six jurors.
+- **The adapter cannot send out tokens.** Use it with an escrow that pays no evaluator fee.
 
 ## Not built
 
+- **A settled job on a public EVM chain.** The adapter is not deployed on Arc Testnet or on any other public chain.
 - **A complete market case.** It needs an export from a buyer or a worker who allows public use.
 - **The one-page viewer.**
 - **Split rulings.** The market can split a payment. This contract has no split outcome.
@@ -253,7 +335,14 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `scripts/commit_hash.py`: the commitment hash for the harness, with the shared test vector.
 - `scripts/export_cases.py`: makes the case files from the Apart logs.
 - `cases/pushJ/`: 47 recorded panels.
-- `pitches/`: the shaped pitch.
+- `evaluator/src/lib.rs`: the evaluator contract and 16 unit tests.
+- `evm/src/LockJuryEvaluator.sol`: the EVM adapter. `evm/test/` has 19 Foundry tests.
+- `evm/lib/erc-8183/`: the ERC-8183 reference contract, copied from erc-8183/base-contracts at commit 142e669.
+- `demo/src/bin/evaluator_testnet.rs`: the live run on NEAR testnet.
+- `fixtures/evaluator/testnet-rulings.json`: the signatures and the values of the live run on 11 November.
+- `scripts/ruling_digest.py`: the ruling digest for the harness, with the shared test vector.
+- `pitches/`: the two shaped pitches.
+- `cycles/`: the record of the second bet.
 
 ## License
 
