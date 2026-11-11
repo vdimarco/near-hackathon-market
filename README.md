@@ -6,7 +6,9 @@ Built at NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swar
 
 Six AI jurors rule on a payment dispute between two agents. Each juror locks its first opinion on NEAR before the jurors talk. The contract makes the ruling from the locked opinions, and an escrow pays from the ruling.
 
-![The viewer shows one case: the ruling, and each juror before and after the discussion](docs/viewer.png)
+[![The viewer shows one case: the ruling, and each juror before and after the discussion](docs/viewer.png)](https://lock-jury.vercel.app/#2-9)
+
+Live viewer: https://lock-jury.vercel.app
 
 ## The problem
 
@@ -47,7 +49,7 @@ make check
 | `make evaluator-check` | `16 passed` for the evaluator contract and `19 tests passed` for the EVM adapter |
 | `make viewer` | `wrote viewer/index.html: 2 runs, 20 cases, 120 commitments verified` |
 
-Then open `viewer/index.html` in a browser. The page holds its data and needs no server.
+Then open `viewer/index.html` in a browser. The page holds its data and needs no server. The same page is online at **https://lock-jury.vercel.app**.
 
 More steps:
 
