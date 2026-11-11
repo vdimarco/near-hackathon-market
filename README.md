@@ -2,7 +2,7 @@
 
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. The viewer page is not built. No juror has read a real market dispute yet. See "Not built".
+**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
