@@ -1,8 +1,10 @@
 # Lock Before You Talk: a jury on NEAR
 
+[![checks](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml/badge.svg)](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml)
+
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. No juror has read a real market dispute yet. See "Not built".
+**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. GitHub runs the README steps that need no key on a clean machine for each change. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
@@ -64,7 +66,7 @@ The rule compares integer sums: `option_sum > 5000 * juror_count`. Exactly 50% i
 
 The digest binds the chain id, the adapter, the escrow contract, the job id, the description hash, the verdict, and a reason. The reason is a hash of the jury account, the case id, the evidence hash, and the policy hash. Three programs compute the digest and share one test vector: `scripts/ruling_digest.py`, `evaluator/src/lib.rs`, and `evm/src/LockJuryEvaluator.sol`.
 
-**The live run on 11 November 2026 (UTC).** `make evaluator-live` put the jury and `evaluator/` on NEAR testnet and deleted the full access key of each contract account. It replayed the recorded reads of synthetic disputes 02 and 01 from `runs/fresh-2026-11-10/`. The testnet jury gave the rulings of the recorded run: "worker wins" and "requester wins". The signer network signed each ruling, and each `sign_ruling` call burnt 18.6 Tgas.
+**The live run on 11 November 2026 (UTC).** `make evaluator-live` put the jury and `evaluator/` on NEAR testnet and deleted the full access key of each contract account. It replayed the recorded reads of synthetic disputes 02 and 01 from `runs/fresh-2026-11-10/`. The testnet jury gave the rulings of the recorded run: "worker wins" and "requester wins". The signer network signed each ruling, and each `sign_ruling` call burnt 18.6 Tgas. The program read that number before the last refund receipts ran. The testnet RPC now counts 18.8 Tgas for each of the two transactions, which is about 0.0017 NEAR in fees.
 
 | Record | Value |
 |---|---|
@@ -107,6 +109,8 @@ No page shows the submitted work. The API gives the submission only to the buyer
 ## Run it
 
 You need Rust (rustup) and Python 3. The file `rust-toolchain.toml` selects Rust 1.97.0 and the `wasm32-unknown-unknown` target. You do not need an API key, a wallet, or a NEAR account.
+
+GitHub runs Steps 1, 2, 3, 5, and 7 on a clean machine for each change to `main` and for each pull request. The workflow is `.github/workflows/checks.yml`, and [the runs are public](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml). Step 2 runs two times there. The second time has a limit of 20,000 open files, which is the limit of a small container.
 
 ### Step 1. Run the contract tests
 
@@ -169,6 +173,14 @@ ALL EXPECTED RESULTS MATCH
 ```
 
 The withheld-reveal test waits for an 8-second deadline.
+
+**On a machine that allows fewer than 65,535 open files.** The NEAR sandbox asks the system for 65,535 open files when it starts. Some containers have a lower hard limit and do not let a process raise it. To see the hard limit, run `ulimit -Hn`. A direct `cargo run -p demo` stops on such a machine with this error:
+
+```
+Error: couldn't set the file descriptor limit to (65535, 65535), current limit = (20000, 20000)
+```
+
+The `make` targets handle this case. `scripts/with_sandbox.sh` reads the hard limit. If the limit is under 65,535 on Linux, the script builds `scripts/nofile_clamp.c` with the C compiler and preloads it. The library lowers the request of the sandbox to the hard limit of the machine and changes nothing else. The run then starts with two lines that begin with `note:`. On other machines the script runs the command unchanged. `make sandbox-limit-check` tests the script and the library on Linux.
 
 ### Step 3. Replay all 47 recorded panels
 
@@ -356,6 +368,7 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `demo/src/main.rs`: the sandbox replay, the attack tests, and the escrow tests.
 - `demo/src/bin/fresh.rs`: the fresh-run harness.
 - `demo/src/lib.rs`: sandbox helpers that both programs use.
+- `scripts/with_sandbox.sh` and `scripts/nofile_clamp.c`: let the sandbox start on a machine with a low limit of open files. `scripts/test_nofile_clamp.sh` tests them.
 - `runs/fresh-2026-11-10/`: the records of one fresh run, one file for each dispute.
 - `scripts/build_viewer.py` and `viewer/template.html`: build the viewer. `viewer/index.html` is the built page for the two fresh runs.
 - `scripts/fetch_market_cases.py`: reads public dispute records from the legacy market.
@@ -370,6 +383,7 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `demo/src/bin/evaluator_testnet.rs`: the live run on NEAR testnet.
 - `fixtures/evaluator/testnet-rulings.json`: the signatures and the values of the live run on 11 November.
 - `scripts/ruling_digest.py`: the ruling digest for the harness, with the shared test vector.
+- `.github/workflows/checks.yml`: runs Steps 1, 2, 3, 5, and 7 on GitHub for each change.
 - `pitches/`: the two shaped pitches.
 - `cycles/`: the record of the second bet.
 
