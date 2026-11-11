@@ -1,0 +1,64 @@
+{
+  "adapter": "0x4a55525945564d41444150544552000000000001",
+  "chain_id": 5042002,
+  "escrow": "0x0747eef0706327138c69792bf28cd525089e4583",
+  "evaluator": "dev-20261111042213-22311744102799.testnet",
+  "jury": "dev-20261111042208-14186395012630.testnet",
+  "key_deletion_txs": {
+    "evaluator": "8NDScsa5fVyyASRGNCPYeEfV7sqqcdEj8od9m1cpEA4B",
+    "jury": "Dvs35aDmMYEK5neYF4vT7MmR9GcQ4mZHjF5SvGmQygBZ"
+  },
+  "near_network": "testnet",
+  "note": "Signatures from the NEAR testnet signer network for rulings of the jury contract. Written by `make evaluator-live`. The Foundry test evm/test/RecordedRuling.t.sol replays this file on a local EVM.",
+  "opener": "dev-20261111042205-96031066760269.testnet",
+  "rulings": [
+    {
+      "description": "Write a Python function slugify(title) that returns a lower-case URL slug. Include 5 unit tests. Deliver one file. Budget 5 NEAR. Deadline 24 hours.",
+      "description_hash": "0x0dc73dfb4f9ebedceae3d52147d5fdca8392af5aa1c935e0a2291a660b9e066d",
+      "digest": "0x81a6a047d5b3f5dfe18dae1ebc9886e167662684970824179bfb534697785452",
+      "job_id": 1,
+      "near": {
+        "big_r": "030b56b9c7ac25c0a7e92d0d676c5a880d2f2262e5c03fe7928ec68edfc2a3a8ec",
+        "case_id": 0,
+        "case_key": "eip155:5042002:0x0747eef0706327138c69792bf28cd525089e4583:1:0x4a55525945564d41444150544552000000000001:0dc73dfb4f9ebedceae3d52147d5fdca8392af5aa1c935e0a2291a660b9e066d",
+        "open_case_tx": "56d1RvvRc3V5gx7ZmZNCn6HbRtyGs5hHT6gjA9qJNhHM",
+        "recovery_id": 0,
+        "ruling": "worker wins",
+        "s": "5593083dbe9931350d07b4d0275d1a5f0b8490032faad5a16dcd2a5de31da23f",
+        "sign_ruling_tx": "8sYBBtB3APXufNL4pA3p73Sbaw6wo7txxR6DHNpGEk48"
+      },
+      "r": "0x0b56b9c7ac25c0a7e92d0d676c5a880d2f2262e5c03fe7928ec68edfc2a3a8ec",
+      "reason": "0x2e15f02e633f69ff336ec1922ef01ab498e80df607833ed019fb155886d1e431",
+      "s": "0x5593083dbe9931350d07b4d0275d1a5f0b8490032faad5a16dcd2a5de31da23f",
+      "source": "runs/fresh-2026-11-10/synthetic-dispute-02-v1.json",
+      "v": 27,
+      "verdict": 1
+    },
+    {
+      "description": "Write a Python function slugify(title) that returns a lower-case URL slug. Include 5 unit tests. Deliver one file. Budget 5 NEAR. Deadline 24 hours.",
+      "description_hash": "0x0dc73dfb4f9ebedceae3d52147d5fdca8392af5aa1c935e0a2291a660b9e066d",
+      "digest": "0x0557362f5ed6a1b5644b591ce96daa5f1eb39f509ca5d5355dcea1cd301b974f",
+      "job_id": 2,
+      "near": {
+        "big_r": "026b79cf549a1655928d24895626ae6a3c917a8abdf560a084901b848e99a7dabe",
+        "case_id": 1,
+        "case_key": "eip155:5042002:0x0747eef0706327138c69792bf28cd525089e4583:2:0x4a55525945564d41444150544552000000000001:0dc73dfb4f9ebedceae3d52147d5fdca8392af5aa1c935e0a2291a660b9e066d",
+        "open_case_tx": "9FXshFxbpba1xoZeKnuPCnc4chRhNBkpFktasJhuLsw6",
+        "recovery_id": 0,
+        "ruling": "requester wins",
+        "s": "26d69b1d0cc674fb980fe6ed25657d007d67bfe7fed642c06acdd26c3ea9c21a",
+        "sign_ruling_tx": "6xEw5SePD5pDiBov3xsXvXZ1ozNB3CZ4iiCfvJkca6PF"
+      },
+      "r": "0x6b79cf549a1655928d24895626ae6a3c917a8abdf560a084901b848e99a7dabe",
+      "reason": "0x49952725870dd002ab383379424c777aba2700ffcade98e0531ccdf47cfe68a8",
+      "s": "0x26d69b1d0cc674fb980fe6ed25657d007d67bfe7fed642c06acdd26c3ea9c21a",
+      "source": "runs/fresh-2026-11-10/synthetic-dispute-01-v1.json",
+      "v": 27,
+      "verdict": 2
+    }
+  ],
+  "signer_address": "0x25a45bb5ae64a52d940e28ac510706d9f3cb7fb0",
+  "signer_contract": "v1.signer-prod.testnet",
+  "signer_path": "erc8183-1",
+  "signer_public_key": "secp256k1:5jwxHU2tV3Z9t4cf2k1uFX82rArKbNttjLEC1oYi2g7TDBqHtZyncWgAyADys6C8m5LmeHriBDQCjewNcTPE8bhy"
+}

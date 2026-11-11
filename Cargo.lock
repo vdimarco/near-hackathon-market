@@ -719,6 +719,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "borsh",
+ "bs58 0.5.1",
  "futures",
  "getrandom 0.2.17",
  "near-workspaces",
@@ -726,6 +727,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.9",
+ "sha3 0.10.9",
  "tokio",
 ]
 
@@ -1937,6 +1939,13 @@ checksum = "4744e383959f0db86ede514b809b1c53251889093803c05267acc7d4e7030d70"
 
 [[package]]
 name = "lock-escrow"
+version = "0.1.0"
+dependencies = [
+ "near-sdk",
+]
+
+[[package]]
+name = "lock-evaluator"
 version = "0.1.0"
 dependencies = [
  "near-sdk",

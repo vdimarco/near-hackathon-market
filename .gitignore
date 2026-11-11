@@ -1,3 +1,4 @@
 target/
 .market-cache/
 .env
+__pycache__/
