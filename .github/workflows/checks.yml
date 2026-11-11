@@ -1,0 +1,61 @@
+# Runs the README steps that need no key, on a clean machine.
+# Steps 4 and 6 are not here: Step 4 needs an API key, and Step 6 uses NEAR testnet.
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  readme-steps:
+    name: README steps on a clean machine
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Tools and the limit of open files
+        run: |
+          rustup toolchain install || rustup show
+          rustc --version
+          cargo --version
+          node --version
+          python3 --version
+          echo "open files: soft $(ulimit -Sn), hard $(ulimit -Hn)"
+
+      - name: Step 1. Contract tests
+        run: make test
+
+      - name: Step 2. Attack tests, escrow tests, and 3 recorded panels
+        run: make demo-quick
+
+      - name: Step 2 again with the limit of a small container
+        run: |
+          ulimit -n 20000
+          echo "open files: soft $(ulimit -Sn), hard $(ulimit -Hn)"
+          make demo-quick
+
+      - name: Step 3. Replay all 47 recorded panels
+        run: make demo
+
+      - name: Step 5. EVM adapter with the recorded testnet signatures
+        run: make evaluator-check
+
+      - name: Step 7. The viewer build equals the committed page
+        run: |
+          make viewer
+          git diff --exit-code -- viewer/index.html
+
+      - name: Tests of the helpers
+        run: |
+          cargo test -p demo --lib
+          make sandbox-limit-check

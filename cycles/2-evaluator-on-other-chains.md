@@ -43,6 +43,7 @@ An audit ran the README steps in a cloud container of Claude Code. The first scr
 
 - **The sandbox steps did not start in a container with a hard limit of 20,000 open files.** The NEAR sandbox asks for 65,535. `scripts/with_sandbox.sh` now preloads `scripts/nofile_clamp.c` on such a machine, and the `make` targets use the script.
 - **The demo read the contract wasm from `target/` only.** It failed when `CARGO_TARGET_DIR` was set. It now reads from the build folder that cargo uses.
+- **The repository had no CI.** `.github/workflows/checks.yml` runs Steps 1, 2, 3, 5, and 7 on GitHub for each change. Step 2 runs a second time with a limit of 20,000 open files.
 - **The README gave 18.6 Tgas for a `sign_ruling` call.** The program read that number before the last refund receipts ran. The full count from the testnet RPC is 18.8 Tgas, about 0.0017 NEAR in fees.
 
 Two raw ideas wait for a shaping pass. They are not bets.

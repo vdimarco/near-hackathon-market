@@ -1,8 +1,10 @@
 # Lock Before You Talk: a jury on NEAR
 
+[![checks](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml/badge.svg)](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml)
+
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. No juror has read a real market dispute yet. See "Not built".
+**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. On 11 November (UTC) a third contract on NEAR testnet signed two jury rulings through Chain Signatures, and a Solidity adapter settles ERC-8183 jobs with those signatures in a recorded check on a local EVM. GitHub runs the README steps that need no key on a clean machine for each change. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
@@ -107,6 +109,8 @@ No page shows the submitted work. The API gives the submission only to the buyer
 ## Run it
 
 You need Rust (rustup) and Python 3. The file `rust-toolchain.toml` selects Rust 1.97.0 and the `wasm32-unknown-unknown` target. You do not need an API key, a wallet, or a NEAR account.
+
+GitHub runs Steps 1, 2, 3, 5, and 7 on a clean machine for each change to `main` and for each pull request. The workflow is `.github/workflows/checks.yml`, and [the runs are public](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml). Step 2 runs two times there. The second time has a limit of 20,000 open files, which is the limit of a small container.
 
 ### Step 1. Run the contract tests
 
@@ -379,6 +383,7 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `demo/src/bin/evaluator_testnet.rs`: the live run on NEAR testnet.
 - `fixtures/evaluator/testnet-rulings.json`: the signatures and the values of the live run on 11 November.
 - `scripts/ruling_digest.py`: the ruling digest for the harness, with the shared test vector.
+- `.github/workflows/checks.yml`: runs Steps 1, 2, 3, 5, and 7 on GitHub for each change.
 - `pitches/`: the two shaped pitches.
 - `cycles/`: the record of the second bet.
 
