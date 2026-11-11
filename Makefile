@@ -1,4 +1,8 @@
-.PHONY: test demo demo-quick fresh fresh-one viewer cases market-cases evaluator-check evaluator-live
+.PHONY: check test demo demo-quick fresh fresh-one viewer cases market-cases evaluator-check evaluator-live
+
+# Every check that needs no key and no account, in one command. About 10 minutes on a first build.
+check: test demo-quick evaluator-check viewer
+	@echo "ALL CHECKS PASSED"
 
 # Unit tests of both contracts, and the shared test vector of the commitment hash.
 test:
