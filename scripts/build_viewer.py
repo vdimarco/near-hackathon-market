@@ -1,14 +1,16 @@
 """Build the one-page viewer from a fresh-run directory.
 
-Usage: python3 scripts/build_viewer.py [runs/<dir>]
+Usage: python3 scripts/build_viewer.py [runs/<dir> ...]
 
-The script reads the run records, checks each commitment hash again with
+With no argument the script reads every run in runs/. It reads the run records, checks each commitment hash again with
 scripts/commit_hash.py, and writes viewer/index.html. The page holds its
-data and needs no server and no network. The script exits with an error if
+data and its fonts, and needs no server and no network. The script exits with an error if
 a commitment does not verify.
 """
+import base64
 import json
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -76,18 +78,52 @@ def load(run_dir):
             "comparison": rec.get("comparison"),
             "jurors": jurors,
         })
-    return {"run_dir": run_dir.name, "mode": run["mode"], "unix_time": run.get("unix_time"), "counts": run["counts"], "cases": cases}
+    providers = sorted({j["model"].split(":")[0] for c in cases for j in c["jurors"]})
+    names = {"adaption": "Adaption", "near": "NEAR AI Cloud"}
+    panel = " and ".join(names.get(p, p) for p in providers)
+    day = time.strftime("%-d %B %Y", time.gmtime(run["unix_time"])) if run.get("unix_time") else run_dir.name
+    return {
+        "run_dir": run_dir.name,
+        "label": f"{day}, {panel} panel",
+        "note": (
+            f"This is a fresh run of {len(cases)} cases on a local NEAR sandbox, with models on {panel}. "
+            "One operator holds all six juror keys, and one person wrote the cases."
+        ),
+        "counts": run["counts"],
+        "cases": cases,
+    }
+
+
+def fonts_css():
+    faces = [
+        ("Bricolage Grotesque", "200 800", "bricolage-grotesque-latin-wght-normal.woff2"),
+        ("IBM Plex Sans", "400", "ibm-plex-sans-latin-400-normal.woff2"),
+        ("IBM Plex Sans", "600", "ibm-plex-sans-latin-600-normal.woff2"),
+        ("IBM Plex Mono", "400", "ibm-plex-mono-latin-400-normal.woff2"),
+    ]
+    out = []
+    for family, weight, name in faces:
+        data = base64.b64encode((ROOT / "viewer" / "fonts" / name).read_bytes()).decode()
+        out.append(
+            f'@font-face {{ font-family:"{family}"; font-weight:{weight}; font-style:normal; font-display:swap; '
+            f'src:url(data:font/woff2;base64,{data}) format("woff2"); }}'
+        )
+    return "\n".join(out)
 
 
 def main():
-    run_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else sorted((ROOT / "runs").iterdir())[-1]
-    data = load(run_dir)
+    if len(sys.argv) > 1:
+        run_dirs = [Path(a) for a in sys.argv[1:]]
+    else:
+        run_dirs = sorted(d for d in (ROOT / "runs").iterdir() if (d / "run.json").exists())
+    runs = [load(d) for d in run_dirs]
     template = (ROOT / "viewer" / "template.html").read_text()
-    blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+    blob = json.dumps({"runs": runs}, ensure_ascii=False).replace("</", "<\\/")
     out = ROOT / "viewer" / "index.html"
-    out.write_text(template.replace("/*__DATA__*/null", blob))
-    n = sum(1 for c in data["cases"] for j in c["jurors"] if j["verified"])
-    print(f"wrote {out.relative_to(ROOT)}: {len(data['cases'])} cases, {n} commitments verified")
+    out.write_text(template.replace("/*__FONTS__*/", fonts_css()).replace("/*__DATA__*/null", blob))
+    cases = sum(len(r["cases"]) for r in runs)
+    n = sum(1 for r in runs for c in r["cases"] for j in c["jurors"] if j["verified"])
+    print(f"wrote {out.relative_to(ROOT)}: {len(runs)} runs, {cases} cases, {n} commitments verified")
 
 
 if __name__ == "__main__":

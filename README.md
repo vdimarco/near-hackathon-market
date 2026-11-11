@@ -201,9 +201,9 @@ The contract decided 8 cases with the expected ruling. Case 09 has a hidden subm
 make viewer
 ```
 
-Expected result: `wrote viewer/index.html: 10 cases, 60 commitments verified`. Then open `viewer/index.html` in a browser. The page holds its data, so it needs no server and no network.
+Expected result: a line that starts with `wrote viewer/index.html` and ends with the number of commitments verified. Then open `viewer/index.html` in a browser. The page holds its data and its fonts, so it needs no server and no network.
 
-The page shows one case at a time: the outcome, the sandbox payment, the pooled first reads next to the pooled reads after the discussion, both reads of each juror, the evidence, and the fixture's expected ruling in a separate record. The build script computes each commitment hash again from the revealed values and stops with an error if one differs.
+The page shows one case at a time: the ruling, the sandbox payment, a triangle with each juror before and after the discussion, the pooled reads, the evidence, and the fixture's expected ruling in a separate record. A list at the side selects the case, and a menu selects the run. The build script computes each commitment hash again from the revealed values and stops with an error if one differs.
 
 ## What each mode shows
 
