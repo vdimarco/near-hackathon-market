@@ -1,0 +1,16 @@
+[package]
+name = "lock-evaluator"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Signs a ruling of the jury contract for an ERC-8183 job on an EVM chain, through NEAR Chain Signatures."
+repository = "https://github.com/vdimarco/near-hackathon-market"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+near-sdk = "5.30"
+
+[dev-dependencies]
+near-sdk = { version = "5.30", features = ["unit-testing"] }
