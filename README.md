@@ -2,7 +2,7 @@
 
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November. The one-page viewer shows that run. No juror has read a real market dispute yet. See "Not built".
+**Status on 11 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November with models on Adaption, and on 11 November with models on NEAR AI Cloud. The one-page viewer shows both runs. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
@@ -173,7 +173,7 @@ make fresh-one   # one dispute, about 2 minutes
 make fresh       # ten disputes, about 25 minutes
 ```
 
-The default panel is six models on Adaption, the same six as the recorded panels. Pick other jurors with `--jurors`, for example `near:z-ai/glm-5.3` for a model on NEAR AI Cloud. A NEAR AI Cloud juror is not tested yet.
+The default panel is six models on Adaption, the same six as the recorded panels. Pick other jurors with `--jurors`, for example `near:z-ai/glm-5.3` for a model on NEAR AI Cloud. A panel of six models on NEAR AI Cloud ran on 11 November. That run needs `NEAR_AI_API_KEY` in `.env`.
 
 In each case the harness opens the case, asks each juror for a first read, and sends the commits. After five of six commits it tries to release the first reads, and it stops with an error if that works. After the sixth commit each juror sees the first reads of its peers, writes one message, and gives a second read. The harness posts the second reads, then the reveals, then it settles a 2 NEAR sandbox deal.
 
@@ -204,6 +204,24 @@ make viewer
 Expected result: a line that starts with `wrote viewer/index.html` and ends with the number of commitments verified. Then open `viewer/index.html` in a browser. The page holds its data and its fonts, so it needs no server and no network.
 
 The page shows one case at a time: the ruling, the sandbox payment, a triangle with each juror before and after the discussion, the pooled reads, the evidence, and the fixture's expected ruling in a separate record. A list at the side selects the case, and a menu selects the run. The build script computes each commitment hash again from the revealed values and stops with an error if one differs.
+
+Result of the run on 11 November 2026 with six models on NEAR AI Cloud (`runs/fresh-2026-11-11-near/`). The panel was Qwen3.8-27B, Qwen3.6-35B-A3B, DeepSeek-V4.1-Flash, GLM-5.3, GLM-5.3-flash, and Kimi-K2.6:
+
+```
+   case                     expected        outcome       ruling          first reads     after talk       moved  audit  escrow
+   synthetic:dispute:01:v1  requester wins  DECIDED       requester wins  requester wins  requester wins    0.0%  6/6  RefundedRequester
+   synthetic:dispute:02:v1  worker wins     DECIDED       worker wins     worker wins     worker wins       2.3%  6/6  PaidWorker
+   synthetic:dispute:03:v1  requester wins  DECIDED       requester wins  requester wins  requester wins    4.2%  6/6  RefundedRequester
+   synthetic:dispute:04:v1  redo            DECIDED       redo            redo            redo              5.0%  6/6  Held
+   synthetic:dispute:05:v1  worker wins     DECIDED       worker wins     worker wins     worker wins       2.7%  6/6  PaidWorker
+   synthetic:dispute:06:v1  requester wins  DECIDED       requester wins  requester wins  requester wins    9.2%  6/6  RefundedRequester
+   synthetic:dispute:07:v1  worker wins     DECIDED       worker wins     worker wins     worker wins       8.0%  6/6  PaidWorker
+   synthetic:dispute:08:v1  redo            DECIDED       redo            redo            redo              2.7%  6/6  Held
+   synthetic:dispute:09:v1  redo            DECIDED       worker wins     worker wins     worker wins      24.2%  6/6  PaidWorker
+   synthetic:dispute:10:v1  worker wins     INCONCLUSIVE  no ruling       worker wins     requester wins    4.2%  6/6  Held
+```
+
+The contract decided 8 cases with the expected ruling, and its result equals the offline calculation in all 10. In case 09 the submission is hidden from the jurors, and this panel paid the worker. The fixture expects no payment on that record. In case 10 the panel reached no majority. The two panels differ on cases 09 and 10. Two runs of ten cases do not show which panel is better.
 
 ## What each mode shows
 

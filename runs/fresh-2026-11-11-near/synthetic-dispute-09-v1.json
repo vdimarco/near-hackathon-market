@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:09:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 0,
+    "audit_sums": [
+      50000,
+      6300,
+      3700
+    ],
+    "case_id": 8,
+    "case_key": "synthetic:dispute:09:v1",
+    "deadline_ns": 1794406059649991926,
+    "evidence_hash": "7a9914ab967f9e5aba750a26d1d0f38a23e6a5c0458e7fbac13b171395493273",
+    "first_sums": [
+      35500,
+      14300,
+      10200
+    ],
+    "jurors": [
+      {
+        "audit": [
+          8500,
+          1000,
+          500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          2000,
+          6000,
+          2000
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 6500,
+        "rationale_hash": "396947de73f90c3e4dcab50a8d3c92588ef272e47121c41a71c3081ef8f216cf"
+      },
+      {
+        "audit": [
+          8000,
+          1500,
+          500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          5000,
+          3000,
+          2000
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 3000,
+        "rationale_hash": "917db78e0619206b86b595f374374a3d0641eff3c12b693200a00a5c50ed737b"
+      },
+      {
+        "audit": [
+          8000,
+          1500,
+          500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          8000,
+          1500,
+          500
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "f6f25a36b73b151c5b2f603a6e2192a86645cef584a947442fb58ba9c81bc9a3"
+      },
+      {
+        "audit": [
+          7000,
+          1500,
+          1500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          2500,
+          3000,
+          4500
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 4500,
+        "rationale_hash": "0d4b32e3a68dd05d2dc74cff000ce21ac2fec3f9c1194b64298554830a54bf25"
+      },
+      {
+        "audit": [
+          8500,
+          800,
+          700
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          8000,
+          800,
+          1200
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "7caf431010ee7ce3475db359860c5fe774b9a66abeda7769fe8759fec69aac1e"
+      },
+      {
+        "audit": [
+          10000,
+          0,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          10000,
+          0,
+          0
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "20219dccfe02bae019079205bc7849fe042ecf37113f91d95c1baeda68b38a9f"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 0
+  },
+  "chain_case_id": 8,
+  "comparison": {
+    "contract_ruling": "worker wins",
+    "expected_ruling": "redo",
+    "note": "No juror saw this object.",
+    "reason": "Neither claim can be checked without the submission. A hidden submission is not missing work. No party should be paid on this record. The expected jury outcome is no majority for either party.",
+    "top_after_discussion": "worker wins",
+    "top_of_first_reads": "worker wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 8,
+    "status": "PaidWorker"
+  },
+  "evidence": {
+    "messages": [
+      "Worker: Submitted a 14-page report.",
+      "Requester: The report is copied from a public source."
+    ],
+    "requirements": "Produce a market analysis report of at least 10 pages on home care software. Budget 20 NEAR.",
+    "submission": "The submission is not available to this review. The market shows it only to the buyer and the worker."
+  },
+  "evidence_hash": "7a9914ab967f9e5aba750a26d1d0f38a23e6a5c0458e7fbac13b171395493273",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          8500,
+          1000,
+          500
+        ],
+        "text": "\n\nThe record only requires a 10+ page market analysis on home care software. The worker claims a 14-page report; no one disputes length or topic. The requester alleges copying but provides no source, excerpt, or comparison, and the submission is unavailable to the panel. Since the party asserting noncompliance bears the burden, an unverified copying claim cannot justify withholding payment. Implied originality would matter only if shown. The record supports payment.\n\n{\"worker wins\": 85, \"redo\": 10, \"requester wins\": 5}"
+      },
+      "discussion_message": "\n\nI agree the panel cannot verify the work because the submission is hidden and the requester supplied no source, excerpt, or comparison. That makes a full refund premature. I disagree with jurors who would pay on the worker’s length assertion alone. A market analysis implies original work, and the copying allegation, though unproven, targets the core deliverable. Because the worker gave no rebuttal or proof of originality, the fairest ruling is redo: the worker must make the report available or submit an original corrected report. If it is shown original, payment is justified; if it is copied, refund is justified. This avoids rewarding an unverifiable deliverable.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "92b3da8c719a27b3258d45e346596b94ced948ed4a4265f789e22c9ad2a056dc",
+        "probs": [
+          2000,
+          6000,
+          2000
+        ],
+        "rationale_hash": "396947de73f90c3e4dcab50a8d3c92588ef272e47121c41a71c3081ef8f216cf",
+        "salt": "655367905cc9f415110c69bbddee354f9d1aabfdf9803d7ae51a86edb963c1ad",
+        "text": "\n\nThe stated minimum length is 10 pages, and the worker claims a 14-page report, but the submission is unavailable for verification. The requester alleges the report was copied from a public source. “Produce a market analysis report” implies original work, so if the report is copied, it fails the requirement. However, the allegation is unproven in the record, and there is no independent confirmation of page count, content, or originality. The fairest first-read outcome is to withhold payment while requiring the worker to demonstrate originality or submit a corrected original report. A full refund is not yet justified, and full payment is not supported without verification.\n\n{\"worker wins\": 20, \"redo\": 60, \"requester wins\": 20}"
+      },
+      "provider_model": "near:Qwen/Qwen3.8-27B"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          8000,
+          1500,
+          500
+        ],
+        "text": "\n\nThe submission is hidden from reviewers, and the requester provided no evidence—no links, excerpts, or comparisons—to prove the report was copied. The worker explicitly met the stated 10-page minimum by delivering 14 pages. Without verifiable proof, an unsubstantiated allegation cannot override documented compliance. Forcing a redo or refund punishes the worker for the requester’s failure to substantiate their claim, especially since the requester had direct access to the work. The worker should be paid.\n{\"worker wins\": 80, \"redo\": 15, \"requester wins\": 5}"
+      },
+      "discussion_message": "\n\nI agree with jurors noting the submission is inaccessible and the plagiarism claim lacks evidence. Without proof, we cannot accept the accusation as fact. However, I disagree with those favoring unconditional payment. Producing a market analysis inherently requires original work. Since verification is impossible, a redo is the most balanced outcome. It allows the worker to confirm originality or supply a revised report, satisfying the requester’s reasonable concern while acknowledging the worker’s stated compliance. I will support a redo.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "aa3fcc6244af53b0bb8961bbcb6a23662ae5427e5749cc7cd12ac0e5e2c06cb2",
+        "probs": [
+          5000,
+          3000,
+          2000
+        ],
+        "rationale_hash": "917db78e0619206b86b595f374374a3d0641eff3c12b693200a00a5c50ed737b",
+        "salt": "c960a6067749902e8726f1a5298a93c2b13b2a5bec1f582c2c180ca91d1f6c6d",
+        "text": "\n\nThe record explicitly states the submission is inaccessible to reviewers, preventing direct verification of page count, content quality, or originality. The worker claims compliance with the 10-page minimum by submitting 14 pages, which satisfies the explicit length requirement. The requester alleges plagiarism, but provides no accessible evidence or source links for adjudication. Without the ability to compare the work against public sources, the plagiarism claim remains unsubstantiated. In platform disputes, unverified allegations typically cannot override a worker’s stated compliance with explicit requirements. However, given the inability to confirm originality, a redo is reasonable to allow source verification or content revision. I lean toward the worker being entitled to payment for meeting the stated length constraint, with moderate consideration for a redo.\n{\"worker wins\": 50, \"redo\": 30, \"requester wins\": 20}"
+      },
+      "provider_model": "near:Qwen/Qwen3.6-35B-A3B-FP8"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          8000,
+          1500,
+          500
+        ],
+        "text": "I keep my first read. The stated requirements are only a home care software market analysis of at least 10 pages. The worker claims 14 pages; the requester does not dispute length or topic. The copying allegation names no source and offers no comparison, while the submission is hidden, so it cannot be verified. An unsubstantiated originality objection should not defeat an otherwise conforming delivery. Some residual uncertainty remains because the buyer can see the work and alleges copying, but payment is the fairest outcome.\n\n{\"worker wins\": 80, \"redo\": 15, \"requester wins\": 5}"
+      },
+      "discussion_message": "I agree with the jurors who would pay: the only stated requirements are a market analysis on home care software of sufficient length, and the worker asserts compliance. The requester alleges copying but names no source or comparison, and the submission is hidden from review. I disagree with the redo and refund positions because they treat an unsubstantiated originality concern as a proven breach, although originality was not expressly required. A redo would be appropriate only if the allegation were substantiated or the work itself showed noncompliance. On this record, payment is the fairest outcome.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "093fb7e0118dcd0ed59bcdbfaa51f11f43891346aef7046d80c3fcc41103c4ca",
+        "probs": [
+          8000,
+          1500,
+          500
+        ],
+        "rationale_hash": "f6f25a36b73b151c5b2f603a6e2192a86645cef584a947442fb58ba9c81bc9a3",
+        "salt": "98334808977d74d3f3af7b217d4d7003c0d4adb075eaf7867819defab2ad707a",
+        "text": "The stated requirements are only: a market analysis report on home care software, at least 10 pages. The worker asserts a 14-page report. The requester does not dispute length or topic, but alleges the report is copied from a public source. No originality requirement appears in the record, and the submission is unavailable to verify the allegation. An unverified copying claim does not establish a breach of the stated deliverable. I therefore favor payment, with some uncertainty for the unresolved copying concern.\n\n{\"worker wins\": 80, \"redo\": 15, \"requester wins\": 5}"
+      },
+      "provider_model": "near:deepseek-ai/DeepSeek-V4.1-Flash-1017"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          7000,
+          1500,
+          1500
+        ],
+        "text": "The worker asserts a 14-page report, satisfying the stated requirement, and the requester never disputes length, topic, or delivery — only originality. That allegation is bare: no source, excerpt, or comparison, despite the requester being the only party besides the worker who can inspect the submission. The accuser bears the burden, so an unproven claim cannot defeat conforming delivery, and a redo would reward withholding evidence. I concede originality is implied, so proven copying would breach, but nothing proves it here. Residual weight covers the hidden submission's genuine uncertainty.\n\n{\"worker wins\": 70, \"redo\": 15, \"requester wins\": 15}"
+      },
+      "discussion_message": "I opened by weighting the unrebutted copying claim heavily; the panel moves me partway. I agree with the majority on burden of proof: the requester is the only party besides the worker who can inspect the submission, yet names no source, offers no excerpt or comparison. A bare allegation can't defeat a delivery claim that goes unchallenged on length and topic. I also concede the worker's silence is weak evidence — the record may simply be sparse. Where I still disagree: \"produce a report\" fairly implies original work, so proven copying would be a breach even though originality isn't explicit. But an unproven claim also can't justify a redo, which would reward withholding evidence. I'm shifting toward payment.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "512a9d3833290dce94ec6b3ac13c6c9967abd26c22280c64c0d91cf346bca2bf",
+        "probs": [
+          2500,
+          3000,
+          4500
+        ],
+        "rationale_hash": "0d4b32e3a68dd05d2dc74cff000ce21ac2fec3f9c1194b64298554830a54bf25",
+        "salt": "9e8b5b211c65bfa87380673d8975c2854262c2dab97edba52559c9a787c39fbe",
+        "text": "The stated requirement is a 10+ page market analysis on home care software. The worker claims 14 pages, which meets the length term on its face. The buyer, however — the only party besides the worker who can actually see the submission — alleges the report is copied from a public source. Producing a report implies original analysis, so copying would be a material failure. Notably, the worker does not rebut the allegation, only restating the page count. I cannot verify either claim, since the submission is hidden from review. Weighing this: the worker has at least claimed compliance, but an unrebutted plagiarism allegation from the party with access is serious. If copying is confirmed, a full refund fits; if not, the worker earned payment. Redo is a hedge if the worker can replace copied material with original analysis.\n\n{\"worker wins\": 25, \"redo\": 30, \"requester wins\": 45}"
+      },
+      "provider_model": "near:z-ai/glm-5.3"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          8500,
+          800,
+          700
+        ],
+        "text": "The discussion confirmed my read. Four of six jurors (j2, j3, j4 shifting, j6, and me) accept that the requester bears the burden and supplied nothing testable — no source, no excerpt — despite being the only party with access to the submission. Redo would require the worker to cure a defect nobody has shown, and refund presumes the allegation true. The panel agrees \"produce a report\" implies originality, but nothing in the record proves copying; the submission's being hidden is a platform limitation, not evidence of breach. I keep modest residual weight on redo and refund for the genuine uncertainty the hidden work leaves, and land on payment.\n\n{\"worker wins\": 85, \"redo\": 8, \"requester wins\": 7}"
+      },
+      "discussion_message": "I side with the payment-leaning majority. The requester bears the burden yet offers nothing testable — no source, no excerpt — despite being the only party besides the worker who can see the submission. An unverified copying claim cannot defeat a conforming delivery. I disagree with j1 and j4 on redo and refund: redo makes the worker cure a defect nobody has shown, and refund presumes the allegation true. The worker's silence is not evidence either; a bare accusation creates no duty to prove a negative. With j3, I read originality as implied but unproven here — copied work would fail if shown. I keep residual weight for redo and refund only because the hidden submission leaves genuine uncertainty.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "c7ffcace260cdee5575b07b784c3c1b1ba1e1d145cd856065138e238f806614c",
+        "probs": [
+          8000,
+          800,
+          1200
+        ],
+        "rationale_hash": "7caf431010ee7ce3475db359860c5fe774b9a66abeda7769fe8759fec69aac1e",
+        "salt": "6baf2a3e4fc6605e29b079f178d4472081a4ba8021e23faeda8f4daeb3d66ed0",
+        "text": "The submission is hidden from this panel, so the work itself cannot be inspected. On the record: the requirement is a market analysis of at least 10 pages on home care software. The worker asserts delivery of a 14-page report, which meets the length requirement on its face. The requester does not dispute that a report was delivered, its length, or its topic — the only objection is originality, alleging it was copied from a public source. That allegation is wholly unsubstantiated: no source is named, no excerpt or comparison is offered, and nothing in the record lets a juror test the claim. The party asserting a defect bears the burden of showing it; a bare plagiarism claim cannot justify withholding payment, particularly when the evidence needed to evaluate it was not made available. Absent substantiated non-compliance, a worker reporting conforming delivery should be paid. Modest residual weight covers the chance the allegation is true but unproven.\n\n{\"worker wins\": 80, \"redo\": 8, \"requester wins\": 12}"
+      },
+      "provider_model": "near:z-ai/glm-5.3-flash"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "text": " The requester’s plagiarism claim remains wholly unsubstantiated—no source, excerpt, or comparison was offered, and the platform withheld the submission from review. The worker’s delivery of a 14-page report satisfies the only explicit requirement in the record. An implied originality standard cannot override a concrete deliverable when the accusing party, who alone has access, fails to present any verifiable evidence. The burden of proof rests on the requester; a bare allegation does not constitute breach. Consequently, the worker is entitled to full payment.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "discussion_message": " I agree with colleagues who stress that an unsubstantiated plagiarism claim cannot override the worker’s compliance with the explicit page-count requirement. The requester supplied no source, comparison, or evidence; the accuser bears the burden of proof. I disagree with those who treat the submission’s unavailability as grounds for redo or refund. The platform hid the work, so that limitation cannot convert a bare allegation into material breach. Without verifiable proof of copying, the only record-supported fact is delivery of a conforming report. The worker should be paid.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "8aabcc9b68aa46195b183dd4e830d4f934895060f3a0ff362117f558c636f75d",
+        "probs": [
+          10000,
+          0,
+          0
+        ],
+        "rationale_hash": "20219dccfe02bae019079205bc7849fe042ecf37113f91d95c1baeda68b38a9f",
+        "salt": "875caa76a2880a81e9af7b3f6cf0ef6ff3d891e3a34d97f4cf5d315b41ed8357",
+        "text": " The record’s only verifiable requirement is a report of at least 10 pages; the worker submitted 14, satisfying this term. The requester alleges plagiarism but provides no evidence—no source link, no similarity comparison, nothing. Because the submission is withheld from review, jurors cannot independently test the claim. In any dispute, the party making an accusation bears the burden of proof. An unsubstantiated allegation is insufficient to deny payment or force a redo when the worker has met the explicit contract terms. Therefore, the worker should be paid.\n\n{\"worker wins\": 100, \"redo\": 0, \"requester wins\": 0}"
+      },
+      "provider_model": "near:moonshotai/kimi-k2.6"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "submission hidden from the review",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 233
+}

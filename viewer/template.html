@@ -345,7 +345,8 @@ function show() {
   root.append(s7);
 
   document.querySelectorAll('#list button').forEach((b, i) => b.setAttribute('aria-current', i === caseIndex ? 'true' : 'false'));
-  history.replaceState(null, '', `#${runIndex + 1}-${caseIndex + 1}`);
+  // A preview pane can run the page in a sandbox that refuses this call.
+  try { history.replaceState(null, '', `#${runIndex + 1}-${caseIndex + 1}`); } catch (e) { /* the page works with no address */ }
 }
 
 function list() {
@@ -366,7 +367,7 @@ const pick = document.getElementById('run');
 D.runs.forEach((r, i) => { const o = el('option', null, r.label); o.value = i; pick.append(o); });
 pick.addEventListener('change', () => { runIndex = +pick.value; caseIndex = Math.min(caseIndex, D.runs[runIndex].cases.length - 1); list(); show(); });
 const m = location.hash.match(/^#(\d+)-(\d+)$/);
-if (m) { runIndex = Math.min(D.runs.length, +m[1]) - 1; caseIndex = Math.min(D.runs[runIndex].cases.length, +m[2]) - 1; }
+if (m) { runIndex = Math.max(0, Math.min(D.runs.length, +m[1]) - 1); caseIndex = Math.max(0, Math.min(D.runs[runIndex].cases.length, +m[2]) - 1); }
 pick.value = runIndex; list(); show();
 </script>
 </body>

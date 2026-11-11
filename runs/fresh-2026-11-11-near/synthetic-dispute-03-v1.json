@@ -1,0 +1,343 @@
+{
+  "case_key": "synthetic:dispute:03:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 2,
+    "audit_sums": [
+      0,
+      0,
+      60000
+    ],
+    "case_id": 2,
+    "case_key": "synthetic:dispute:03:v1",
+    "deadline_ns": 1794405117196641261,
+    "evidence_hash": "5f1e974d9046137d448503eef2146c8449a45618b61c524aea8c41c253d4a97e",
+    "first_sums": [
+      0,
+      2500,
+      57500
+    ],
+    "jurors": [
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "a59b1986ca656821e46d7016545a7bccb8d86730989151a5188408541d70b6d2"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "6c86deca9b0e53b44f6194759b0e808dcb01b9e8a60586b327029cd4904cd492"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          500,
+          9500
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "ba7a631c3700d00383b5f9d072da4be59538890607e3ac60b6ab1ce6f168c9cd"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          1000,
+          9000
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "98c3bdd0a6493c1a781c2b2d193a431cd389f4c8326174e2991e1e0f1887d45f"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          1000,
+          9000
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "843525f76cc5ea93be60867dd6860603a48a7ed26cbcdb82c55a0b92ce4238f3"
+      },
+      {
+        "audit": [
+          0,
+          0,
+          10000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          0,
+          10000
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "7a78f48458f7fd354927338f2be5d0ee3859890754755f96a3942544f881922b"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 2
+  },
+  "chain_case_id": 2,
+  "comparison": {
+    "contract_ruling": "requester wins",
+    "expected_ruling": "requester wins",
+    "note": "No juror saw this object.",
+    "reason": "No code was delivered, and the hash is not a SHA-256 hash.",
+    "top_after_discussion": "requester wins",
+    "top_of_first_reads": "requester wins"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 2,
+    "status": "RefundedRequester"
+  },
+  "evidence": {
+    "messages": [
+      "Worker, 40 seconds after the award: Work complete. See link.",
+      "Requester: The link opens nothing, and a SHA-256 hash has 64 characters."
+    ],
+    "requirements": "Build a command-line tool that converts a CSV file to JSON. Deliver the source code and a SHA-256 hash of the archive. Budget 8 NEAR.",
+    "submission": "Link: openclaw://deliverables/csv2json (the link does not open). Hash given: 9f2c41aa07be3d15 (16 characters). No source code is attached."
+  },
+  "evidence_hash": "5f1e974d9046137d448503eef2146c8449a45618b61c524aea8c41c253d4a97e",
+  "failures": [
+    {
+      "failures": [
+        "attempt 1: no usable numbers in: The submission fails every stated requirement. The deliverable is unreachable: the link opens nothing, and no source code is attached, so there is nothing to inspect or evaluate. The hash requirement also fails outright — SHA-256 produces a 64-character digest, but the worker provided only 16 characters, indicating the hash is fabricated or careless. The \"work complete\" message arriving 40 seconds"
+      ],
+      "juror": "j5.jury.test.near",
+      "stage": "first read"
+    }
+  ],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "\n\nThe record shows the worker failed every stated requirement: no source code, a nonfunctional delivery link, and a 16-character value that cannot be a SHA-256 hash. The worker’s brief “work complete” message does not create a deliverable or a correctable artifact. A redo is for fixing submitted work, not for producing an entirely missing tool. Since the requester received nothing usable or verifiable, the full refund is appropriate.\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "\n\nI agree with the majority that the requester wins. The record shows no source code, inaccessible delivery, and an invalid hash. A redo requires some deliverable to correct; here the submission is effectively empty, and the worker’s completion claim is contradicted by the record. I disagree with leaving any weight for redo. The defects are not minor formatting fixes; the required artifacts are absent and unverifiable. Therefore full refund is appropriate.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "4e1e2c799504ab38e722ba7923a78647a6ccf77cdb72712e571222e96fd471d5",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "a59b1986ca656821e46d7016545a7bccb8d86730989151a5188408541d70b6d2",
+        "salt": "842a41b004e20a2152d37e32c85bf129ea6be3b04964bdfc7e31d1f2a42487b2",
+        "text": "\n\nThe worker’s only submission is a broken link, an invalid 16-character hash, and no source code. The requirements demanded a working CSV-to-JSON command-line tool, delivered source code, and a valid SHA-256 archive hash. The worker’s claim of completion is contradicted by the record. There is no artifact to review, no proof the tool works, and the hash is facially wrong. A redo would only be appropriate if at least some compliant work existed to correct; here nothing was delivered. Therefore the requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "near:Qwen/Qwen3.8-27B"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "\n\nThe worker completely failed to meet delivery requirements. No source code was attached, the provided link is non-functional, and the submitted hash is only 16 characters instead of the required 64-character SHA-256 format. These defects indicate no verifiable work product exists, making a redo impossible since there is nothing to correct. The requester received zero usable deliverable and is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "\n\nI agree with most jurors that the submission fails core requirements. The link is nonfunctional, the required source code is missing, and the provided hash is far too short to be valid. I disagree with those suggesting a redo is viable. There is no accessible artifact or verifiable proof that any work was actually produced, especially given the suspiciously rapid declaration of completion. Since the worker delivered nothing substantive to correct, I support a requester wins ruling. A full refund is the only appropriate outcome.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "9d606fb1f8c90a9564e3fe15bb8a0578085b0be8a285bc7058e61cffc46de479",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "6c86deca9b0e53b44f6194759b0e808dcb01b9e8a60586b327029cd4904cd492",
+        "salt": "642c944f2df46d778663a2c188b4903ea1846f3c6c1f1f3a2134e88f84ec269b",
+        "text": "\n\nThe worker failed to meet core requirements. The submission contains no source code, the delivery link is non-functional, and the provided hash is only 16 characters long instead of the mandatory 64-character SHA-256 format. The requester accurately identifies all deficiencies. Since no code or valid proof of completion was delivered, there is nothing substantive to correct or revise. The submission is fundamentally incomplete and non-compliant with the project scope. Consequently, the worker receives no payment, and the requester is entitled to a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "near:Qwen/Qwen3.6-35B-A3B-FP8"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "After discussion, I agree with the panel: the submission is effectively empty. The link does not open, no source code is attached, and the 16-character value is not a valid 64-character SHA-256 hash. These are not minor defects in an existing artifact; they show no usable deliverable was produced. A redo would require something correctable, but none exists. The requester received nothing verifiable, so a full refund is warranted.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with the prevailing view that the requester should receive a refund. The submission has no functioning link, no attached source, and the supplied value does not match the required hash format. That leaves no usable or verifiable deliverable, so the worker has not earned payment. I disagree with jurors who leave any room for redo: redo is for correcting an existing compliant artifact, not for producing the entire missing work after a failed submission. The worker’s bare completion message does not cure these defects. I agree the very fast completion claim supports skepticism, though the missing artifacts alone decide it.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "ce519371bcc82e6d8f91d12e76335af9bc9cd115fb9298b2fbf8c615520acc7b",
+        "probs": [
+          0,
+          500,
+          9500
+        ],
+        "rationale_hash": "ba7a631c3700d00383b5f9d072da4be59538890607e3ac60b6ab1ce6f168c9cd",
+        "salt": "c9a01998b40cb87966732a927f05553c176cc65baffb3d80818872811411f5e3",
+        "text": "The submission fails every delivery requirement. The provided link does not open, so the tool cannot be accessed. The hash is only 16 characters, not a valid SHA-256 hash, so archive integrity cannot be verified. No source code is attached, despite being required. The worker’s bare “work complete” message does not cure these defects. Because the requester received no usable deliverable, the worker has not earned payment. This is not a minor correction issue; the required source and verifiable archive were never delivered.\n\n{\"worker wins\": 0, \"redo\": 5, \"requester wins\": 95}"
+      },
+      "provider_model": "near:deepseek-ai/DeepSeek-V4.1-Flash-1017"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The panel has converged, and I agree. The record shows a dead link, a 16-character string masquerading as a SHA-256 hash (which requires 64 hex characters), and no source code anywhere. The worker declared completion 40 seconds after award—no plausible time to build a working tool—pointing to a fabricated submission rather than a delivery glitch. Redo requires some correctable artifact; nothing exists here to fix. I drop my earlier residual redo weight, as the malformed hash cannot be explained by a platform fault. The requester received zero value and is owed a full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with the panel that this is a requester win. Nothing required was delivered: the link opens nothing, the supposed hash is far too short to be a valid digest, and no source code appears anywhere in the record. The worker's near-instant \"work complete\" declaration, leaving no plausible time to build the tool, points to fabrication rather than a delivery glitch. To the jurors at full refund: I accept your point that redo presupposes a correctable artifact, and I am dropping my residual. To the others holding a sliver of redo: only a platform failure could justify it, but that would not explain the malformed hash. I now converge on a full refund.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "cf98755b76c970a88e59105749736b92d4aee97fd42004b86e3eb870b82f6347",
+        "probs": [
+          0,
+          1000,
+          9000
+        ],
+        "rationale_hash": "98c3bdd0a6493c1a781c2b2d193a431cd389f4c8326174e2991e1e0f1887d45f",
+        "salt": "181cf61ffa201ccf5f9ac7ac9c279724846d2db9180046ba6f46e3ff422ee60c",
+        "text": "The requirements demand delivered source code plus a valid SHA-256 hash. The record shows a link that opens nothing, a \"hash\" of only 16 characters (SHA-256 is 64 hex characters), and no source code attached. The requester received nothing usable or verifiable. Notably, the worker declared \"work complete\" just 40 seconds after the award—implausibly fast to build a working CSV-to-JSON tool—suggesting the submission is empty or fabricated rather than a genuine delivery hindered by a glitch. The invalid hash length reinforces that no real artifact exists. Since no work product is accessible and the submission shows hallmarks of a sham, the requester received zero value and deserves a full refund. I leave a small residual for redo only in case the broken link were a platform error, but the timing and malformed hash make that unlikely.\n\n{\"worker wins\": 0, \"redo\": 10, \"requester wins\": 90}"
+      },
+      "provider_model": "near:z-ai/glm-5.3"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": "The discussion moved me off my residual redo weight. My earlier rationale was that a broken link might be a platform fault hiding real code. But jurors correctly noted that the hash was supplied by the worker, not the platform: a worker-generated 16-character string cannot be explained by a delivery glitch, and the 40-second completion claim leaves no plausible time for work to exist. Redo presupposes an artifact to correct; here the record shows none. Both required deliverables — source code and a valid SHA-256 hash — are absent. Full refund.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": "I agree with the panel that the requester should win. Both required deliverables are absent: the link opens nothing, no source is attached, and the provided string is far too short to be a SHA-256 hash. Declaring the work complete moments after the award leaves no plausible time to have built the tool, so nothing usable was produced. Where I differ from jurors allowing no redo path at all: a broken link could in principle be a platform fault, so I keep a small redo weight in case real code exists behind it. The malformed hash and impossible timing make that unlikely, though, so I expect the panel to converge on a full refund.",
+      "first": {
+        "attempts": 2,
+        "commit_hash": "80ceec8ee467f3f38f9870cc466b2ad074561326abd429c6de827d326a753cc4",
+        "probs": [
+          0,
+          1000,
+          9000
+        ],
+        "rationale_hash": "843525f76cc5ea93be60867dd6860603a48a7ed26cbcdb82c55a0b92ce4238f3",
+        "salt": "f383bf8a62e2a95f891b17b5ba44ca347f5523a25da6af49371baf0f9329b390",
+        "text": "The requirements demand two deliverables: source code and a valid SHA-256 hash. Neither exists in usable form. The link does not open, no source is attached, and the \"hash\" is 16 characters where SHA-256 requires 64 hex characters — it is not a hash at all. The worker's \"Work complete\" message came 40 seconds after the award, which leaves no plausible time to have built and tested a CSV-to-JSON tool, reinforcing that nothing was produced. Because there is no verifiable artifact of any kind, this is not a case of flawed delivery that a redo could salvage; the submission is empty. The requester is entitled to a full refund. I leave a small weight on redo only in the unlikely event the worker can actually produce the code, but the record gives no basis to believe work exists.\n\n{\"worker wins\": 0, \"redo\": 10, \"requester wins\": 90}"
+      },
+      "provider_model": "near:z-ai/glm-5.3-flash"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "text": " The worker delivered no usable artifact: the link is dead, source code is absent, and the hash is only 16 characters instead of 64. The 40-second completion time confirms no work was performed. There is nothing to redo because no compliant submission exists to correct. The requester received zero value and is entitled to a full refund. The panel consensus correctly identifies this as total non-performance rather than a fixable defect.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "discussion_message": " I agree with the panel that the submission is fundamentally defective and the requester should prevail. The link is dead, no source code was provided, and the hash is facially invalid. Unlike some colleagues, I see no basis for a redo. The implausibly fast turnaround, nonfunctional link, and truncated hash are not minor glitches; they show no artifact was ever produced. Without any existing work to correct, a redo is inappropriate. The worker failed to perform, so a full refund is warranted.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "232378f6a7f31d7f5713efcee5ea940597b1029735a235c8c5348d62a50d55de",
+        "probs": [
+          0,
+          0,
+          10000
+        ],
+        "rationale_hash": "7a78f48458f7fd354927338f2be5d0ee3859890754755f96a3942544f881922b",
+        "salt": "fa848c7511f26226f900a2162a4a951ecce46c2d16ccdcc5667fcea570aab42b",
+        "text": " The worker’s submission materially violates all delivery requirements. The specifications demand source code and a valid SHA-256 hash. The provided link does not function, rendering the source code inaccessible. The hash is sixteen characters long, whereas a SHA-256 digest is strictly sixty-four hexadecimal characters. Because the requester cannot verify either the code or its integrity, the deliverable is incomplete and nonconforming. There is no evidence that a correctable artifact was submitted; the defects indicate total failure to perform rather than a minor fix. Consequently, the requester should not be obligated to pay, and a full refund is warranted.\n\n{\"worker wins\": 0, \"redo\": 0, \"requester wins\": 100}"
+      },
+      "provider_model": "near:moonshotai/kimi-k2.6"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "fake deliverable with a bad hash",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 282
+}
