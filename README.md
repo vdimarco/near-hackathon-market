@@ -64,7 +64,7 @@ The rule compares integer sums: `option_sum > 5000 * juror_count`. Exactly 50% i
 
 The digest binds the chain id, the adapter, the escrow contract, the job id, the description hash, the verdict, and a reason. The reason is a hash of the jury account, the case id, the evidence hash, and the policy hash. Three programs compute the digest and share one test vector: `scripts/ruling_digest.py`, `evaluator/src/lib.rs`, and `evm/src/LockJuryEvaluator.sol`.
 
-**The live run on 11 November 2026 (UTC).** `make evaluator-live` put the jury and `evaluator/` on NEAR testnet and deleted the full access key of each contract account. It replayed the recorded reads of synthetic disputes 02 and 01 from `runs/fresh-2026-11-10/`. The testnet jury gave the rulings of the recorded run: "worker wins" and "requester wins". The signer network signed each ruling, and each `sign_ruling` call burnt 18.6 Tgas.
+**The live run on 11 November 2026 (UTC).** `make evaluator-live` put the jury and `evaluator/` on NEAR testnet and deleted the full access key of each contract account. It replayed the recorded reads of synthetic disputes 02 and 01 from `runs/fresh-2026-11-10/`. The testnet jury gave the rulings of the recorded run: "worker wins" and "requester wins". The signer network signed each ruling, and each `sign_ruling` call burnt 18.6 Tgas. The program read that number before the last refund receipts ran. The testnet RPC now counts 18.8 Tgas for each of the two transactions, which is about 0.0017 NEAR in fees.
 
 | Record | Value |
 |---|---|
@@ -169,6 +169,14 @@ ALL EXPECTED RESULTS MATCH
 ```
 
 The withheld-reveal test waits for an 8-second deadline.
+
+**On a machine that allows fewer than 65,535 open files.** The NEAR sandbox asks the system for 65,535 open files when it starts. Some containers have a lower hard limit and do not let a process raise it. To see the hard limit, run `ulimit -Hn`. A direct `cargo run -p demo` stops on such a machine with this error:
+
+```
+Error: couldn't set the file descriptor limit to (65535, 65535), current limit = (20000, 20000)
+```
+
+The `make` targets handle this case. `scripts/with_sandbox.sh` reads the hard limit. If the limit is under 65,535 on Linux, the script builds `scripts/nofile_clamp.c` with the C compiler and preloads it. The library lowers the request of the sandbox to the hard limit of the machine and changes nothing else. The run then starts with two lines that begin with `note:`. On other machines the script runs the command unchanged. `make sandbox-limit-check` tests the script and the library on Linux.
 
 ### Step 3. Replay all 47 recorded panels
 
@@ -356,6 +364,7 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `demo/src/main.rs`: the sandbox replay, the attack tests, and the escrow tests.
 - `demo/src/bin/fresh.rs`: the fresh-run harness.
 - `demo/src/lib.rs`: sandbox helpers that both programs use.
+- `scripts/with_sandbox.sh` and `scripts/nofile_clamp.c`: let the sandbox start on a machine with a low limit of open files. `scripts/test_nofile_clamp.sh` tests them.
 - `runs/fresh-2026-11-10/`: the records of one fresh run, one file for each dispute.
 - `scripts/build_viewer.py` and `viewer/template.html`: build the viewer. `viewer/index.html` is the built page for the two fresh runs.
 - `scripts/fetch_market_cases.py`: reads public dispute records from the legacy market.

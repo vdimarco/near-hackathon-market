@@ -25,7 +25,7 @@ The work showed these scopes. A `~` marks a scope that the session can drop.
 | Testnet replay | Done. `make evaluator-live` ran one time to the end. |
 | Recorded check | Done. `make evaluator-check` passes. 8 Foundry tests use the two testnet signatures. |
 | ~ One transaction on Arc Testnet | Dropped. Not started. |
-| Merge to `main` | Open. The owner decides. |
+| Merge to `main` | Done on 11 November 2026 with pull request 3. |
 
 ## What the work showed
 
@@ -36,3 +36,16 @@ The work showed these scopes. A `~` marks a scope that the session can drop.
 - **Attached gas costs NEAR before a call runs.** A juror account with 0.3 NEAR could not attach 300 Tgas. Juror calls now attach 20 Tgas.
 - **The reference contract at commit 142e669 is larger than the contract in the EIP text.** `createJob` takes six arguments, and an admin must allow the payment token. The deliverable hash is still only in an event.
 - **Two rulings went through, not one.** Dispute 02 gives "worker wins", and dispute 01 gives "requester wins". The recorded check thus covers `complete` and `reject`.
+
+## Cool-down on 11 November 2026
+
+An audit ran the README steps in a cloud container of Claude Code. The first screen of the hackathon uses Claude Code and Codex. These fixes came from the audit. None of them is a new feature.
+
+- **The sandbox steps did not start in a container with a hard limit of 20,000 open files.** The NEAR sandbox asks for 65,535. `scripts/with_sandbox.sh` now preloads `scripts/nofile_clamp.c` on such a machine, and the `make` targets use the script.
+- **The demo read the contract wasm from `target/` only.** It failed when `CARGO_TARGET_DIR` was set. It now reads from the build folder that cargo uses.
+- **The README gave 18.6 Tgas for a `sign_ruling` call.** The program read that number before the last refund receipts ran. The full count from the testnet RPC is 18.8 Tgas, about 0.0017 NEAR in fees.
+
+Two raw ideas wait for a shaping pass. They are not bets.
+
+- Settle one ERC-8183 job on a public EVM testnet. It is the first line under "Not built" in the README.
+- Show the signed ruling in the viewer for cases 01 and 02, and host the page.
