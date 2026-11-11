@@ -95,6 +95,15 @@ pub fn first_line(text: &str) -> String {
     text.lines().next().unwrap_or("").chars().take(150).collect()
 }
 
+/// The reason that the node gives when it refuses a transaction for its key,
+/// for example `RequiresFullAccess` or `MethodNameMismatch`.
+pub fn key_refusal(error_text: &str) -> String {
+    match error_text.split("InvalidAccessKeyError(").nth(1) {
+        Some(rest) => rest.chars().take_while(|c| c.is_ascii_alphanumeric()).collect(),
+        None => first_line(error_text),
+    }
+}
+
 pub fn u32s(v: &Value) -> Option<Vec<u32>> {
     v.as_array()?.iter().map(|x| x.as_u64().map(|n| n as u32)).collect()
 }

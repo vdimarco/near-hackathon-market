@@ -267,7 +267,7 @@ async fn main() -> Result<()> {
     println!("== 2. Juror key limits");
     let transfer = match panel.jurors[0].transfer_near(panel.requester.id(), NearToken::from_near(1)).await {
         Err(e) => {
-            println!("   node: {}", first_line(&format!("{:?}", e)));
+            println!("   the node refused the key: {}", key_refusal(&format!("{:?}", e)));
             true
         }
         Ok(r) => r.is_failure(),
@@ -281,7 +281,7 @@ async fn main() -> Result<()> {
         .await;
     let open_refused = match open {
         Err(e) => {
-            println!("   node: {}", first_line(&format!("{:?}", e)));
+            println!("   the node refused the key: {}", key_refusal(&format!("{:?}", e)));
             true
         }
         Ok(r) => r.is_failure(),
