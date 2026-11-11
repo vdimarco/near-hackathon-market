@@ -1,0 +1,335 @@
+{
+  "case_key": "synthetic:dispute:08:v1",
+  "chain": {
+    "audit_count": 6,
+    "audit_majority": 1,
+    "audit_sums": [
+      1400,
+      51900,
+      6700
+    ],
+    "case_id": 7,
+    "case_key": "synthetic:dispute:08:v1",
+    "deadline_ns": 1794405826104502893,
+    "evidence_hash": "dd8805c7aa511b93a2aec4e14362d5e665439f988682f598a4d2fed9fbc7ec78",
+    "first_sums": [
+      1500,
+      50300,
+      8200
+    ],
+    "jurors": [
+      {
+        "audit": [
+          500,
+          8500,
+          1000
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          500,
+          8500,
+          1000
+        ],
+        "juror": "j1.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "3fa6df49ee415c534e8a0aa2b4ac1d31452e887bec68eee79334772e049c150f"
+      },
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          10000,
+          0
+        ],
+        "juror": "j2.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "e403d0bdc35374207bc74024bf7832f28143ce8a0b1e8100c52295b92bc4e2ad"
+      },
+      {
+        "audit": [
+          0,
+          10000,
+          0
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          9000,
+          1000
+        ],
+        "juror": "j3.jury.test.near",
+        "moved_bps": 1000,
+        "rationale_hash": "f4a94f41f6a60d352e0fe9843294e2e26f92b5cd7433c821ea6f9aaf92454cd3"
+      },
+      {
+        "audit": [
+          500,
+          8000,
+          1500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          500,
+          7500,
+          2000
+        ],
+        "juror": "j4.jury.test.near",
+        "moved_bps": 500,
+        "rationale_hash": "24e1e6a9ac2b35e1ce70eaad8340a3ee144cbb396ef6ebd97a2713b6997e931b"
+      },
+      {
+        "audit": [
+          400,
+          7900,
+          1700
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          500,
+          7800,
+          1700
+        ],
+        "juror": "j5.jury.test.near",
+        "moved_bps": 100,
+        "rationale_hash": "99c41c14f30cf40bce2d3cce57bb6fb3b15c96d14b2b4725dd1382048a68145a"
+      },
+      {
+        "audit": [
+          0,
+          7500,
+          2500
+        ],
+        "audit_posted": true,
+        "committed": true,
+        "first": [
+          0,
+          7500,
+          2500
+        ],
+        "juror": "j6.jury.test.near",
+        "moved_bps": 0,
+        "rationale_hash": "63815774e9c81ab898a5443eabb8dc6c9448c41361d2e05a7e1e40c8b1be5dff"
+      }
+    ],
+    "missing_audit_reports": [],
+    "missing_commits": [],
+    "missing_reveals": [],
+    "opener": "requester.test.near",
+    "options": [
+      "worker wins",
+      "redo",
+      "requester wins"
+    ],
+    "outcome": "Decided",
+    "phase": "Closed",
+    "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+    "protocol_version": 2,
+    "ruling": 1
+  },
+  "chain_case_id": 7,
+  "comparison": {
+    "contract_ruling": "redo",
+    "expected_ruling": "redo",
+    "note": "No juror saw this object.",
+    "reason": "The archive step works. The delete step is wrong and unsafe, and the worker offers a fix.",
+    "top_after_discussion": "redo",
+    "top_of_first_reads": "redo"
+  },
+  "contract": "jury.test.near",
+  "escrow": {
+    "deal_id": 7,
+    "status": "Held"
+  },
+  "evidence": {
+    "messages": [
+      "Requester: The script deleted files from my source directory in a test.",
+      "Worker: I can fix the find command."
+    ],
+    "requirements": "Write a Bash script that makes a dated backup of a directory as a .tar.gz file and deletes backups older than 7 days. Budget 5 NEAR.",
+    "submission": "A Bash script of 18 lines. It creates the dated archive correctly. The delete step uses 'find $DIR -mtime 7 -delete', which matches files that are exactly 7 days old and also runs in the source directory, not the backup directory."
+  },
+  "evidence_hash": "dd8805c7aa511b93a2aec4e14362d5e665439f988682f598a4d2fed9fbc7ec78",
+  "failures": [],
+  "fixture_type": "synthetic case with stated expected outcome",
+  "gate": {
+    "release_after_5_commits": "refused",
+    "release_after_6_commits": "allowed"
+  },
+  "jurors": [
+    {
+      "account": "j1.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          500,
+          8500,
+          1000
+        ],
+        "text": "\n\nThe script correctly creates the dated archive, so full payment or full refund overshoot. But the deletion step fails the stated requirement: it scans the source directory and uses -mtime 7, not an older-than-7-days test, and the requester reports actual source-file deletion. That makes the delivered script unsafe and noncompliant. The worker admits the find command can be fixed. The appropriate remedy is correction before any payment.\n{\"worker wins\": 5, \"redo\": 85, \"requester wins\": 10}"
+      },
+      "discussion_message": "\n\nI agree with redo. I disagree with any position favoring full payment. The backup creation appears acceptable, but the deletion logic is materially noncompliant and dangerous: it targets the source directory and uses exact-age matching rather than an older-than condition. The reported source-file deletion confirms real harm. The worker’s offer to fix supports correction, not payment. The delivered script is unsafe, so payment in full is unwarranted; yet full refund is excessive because the archive function works and the flaw is localized. The worker should correct the find step, scope it to backups, use the proper older-than test, and verify safe behavior before payment.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "347fd7ba9af634bce522e8e30b11838136923ad4a0f04dc31895d98e9f92cc42",
+        "probs": [
+          500,
+          8500,
+          1000
+        ],
+        "rationale_hash": "3fa6df49ee415c534e8a0aa2b4ac1d31452e887bec68eee79334772e049c150f",
+        "salt": "ac2d327060d265e291053ff372b02e90473e388662eb5fef06507c3df2183bdd",
+        "text": "\n\nThe script fails the core requirement: it must delete backups older than 7 days, not files in the source directory. `find $DIR -mtime 7 -delete` targets the source directory and only matches files about 7 days old, rather than older-than-7-days. The correct approach would target the backup location and use an older-than condition such as `-mtime +7`.\n\nThe requester reports that the script deleted source files during testing, which is a serious defect. The worker acknowledges the `find` command can be fixed. Because the deliverable is materially noncompliant but the defect appears correctable, payment in full is not appropriate and full refund seems too harsh. The proper first-read outcome is that the worker must correct the script before any payment.\n\n{\"worker wins\": 5, \"redo\": 85, \"requester wins\": 10}"
+      },
+      "provider_model": "near:Qwen/Qwen3.8-27B"
+    },
+    {
+      "account": "j2.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "\n\nThe script correctly handles archive creation but fails the retention requirement. The `find` command targets the source directory and uses exact-age matching (`-mtime 7`), which destroyed data in testing. This is a critical, localized defect. The worker acknowledges the issue and offers a fix. Since the core backup functionality works and the error is easily correctable, a redo is the fairest outcome. Full payment is unjustified for unsafe code, and a full refund is excessive given half the task was successfully delivered.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "\n\nI agree with the panel that the deletion logic is fundamentally flawed, targeting the source directory instead of the backup folder and matching exact age rather than older-than. This caused the reported data loss, ruling out payment for the worker. However, I disagree with assigning any weight to a full refund or a win for the requester. The archive creation function is fully functional, and the worker has acknowledged the flaw and offered a straightforward fix. Withholding payment until the command is corrected is the most equitable outcome. The defect is localized and easily fixable, making a redo the only appropriate ruling.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "70a869ead501cfb67450ce630022ac1d9a782320120acddbe3ae009cd10c175b",
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "rationale_hash": "e403d0bdc35374207bc74024bf7832f28143ce8a0b1e8100c52295b92bc4e2ad",
+        "salt": "2632603f124c05350023dec7b8ece638b6c653f93e3d6556331042e531709a85",
+        "text": "\n\nThe script correctly creates the dated .tar.gz backup, satisfying the primary archival requirement. However, the deletion logic fails on two critical counts: it uses `-mtime 7` instead of `+7`, deleting only files exactly a week old rather than older, and it targets the source directory instead of the backup location. This directly caused the data loss reported by the requester and violates the core requirement to safely prune old backups. The worker has acknowledged the flaw and offered to correct it. Given the script is structurally sound but contains a high-risk logical error that is readily fixable, a redo is appropriate. Payment should be withheld until the dangerous `find` command is corrected.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "provider_model": "near:Qwen/Qwen3.6-35B-A3B-FP8"
+    },
+    {
+      "account": "j3.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          10000,
+          0
+        ],
+        "text": "The archive creation meets the dated .tar.gz requirement, but the retention command is unsafe and noncompliant: it runs in the source directory and uses exact-age matching instead of older-than matching. The requester’s reported data loss confirms the severity. Still, the defect is localized and the worker explicitly offers to fix it, so full payment is unsafe while full refund is excessive because the backup half works. Payment should be withheld until the deletion logic is corrected to target backups with an older-than test and verified safe.\n\n{\"worker wins\": 0, \"redo\": 100, \"requester wins\": 0}"
+      },
+      "discussion_message": "I agree with the panel’s dominant outcome: redo. The archive creation works, but the deletion command is mis-scoped to the source directory and matches exact age rather than older-than, causing data loss; the worker admits it is fixable. I disagree with giving requester-win weight: a full refund overstates a localized, correctable defect when the backup portion was delivered. I also reject worker wins. Payment should wait until the deletion logic is corrected and verified safe.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "7cb491990d43aeae1ec6256cb03229528f99fcc6fe5a59ad6b9484fa56aed218",
+        "probs": [
+          0,
+          9000,
+          1000
+        ],
+        "rationale_hash": "f4a94f41f6a60d352e0fe9843294e2e26f92b5cd7433c821ea6f9aaf92454cd3",
+        "salt": "a2ada52c502dba192e3fcb932a51de1da13096d28bcea0401bfeda909ef7fcc6",
+        "text": "The script meets the backup/archive requirement but fails the deletion requirement. The `find $DIR -mtime 7 -delete` command targets the source directory and uses exact-age matching rather than “older than 7 days.” It also caused source files to be deleted in testing, a serious defect. Because the worker identifies the issue and it is fixable, the work should be corrected before payment rather than paid as-is or fully refunded. The correct scope should be the backup directory and a condition like `-mtime +7`.\n\n{\"worker wins\": 0, \"redo\": 90, \"requester wins\": 10}"
+      },
+      "provider_model": "near:deepseek-ai/DeepSeek-V4.1-Flash-1017"
+    },
+    {
+      "account": "j4.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          500,
+          8000,
+          1500
+        ],
+        "text": "The panel converged on redo, and I concur. The deletion step fails the requirement twice: it runs in the source directory rather than the backup directory, and `-mtime 7` matches files exactly 7 days old rather than older. With `-delete`, it destroyed requester data — confirmed in testing — so full payment is indefensible. But a full refund also overstates it: the dated archive works, the worker admits the flaw and offered the fix, and the correction is a small, well-defined change. The worker should fix the find command and verify safe behavior before payment.\n\n{\"worker wins\": 5, \"redo\": 80, \"requester wins\": 15}"
+      },
+      "discussion_message": "I agree with the panel's convergence on redo. Like everyone, I see two distinct defects in the deletion logic: the find command scans the source directory instead of the backup location, and the age test matches files exactly a week old rather than older than that. The result was destructive to the requester's data, so paying in full is off the table. Where I differ slightly from j2: I keep some requester-favor weight because the data loss was real and severe, even if half the deliverable worked. But a full refund overstates the failure — the archive half is sound, the worker admits the flaw, and the fix is small and well-defined. Redo, with verified safety before payment, is the right outcome.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "59ac9eadc93d390df10478e5ced207f79228b5e9fd43f79de2d7739bcb397fae",
+        "probs": [
+          500,
+          7500,
+          2000
+        ],
+        "rationale_hash": "24e1e6a9ac2b35e1ce70eaad8340a3ee144cbb396ef6ebd97a2713b6997e931b",
+        "salt": "f04b1c5e8176d7d56465069636502cc5dcd6e608f01ae1941f478469c94afea9",
+        "text": "The backup-creation half of the script works, but the retention half fails the requirements in two distinct ways: it deletes in the source directory rather than the backup directory, and `-mtime 7` matches files exactly 7 days old instead of `-mtime +7` for older-than. The result is data-destructive: the requester's test confirmed source files were deleted. That is a critical defect, not a cosmetic one. Still, the core deliverable (dated .tar.gz backup) exists, the worker admits the flaw, and the fix is a small, well-defined change. \"Redo\" fits: correct the find command to target the backup directory with `-mtime +7`, then payment. The severity of deleting source data justifies some requester-favor weight, but full refund overstates the failure since half the task was delivered.\n\n{\"worker wins\": 5, \"redo\": 75, \"requester wins\": 20}"
+      },
+      "provider_model": "near:z-ai/glm-5.3"
+    },
+    {
+      "account": "j5.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          400,
+          7900,
+          1700
+        ],
+        "text": "The panel is unanimous on redo, and the discussion confirms my first read. The archive half of the spec is delivered correctly, which rules out both full payment (the script as delivered is dangerous — it deleted source files) and a full refund (half the task was done properly). The retention half fails on two counts: `-mtime 7` matches files exactly 7 days old rather than older than 7, and the find runs in the source directory instead of the backup directory. The worker concedes the flaw and the fix is small and well-defined (`-mtime +7` scoped to backups). Real data loss keeps modest requester weight.\n\n{\"worker wins\": 4, \"redo\": 79, \"requester wins\": 17}"
+      },
+      "discussion_message": "We all land on redo, and I agree. Archive creation works, so both full payment and a full refund overshoot. The find step fails the retention requirement both ways: it scans the source directory instead of the backup directory, and it matches files at the cutoff age, not beyond it. Paired with delete, it destroyed requester data —",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "2dcf0f9c1607ed39dc9084831de6426d811662a14fcd96163eaaa71ee9e52611",
+        "probs": [
+          500,
+          7800,
+          1700
+        ],
+        "rationale_hash": "99c41c14f30cf40bce2d3cce57bb6fb3b15c96d14b2b4725dd1382048a68145a",
+        "salt": "bbbd09cc7644f6bed1bcd0fff14eceff865d3f0602eb4e1d0ec1978b0f487346",
+        "text": "The script meets half the spec: dated .tar.gz creation works. The delete step fails both parts of that requirement — `-mtime 7` targets files exactly 7 days old rather than older than 7 days, and it scans the source directory instead of the backup directory. Combined with `-delete`, this destroyed requester data in testing, which the worker effectively confirms by offering a fix. That rules out \"worker wins.\" The failure is serious but localized: one find command, explicitly fixable, with the rest of the deliverable sound. A redo lets the worker correct the command (e.g., `-mtime +7` scoped to the backup directory) while withholding payment until the script is safe and verified. Full refund overstates it since the archive functionality was delivered correctly. Redo is the fair outcome.\n\n{\"worker wins\": 5, \"redo\": 78, \"requester wins\": 17}"
+      },
+      "provider_model": "near:z-ai/glm-5.3-flash"
+    },
+    {
+      "account": "j6.jury.test.near",
+      "after_discussion": {
+        "attempts": 1,
+        "probs": [
+          0,
+          7500,
+          2500
+        ],
+        "text": " The script's archive creation works, but its deletion logic is critically defective: it targets the source directory with -mtime 7, causing data loss. The worker admitted the flaw and offered to fix it. Full payment is inappropriate for unsafe, non-compliant code, yet a full refund overstates the failure because the backup function is sound and the error is localized. Redo remains the just outcome: the worker must correct the find command to target backups with -mtime +7 and verify safety before payment. The confirmed source-file deletion warrants some refund risk, but correction before payment is fairer.\n\n{\"worker wins\": 0, \"redo\": 75, \"requester wins\": 25}"
+      },
+      "discussion_message": " I agree with the panel that redo is the proper outcome. The script’s archive creation succeeds, but the find command fatally defects the deletion requirement by targeting the source directory with exact-age matching, causing reported data loss. Like most of you, I see no case for full payment because the delivered code is dangerous and noncompliant. However, I place slightly more weight on the severity of actual source-file deletion in testing than some colleagues; this tilts my requester-wins weight a bit higher. Still, because the worker explicitly offered to fix the bug and the error is localized, correction before payment remains the fairer remedy than a full refund.",
+      "first": {
+        "attempts": 1,
+        "commit_hash": "f62c0c529b308f29879f1e6ac08888d6b32581e3e1bee726dc5c874badca612d",
+        "probs": [
+          0,
+          7500,
+          2500
+        ],
+        "rationale_hash": "63815774e9c81ab898a5443eabb8dc6c9448c41361d2e05a7e1e40c8b1be5dff",
+        "salt": "48ca026029a1b42407864eaa1acecc58ae9d3a7654ffb87f8d82b0d9d95c5d01",
+        "text": " Worker delivered a script that correctly creates dated archives but contains a critical flaw: `find` targets the source directory with `-mtime 7` instead of the backup directory with `+7`, causing data loss. This fails the deletion requirement and makes the script unsafe. However, the archive creation works, and the worker explicitly offered to fix the bug. A full refund is excessive because the error is localized and correctable, but full payment is unwarranted for dangerous, non-compliant code. Redo is the fair outcome: the worker must correct the deletion logic and verify safety before payment.\n\n{\"worker wins\": 0, \"redo\": 75, \"requester wins\": 25}"
+      },
+      "provider_model": "near:moonshotai/kimi-k2.6"
+    }
+  ],
+  "mode": "fresh run on a local sandbox, operator-run panel",
+  "options": [
+    "worker wins",
+    "redo",
+    "requester wins"
+  ],
+  "pattern": "work that does not run",
+  "policy_hash": "7eb653ee1f2ce5f806ea81a796c1ff3e14099819033115d81d4188f88c78d850",
+  "seconds": 198
+}
