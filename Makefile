@@ -1,4 +1,4 @@
-.PHONY: test demo demo-quick fresh fresh-one cases market-cases
+.PHONY: test demo demo-quick fresh fresh-one viewer cases market-cases
 
 # Unit tests of both contracts, and the shared test vector of the commitment hash.
 test:
@@ -30,3 +30,8 @@ cases:
 # Read public dispute records from the legacy market again. Uses the network.
 market-cases:
 	python3 scripts/fetch_market_cases.py
+
+# Build the one-page viewer from the newest run in runs/. No network.
+# Then open viewer/index.html in a browser.
+viewer:
+	python3 scripts/build_viewer.py

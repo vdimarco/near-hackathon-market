@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lock Before You Talk: case viewer</title>
+<style>
+:root { --bg:#f7f6f2; --card:#fff; --ink:#1c1b19; --mute:#6b675f; --line:#dedad0; --first:#1f5f8b; --audit:#b5651d; --ok:#2e6b3a; --warn:#9a5b00; --bad:#a23b2c; }
+@media (prefers-color-scheme: dark) { :root { --bg:#151514; --card:#1e1e1c; --ink:#ecebe6; --mute:#a09c93; --line:#34332f; --first:#6fb2de; --audit:#e0a15a; --ok:#7cc48a; --warn:#e2b25c; --bad:#e58a7b; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width:1080px; margin:0 auto; padding:24px 16px 64px; }
+h1 { font-size:22px; margin:0 0 4px; }
+h2 { font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); margin:0 0 10px; font-weight:600; }
+p { margin:0 0 8px; }
+.mute { color:var(--mute); }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size:12px; word-break:break-all; }
+.banner { border:1px solid var(--line); border-left:4px solid var(--warn); background:var(--card); padding:10px 14px; margin:14px 0; border-radius:6px; }
+.bar { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:16px 0; }
+select { font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); max-width:100%; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap:14px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+.wide { grid-column:1 / -1; }
+.outcome { font-size:26px; font-weight:700; line-height:1.2; }
+.Decided { color:var(--ok); } .Inconclusive { color:var(--warn); } .Incomplete { color:var(--bad); }
+.tag { display:inline-block; border:1px solid var(--line); border-radius:999px; padding:1px 9px; font-size:12px; color:var(--mute); margin:0 6px 6px 0; }
+.tag.ok { color:var(--ok); border-color:var(--ok); } .tag.bad { color:var(--bad); border-color:var(--bad); } .tag.warn { color:var(--warn); border-color:var(--warn); }
+.row { display:grid; grid-template-columns:120px 1fr 52px; gap:8px; align-items:center; margin:3px 0; font-size:13px; }
+.track { height:10px; background:var(--line); border-radius:5px; position:relative; overflow:hidden; }
+.fill { height:100%; border-radius:5px; }
+.fill.first { background:var(--first); } .fill.audit { background:var(--audit); }
+.half { position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--ink); opacity:.45; }
+.num { text-align:right; font-variant-numeric:tabular-nums; }
+.legend span { display:inline-block; width:10px; height:10px; border-radius:2px; margin:0 5px 0 12px; }
+table { width:100%; min-width:700px; border-collapse:collapse; font-size:13px; }
+td.mono { white-space:nowrap; }
+th, td { text-align:left; padding:7px 8px; border-top:1px solid var(--line); vertical-align:top; }
+th { color:var(--mute); font-weight:600; border-top:0; }
+td.num, th.num { text-align:right; }
+.mini { display:flex; gap:3px; align-items:flex-end; height:34px; }
+.mini div { width:14px; border-radius:2px 2px 0 0; min-height:1px; }
+details { margin-top:6px; } summary { cursor:pointer; color:var(--mute); font-size:13px; }
+blockquote { margin:6px 0 10px; padding:6px 10px; border-left:3px solid var(--line); white-space:pre-wrap; font-size:13px; }
+.scroll { overflow-x:auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>Lock Before You Talk: case viewer</h1>
+<p class="mute">Six AI jurors lock a first read on NEAR before they talk. The locked reads make the ruling.</p>
+<div class="banner" id="mode"></div>
+<div class="bar"><label for="pick"><strong>Case</strong></label><select id="pick"></select><span class="mute" id="count"></span></div>
+<div class="grid" id="view"></div>
+</main>
+<script id="data" type="application/json">/*__DATA__*/null</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const pct = (v, total) => total ? (100 * v / total) : 0;
+const fmt = x => x.toFixed(1) + '%';
+
+function bars(options, sums, n, kind) {
+  const box = el('div');
+  options.forEach((o, i) => {
+    const r = el('div', 'row');
+    r.append(el('div', null, o));
+    const t = el('div', 'track'); const f = el('div', 'fill ' + kind);
+    const p = pct(sums[i], 10000 * n); f.style.width = p + '%';
+    t.append(f, el('div', 'half')); r.append(t, el('div', 'num', fmt(p)));
+    box.append(r);
+  });
+  return box;
+}
+
+function mini(read, kind) {
+  const m = el('div', 'mini');
+  if (!read) { m.append(el('span', 'mute', 'none')); return m; }
+  read.forEach(v => { const b = el('div'); b.style.height = Math.max(1, v / 10000 * 34) + 'px'; b.style.background = 'var(--' + kind + ')'; b.title = (v / 100) + '%'; m.append(b); });
+  return m;
+}
+
+function card(title, wide) { const c = el('section', 'card' + (wide ? ' wide' : '')); c.append(el('h2', null, title)); return c; }
+function kv(c, k, v, mono) { const p = el('p'); p.append(el('strong', null, k + ': ')); p.append(el('span', mono ? 'mono' : null, v)); c.append(p); }
+function tag(text, cls) { return el('span', 'tag' + (cls ? ' ' + cls : ''), text); }
+
+function show(c) {
+  const v = document.getElementById('view'); v.replaceChildren();
+  const n = c.jurors.length, opt = c.options;
+
+  const o = card('Binding outcome');
+  o.append(el('div', 'outcome ' + c.outcome, c.outcome === 'Decided' ? opt[c.ruling] : c.outcome.toUpperCase()));
+  o.append(el('p', 'mute', c.outcome === 'Decided' ? 'Decided from the locked first reads. One option has more than 50%.'
+    : c.outcome === 'Inconclusive' ? 'All six jurors revealed. No option has more than 50%. No ruling.'
+    : 'A commit or a reveal is missing. No ruling.'));
+  const e = c.escrow || {};
+  kv(o, 'Sandbox payment', e.status ? ({ PaidWorker: 'worker paid', RefundedRequester: 'requester refunded', Held: 'funds held' }[e.status] || e.status) : 'no deal');
+  kv(o, 'Jury contract', c.contract + ', case ' + c.chain_case_id, true);
+  v.append(o);
+
+  const s = card('Source');
+  s.append(tag(c.fixture_type, 'warn'), tag(c.mode));
+  kv(s, 'Case', c.case_key, true);
+  if (c.pattern) kv(s, 'Pattern', c.pattern);
+  kv(s, 'Evidence hash', c.evidence_hash, true);
+  kv(s, 'Policy hash', c.policy_hash, true);
+  v.append(s);
+
+  const p = card('Pooled reads', true);
+  const lg = el('p', 'legend mute'); const a = el('span'); a.style.background = 'var(--first)'; const b = el('span'); b.style.background = 'var(--audit)';
+  lg.append(a, 'first reads, locked before the discussion (these decide)', b, 'reads after the discussion (comparison only)');
+  p.append(lg);
+  const two = el('div', 'grid');
+  const p1 = el('div'); p1.append(el('p', null, 'First reads, ' + n + ' of ' + n + ' jurors'));
+  p1.append(c.first_sums ? bars(opt, c.first_sums, n, 'first') : el('p', 'mute', 'No first reads were revealed.'));
+  const p2 = el('div'); p2.append(el('p', null, 'After the discussion, ' + c.audit_count + ' of ' + n + ' jurors'));
+  p2.append(c.audit_sums ? bars(opt, c.audit_sums, c.audit_count, 'audit') : el('p', 'mute', 'No juror posted a read after the discussion.'));
+  two.append(p1, p2); p.append(two);
+  p.append(el('p', 'mute', 'The line in each bar marks 50%. A change of opinion does not show that the change was right.'));
+  v.append(p);
+
+  const j = card('Jurors', true);
+  const wrap = el('div', 'scroll'); const t = el('table');
+  const h = el('tr'); ['Juror', 'Model', 'Commit', 'First read', 'After talk', 'Moved'].forEach((x, i) => h.append(el('th', i === 5 ? 'num' : null, x))); t.append(h);
+  c.jurors.forEach(x => {
+    const r = el('tr');
+    r.append(el('td', 'mono', x.account), el('td', null, x.model));
+    const cm = el('td');
+    cm.append(!x.committed ? tag('no commit', 'bad') : x.verified ? tag('reveal matches commit', 'ok') : x.first ? tag('not checked') : tag('no reveal', 'bad'));
+    if (x.commit_hash) cm.append(el('div', 'mono mute', x.commit_hash.slice(0, 16) + '…'));
+    r.append(cm);
+    const f = el('td'); f.append(mini(x.first, 'first')); r.append(f);
+    const g = el('td'); g.append(mini(x.audit, 'audit')); r.append(g);
+    r.append(el('td', 'num', x.moved_bps == null ? 'n/a' : fmt(x.moved_bps / 100)));
+    t.append(r);
+  });
+  wrap.append(t); j.append(wrap);
+  j.append(el('p', 'mute', 'Bars in each cell, left to right: ' + opt.join(', ') + '.'));
+  const miss = [['commit', c.missing_commits], ['reveal', c.missing_reveals], ['read after the discussion', c.missing_audit_reports]];
+  miss.forEach(([name, list]) => { if (list && list.length) j.append(el('p', null, 'Missing ' + name + ': ' + list.join(', '))); });
+  if (c.gate) { j.append(tag('release of first reads after 5 commits: ' + c.gate.release_after_5_commits, c.gate.release_after_5_commits === 'refused' ? 'ok' : 'bad'), tag('after 6 commits: ' + c.gate.release_after_6_commits)); }
+  v.append(j);
+
+  const ev = card('Evidence that the jurors read', true);
+  kv(ev, 'Requirements', c.evidence.requirements);
+  kv(ev, 'Submission', c.evidence.submission);
+  (c.evidence.messages || []).forEach(m => ev.append(el('blockquote', null, m)));
+  v.append(ev);
+
+  const tx = card('Juror texts (off-chain)', true);
+  c.jurors.forEach(x => {
+    const d = el('details'); d.append(el('summary', null, x.account + ' · ' + x.model));
+    [['First read', x.first_text], ['Message to the panel', x.message], ['After the discussion', x.audit_text]].forEach(([k, val]) => { if (val) { d.append(el('p', 'mute', k)); d.append(el('blockquote', null, val)); } });
+    tx.append(d);
+  });
+  v.append(tx);
+
+  if (c.comparison) {
+    const k = card('Comparison record (no juror saw this)', true);
+    kv(k, 'Expected ruling of the fixture', c.comparison.expected_ruling);
+    kv(k, 'Contract ruling', c.comparison.contract_ruling || 'no ruling');
+    kv(k, 'Top option after the discussion', c.comparison.top_after_discussion || 'none');
+    if (c.comparison.reason) kv(k, 'Reason given by the fixture author', c.comparison.reason);
+    v.append(k);
+  }
+}
+
+const pick = document.getElementById('pick');
+D.cases.forEach((c, i) => { const o = el('option', null, c.case_key + (c.pattern ? ' · ' + c.pattern : '')); o.value = i; pick.append(o); });
+pick.addEventListener('change', () => { show(D.cases[pick.value]); location.hash = pick.value; });
+const when = D.unix_time ? new Date(D.unix_time * 1000).toISOString().slice(0, 10) : '';
+document.getElementById('mode').textContent = 'Mode: ' + D.mode + '. Run ' + D.run_dir + (when ? ' (' + when + ')' : '') +
+  '. The cases are synthetic and one person wrote them. One operator holds all six juror keys. The contract ran on a local NEAR sandbox, not on a public network.';
+document.getElementById('count').textContent = D.cases.length + ' cases in this run';
+const start = Math.min(Math.max(parseInt(location.hash.slice(1)) || 0, 0), D.cases.length - 1);
+pick.value = start; show(D.cases[start]);
+</script>
+</body>
+</html>

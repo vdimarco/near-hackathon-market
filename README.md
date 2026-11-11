@@ -2,7 +2,7 @@
 
 Built for NEAR HACKATHON: Build Beyond Boundaries. Tracks: Agent Economy, AI Swarms, AI Security & Defense.
 
-**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November. The viewer page is not built. No juror has read a real market dispute yet. See "Not built".
+**Status on 10 November 2026:** the jury contract, the sandbox escrow, their tests, and the recorded replay work. The fresh-run harness works: six jurors read the ten synthetic disputes through the contract on 10 November. The one-page viewer shows that run. No juror has read a real market dispute yet. See "Not built".
 
 ## What it does
 
@@ -195,6 +195,16 @@ Result of the run on 10 November 2026 (`runs/fresh-2026-11-10/`):
 
 The contract decided 8 cases with the expected ruling. Case 09 has a hidden submission, and the panel reached no majority, which is the outcome that the fixture expects. Case 10 is late delivery of correct work: the first reads gave "requester wins" 56%, and the fixture expects "worker wins". After the discussion the top option equals the expected ruling in all 10 cases. This is one run of ten cases that one person wrote. It is not evidence for or against locked first reads. The model answers change from run to run.
 
+### Step 5. Open the viewer
+
+```bash
+make viewer
+```
+
+Expected result: `wrote viewer/index.html: 10 cases, 60 commitments verified`. Then open `viewer/index.html` in a browser. The page holds its data, so it needs no server and no network.
+
+The page shows one case at a time: the outcome, the sandbox payment, the pooled first reads next to the pooled reads after the discussion, both reads of each juror, the evidence, and the fixture's expected ruling in a separate record. The build script computes each commitment hash again from the revealed values and stops with an error if one differs.
+
 ## What each mode shows
 
 | Mode | What it shows | Status |
@@ -232,7 +242,6 @@ The 47 panels come from the Apart experiment (`runs/pushJ.jsonl`, condition C2, 
 ## Not built
 
 - **A complete market case.** It needs an export from a buyer or a worker who allows public use.
-- **The one-page viewer.**
 - **Split rulings.** The market can split a payment. This contract has no split outcome.
 
 ## Relation to the Apart project
@@ -247,6 +256,7 @@ The Apart repository holds the experiment and its logs. This repository is new c
 - `demo/src/bin/fresh.rs`: the fresh-run harness.
 - `demo/src/lib.rs`: sandbox helpers that both programs use.
 - `runs/fresh-2026-11-10/`: the records of one fresh run, one file for each dispute.
+- `scripts/build_viewer.py` and `viewer/template.html`: build the viewer. `viewer/index.html` is the built page for the run of 10 November.
 - `scripts/fetch_market_cases.py`: reads public dispute records from the legacy market.
 - `cases/market-legacy/index.json`: 158 partial public cases.
 - `cases/synthetic-disputes/disputes.json`: 10 synthetic disputes.
