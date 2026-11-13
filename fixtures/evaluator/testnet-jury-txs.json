@@ -1,0 +1,201 @@
+{
+ "note": "Every transaction the testnet live run sent to the jury contract, listed from the NearBlocks testnet index on 13 November 2026. scripts/verify_testnet.py reads each one again from a NEAR archival node, so the index is not trusted.",
+ "jury": "dev-20261111042208-14186395012630.testnet",
+ "txs": [
+  {
+   "tx": "2dZc6N1t8nwHmB58gaPYpntaa3fZZAWs98pGZaCKGUF7",
+   "signer": "dev-20261111042208-14186395012630.testnet",
+   "method": "new"
+  },
+  {
+   "tx": "56d1RvvRc3V5gx7ZmZNCn6HbRtyGs5hHT6gjA9qJNhHM",
+   "signer": "dev-20261111042205-96031066760269.testnet",
+   "method": "open_case"
+  },
+  {
+   "tx": "CAKvLVfnvdjZzmW9mjgGt88u3id5crH1YykR5PU7w8t4",
+   "signer": "j1.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "9D9bmkK7XR6f1Wf7PpkuHrs5Ehnvh9Wq7sviswaU9YBK",
+   "signer": "j2.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "4FHgd6SSUn5QqngeLpvSRnK5wW33mQPicRoGwMgJM9NJ",
+   "signer": "j3.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "CTZenKYRm8876CdxrqjX3uKfd1nW1MW899S1qFsJ8x8G",
+   "signer": "j4.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "E8nbwcX35vaAQcrY42fqYf3MwXXk6gqVbjKseWu1j5Q2",
+   "signer": "j5.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "6r2nSqLvQpgWnEN1KAej8CQ4R6ccDw2xEnKYgFsC3ZvC",
+   "signer": "j6.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "2bMC9Cy1iq21oWJMuV6yxWqLVAQTNZr8S2zxu8XnCMau",
+   "signer": "j1.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "9TQqVZZjaEqXeEi7xm8K9WLMAWhq1dxkvkfgWZYHi4ZL",
+   "signer": "j2.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "B346FKHBkmmh5FoZj6DciJhvQbNKMahWdNkopCt2nZwk",
+   "signer": "j3.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "5mnTd6H9cm762xUHFFmPdWHGJ6af9ZxwC84HT2g3BxS8",
+   "signer": "j4.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "DVrLxXKcvFmP4t4A9SEDN7AsRrKD5kFr7h4Ch3nBLb2H",
+   "signer": "j5.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "84PDfnka7KX7K4uNMf2vn3sZuhnkChvkhHAznzwQ8vGi",
+   "signer": "j6.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "5iTghErRcu4wVufPsUYL75tNX5WToUF1it53XeUuH6kL",
+   "signer": "j1.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "Bvmsd6tHGdxgPfDmbF4bVuBcr5CYtREVtChNxyVQWMoz",
+   "signer": "j2.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "CCZxY2bhXvoxKoA9tx7y5imuVDiH62aYzv5rwxNDF9Us",
+   "signer": "j3.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "2MAZHrz6bQGNMUNxzGrhTsMbqSe5JeK9gPAXZD4PGQTV",
+   "signer": "j4.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "CDLFsWiuhVZcGQ4hqdyW9wQeNTYnfjLPb1usdYmcS4rV",
+   "signer": "j5.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "6xgWhVGMFwnJaiqrgyvR2K9hrT2RDCKzfk82s5HvLfZw",
+   "signer": "j6.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "9FXshFxbpba1xoZeKnuPCnc4chRhNBkpFktasJhuLsw6",
+   "signer": "dev-20261111042205-96031066760269.testnet",
+   "method": "open_case"
+  },
+  {
+   "tx": "2V1VffTaHbqKoB7suxuxnmuQF3V76ufEM4KZThXLdJMi",
+   "signer": "j1.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "4p1hXqmbgpzuwy9fCERV27zFpyctRFAmNkKYZh7o167A",
+   "signer": "j2.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "D5G64gGNHig6tKmdBvsr3fHN7HT2KamMR1MNZFMdFjk3",
+   "signer": "j3.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "82GYh4CsbjT4nQr73c7cLRookFDzpppfinuPgJvwbtvh",
+   "signer": "j4.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "9guXX4xXFWsovJ5yXmxfrNkcQTLUyh21dCfVQ7bKvh6H",
+   "signer": "j5.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "ASqa9cojTqqn5ytfABv9Ch9BqjQWGd3PWdYF6KUfPeX",
+   "signer": "j6.dev-20261111042208-14186395012630.testnet",
+   "method": "commit"
+  },
+  {
+   "tx": "8fkhvUodMj3mZ7kCaEfdfPX4jQaWuJvdHqEsPJXi1KaQ",
+   "signer": "j1.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "2UbBPtydZUq6hLxCEdt3zwgiTL2WvwgcmPU5p8dCGES6",
+   "signer": "j2.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "CwAuAsVK3NAtA6aNZdaBBX9T3SbtkmpRnnZJ6kusNpjK",
+   "signer": "j3.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "8T2phXsiTUNw95dmEGsHKWzcEPnUt1gccGYCTDCErfF9",
+   "signer": "j4.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "H8aRSoGhHzotj1bWgWeGrSQVYmoxYuNYBvSnzg77F62g",
+   "signer": "j5.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "8sBRhTqTPiMD9kEVm4REBohXznYhr518iqsYjzvnwAfB",
+   "signer": "j6.dev-20261111042208-14186395012630.testnet",
+   "method": "final_read"
+  },
+  {
+   "tx": "23TTxvXZ7wXviTM6SbXJmqYEY555RqfPyATxAWp7vY1d",
+   "signer": "j1.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "DiE7F935gjkNry2z6aSfWnWEkU69nUyKYDN1fqMbU51g",
+   "signer": "j2.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "F6TDKySksEdXC25qBKnCZ9UhoqV8TtMhDstYn1CKnGNK",
+   "signer": "j3.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "AWawEXK4QPY8F3ZNWQW9HGWxzbsRdshj7iCbdBi4rn9N",
+   "signer": "j4.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "DYZWTa2MEXvJZMLG64TCF8hyfYmcbjvQsQRH9oRLA8Js",
+   "signer": "j5.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  },
+  {
+   "tx": "CTrFEMWk65hAe4T7jR7tMaeUpgTfzH9h8p36z1yu53fE",
+   "signer": "j6.dev-20261111042208-14186395012630.testnet",
+   "method": "reveal"
+  }
+ ]
+}
