@@ -1,4 +1,4 @@
-.PHONY: check test demo demo-quick fresh fresh-one viewer cases market-cases evaluator-check evaluator-live sandbox-limit-check
+.PHONY: check test demo demo-quick fresh fresh-one viewer cases market-cases evaluator-check evaluator-live verify-testnet sandbox-limit-check
 
 # Every check that needs no key and no account, in one command. About 10 minutes on a first build.
 check: test demo-quick evaluator-check viewer
@@ -59,6 +59,10 @@ evaluator-check:
 	cargo test -p demo --bin evaluator_testnet
 	python3 scripts/ruling_digest.py
 	cd evm && npm ci --no-audit --no-fund && $(FORGE) test
+
+# Read the live testnet run from the chain and check the lock. Read-only. Python 3 only, no key.
+verify-testnet:
+	python3 scripts/verify_testnet.py
 
 # Live run on NEAR testnet. The jury rules on two recorded disputes, and the
 # signer network signs each ruling. Writes fixtures/evaluator/testnet-rulings.json.
