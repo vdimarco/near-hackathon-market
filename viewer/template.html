@@ -4,11 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lock Before You Talk: case viewer</title>
+<meta name="description" content="Six AI jurors lock a first read on NEAR before they talk. This page shows each case: the ruling, and each juror before and after the discussion.">
+<meta property="og:title" content="Lock Before You Talk: case viewer">
+<meta property="og:description" content="Six AI jurors lock a first read on NEAR before they talk. The locked reads make the ruling.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#edf0ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1719" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23132027'/%3E%3Cpath d='M16 6 L27 25 H5 z' fill='none' stroke='%23edf0ee' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='19' r='3.5' fill='%23c4780a'/%3E%3C/svg%3E">
 <style>
 /*__FONTS__*/
 :root {
-  --paper:#edf0ee; --surface:#f9fbfa; --ink:#132027; --mute:#5a696e; --rule:#c8d1cf;
-  --lock:#1f3a93; --talk:#c4780a;
+  --paper:#edf0ee; --surface:#f9fbfa; --ink:#132027; --mute:#536267; --rule:#c8d1cf;
+  --lock:#1f3a93; --talk:#b06a05;
   --worker:#0f7b6c; --redo:#5f6b73; --requester:#8a3b8f; --none:#9a5b00; --bad:#a23b2c;
   --display:"Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
   --body:"IBM Plex Sans", system-ui, sans-serif;
@@ -20,112 +27,211 @@
 }
 * { box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; }
-body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.55 var(--body); }
-a { color:inherit; }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 var(--body); }
+a { color:inherit; text-underline-offset:3px; }
+a:hover { color:var(--lock); }
+button { font:inherit; color:inherit; }
 :focus-visible { outline:2px solid var(--lock); outline-offset:2px; }
-.page { max-width:1200px; margin:0 auto; padding:28px 20px 80px; }
-.top h1 { font:700 30px/1.05 var(--display); letter-spacing:-.02em; margin:0 0 6px; }
-.top p { margin:0; color:var(--mute); max-width:76ch; }
-.shell { display:grid; grid-template-columns:270px minmax(0, 1fr); gap:40px; margin-top:28px; align-items:start; }
+.page { max-width:1200px; margin:0 auto; padding:32px 20px 48px; }
+
+/* Masthead */
+.top { display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:8px 32px; align-items:start; padding-bottom:26px; border-bottom:2px solid var(--ink); }
+.top h1 { font:700 clamp(32px, 5vw, 46px)/1 var(--display); letter-spacing:-.03em; margin:0 0 12px; }
+.top .lead { margin:0; font-size:19px; line-height:1.4; max-width:56ch; }
+.top .mode { margin:8px 0 0; color:var(--mute); font-size:14px; max-width:76ch; }
+.top .links { display:flex; gap:18px; font-size:14px; font-weight:600; padding-top:10px; white-space:nowrap; }
+.steps { grid-column:1 / -1; list-style:none; margin:18px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; counter-reset:step; }
+.steps li { counter-increment:step; background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:12px 14px 13px; font-size:14px; line-height:1.45; color:var(--mute); }
+.steps b { display:block; color:var(--ink); font:600 17px/1.2 var(--display); margin-bottom:4px; }
+.steps b::before { content:counter(step); display:inline-grid; place-items:center; width:22px; height:22px; margin-right:8px; border-radius:50%; background:var(--ink); color:var(--paper); font:600 12px var(--body); vertical-align:2px; }
+.shell { display:grid; grid-template-columns:280px minmax(0, 1fr); gap:44px; margin-top:28px; align-items:start; }
 
 /* Docket */
-.docket { position:sticky; top:16px; min-width:0; }
-.case { min-width:0; }
-.docket label { display:block; font-weight:600; margin-bottom:6px; }
-.docket select { width:100%; font:inherit; padding:7px 8px; border:1px solid var(--rule); border-radius:4px; background:var(--surface); color:var(--ink); }
+.docket { position:sticky; top:16px; min-width:0; max-height:calc(100vh - 32px); overflow-y:auto; }
+.case { min-width:0; scroll-margin-top:12px; }
+.docket label { display:block; font-weight:600; font-size:14px; margin-bottom:6px; }
+.docket select { width:100%; font:inherit; font-size:15px; padding:8px; border:1px solid var(--rule); border-radius:6px; background:var(--surface); color:var(--ink); }
 .docket ol { list-style:none; margin:16px 0 0; padding:0; border-top:1px solid var(--rule); }
-.docket button { display:grid; grid-template-columns:26px 1fr 14px; gap:8px; align-items:start; width:100%; text-align:left; font:inherit; color:inherit; background:none; border:0; border-bottom:1px solid var(--rule); padding:9px 6px; cursor:pointer; }
-.docket button:hover { background:var(--surface); }
-.docket button[aria-current="true"] { background:var(--ink); color:var(--paper); }
-.docket button[aria-current="true"] .mark { outline:2px solid var(--paper); }
+.docket ol button { display:grid; grid-template-columns:26px 1fr 14px; gap:8px; align-items:start; width:100%; text-align:left; background:none; border:0; border-bottom:1px solid var(--rule); padding:8px; cursor:pointer; }
+.docket ol button:hover { background:var(--surface); }
+.docket ol button[aria-current="true"] { background:var(--ink); color:var(--paper); }
+.docket ol button[aria-current="true"] .mark { outline:2px solid var(--paper); }
 .docket .n { font:600 15px/1.4 var(--display); font-variant-numeric:tabular-nums; }
-.docket .what { font-size:13px; line-height:1.35; }
-.docket .res { display:block; opacity:.75; }
-.mark { width:12px; height:12px; margin-top:4px; border:2px solid currentColor; }
+.docket .what { font-size:14px; line-height:1.35; }
+.docket .res { display:block; font-size:13px; opacity:.75; }
+.mark { width:12px; height:12px; margin-top:4px; border:2px solid currentColor; flex:none; }
 .mark.Decided { background:currentColor; }
 .mark.Incomplete { border-style:dashed; }
-.docket .key { font-size:12px; color:var(--mute); margin:12px 0 0; }
-.docket .key span { display:inline-block; vertical-align:-1px; margin:0 5px 0 0; }
+.tally { list-style:none; margin:14px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:4px 12px; font-size:13px; color:var(--mute); }
+.tally li { display:flex; gap:7px; align-items:center; }
+.tally .mark { margin:0; }
+.tally b { margin-left:auto; color:var(--ink); font-variant-numeric:tabular-nums; }
 
 /* Case */
-.case > section { padding:26px 0; border-top:1px solid var(--rule); }
+.case > section { padding:30px 0; border-top:1px solid var(--rule); }
 .case > section:first-child { border-top:0; padding-top:0; }
-.case h2 { font:600 19px/1.2 var(--display); letter-spacing:-.01em; margin:0 0 14px; }
-.kicker { color:var(--mute); margin:0 0 10px; }
-.verdict { border-left:6px solid var(--hue, var(--ink)); padding:2px 0 2px 18px; }
-.verdict .big { font:700 clamp(30px, 5vw, 52px)/1.02 var(--display); letter-spacing:-.03em; margin:0 0 10px; max-width:18ch; }
+.case h2 { font:600 22px/1.2 var(--display); letter-spacing:-.01em; margin:0 0 16px; }
+.head { display:flex; gap:12px; align-items:center; justify-content:space-between; margin:0 0 12px; }
+.kicker { color:var(--mute); margin:0; font-size:15px; }
+.kicker b { color:var(--ink); }
+.step { display:flex; gap:6px; flex:none; }
+.step button, .tool { background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer; min-height:36px; }
+.step button:hover:not(:disabled), .tool:hover { border-color:var(--ink); }
+.step button:disabled { opacity:.4; cursor:default; }
+.verdict { background:var(--surface); border:1px solid var(--rule); border-left:8px solid var(--hue, var(--ink)); border-radius:6px; padding:22px 24px 24px; }
+.verdict .tag { display:inline-block; font-size:13px; font-weight:600; color:var(--hue, var(--ink)); margin:0 0 8px; }
+.verdict .big { font:700 clamp(30px, 4.6vw, 50px)/1.03 var(--display); letter-spacing:-.03em; margin:0 0 12px; max-width:20ch; }
 .verdict .then { font-size:17px; margin:0; max-width:60ch; }
-.facts { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:14px 28px; margin:24px 0 0; padding:0; }
-.facts dt { color:var(--mute); font-size:13px; }
-.facts dd { margin:0; font-weight:600; }
+.facts { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:12px; margin:14px 0 0; padding:0; }
+.facts div { border:1px solid var(--rule); border-radius:6px; padding:11px 14px 12px; }
+.facts dt { color:var(--mute); font-size:13px; line-height:1.35; }
+.facts dd { margin:3px 0 0; font-weight:600; line-height:1.3; }
 
 /* Plot */
-.stood { display:grid; grid-template-columns:minmax(0, 430px) minmax(0, 1fr); gap:36px; align-items:start; }
+.stood { display:grid; grid-template-columns:minmax(0, 370px) minmax(0, 1fr); gap:28px; align-items:start; }
 svg.tri { width:100%; height:auto; display:block; overflow:visible; }
 .tri text { font:13px var(--body); fill:var(--ink); }
-.tri .corner { font:600 14px var(--body); }
+.tri .corner { font:600 15px var(--body); }
 .tri .faint { fill:var(--mute); font-size:12px; }
 .tri .num { font:600 10px var(--body); fill:var(--surface); text-anchor:middle; dominant-baseline:central; pointer-events:none; }
-.legend { list-style:none; padding:0; margin:14px 0 0; display:flex; flex-wrap:wrap; gap:6px 18px; font-size:13px; color:var(--mute); }
+.legend { list-style:none; padding:0; margin:14px 0 0; display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; font-size:13px; color:var(--mute); }
 .legend svg { width:18px; height:14px; vertical-align:-2px; margin-right:5px; overflow:visible; }
 table { border-collapse:collapse; width:100%; }
-th, td { text-align:left; padding:8px 10px 8px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
-th { font-weight:600; font-size:13px; color:var(--mute); }
+th, td { text-align:left; padding:9px 10px 9px 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+th { font-weight:600; font-size:13px; color:var(--mute); vertical-align:bottom; }
 td.r, th.r { text-align:right; padding-right:0; padding-left:10px; font-variant-numeric:tabular-nums; }
 .pool td { font-size:16px; }
 .pool .maj { font-weight:600; }
 .pool small { display:block; font-size:12px; color:var(--mute); font-weight:400; }
+.pool th { white-space:nowrap; }
+.pool .bar { width:34%; }
+.pool td.bar { padding-top:14px; }
+.trk { min-width:64px; }
+.trk { position:relative; display:block; height:15px; background:linear-gradient(var(--rule), var(--rule)) 0 0 / 100% 1px no-repeat; }
+.trk::after { content:""; position:absolute; left:50%; top:-3px; bottom:-3px; width:1px; background:var(--mute); }
+.trk i { display:block; min-width:1px; }
+.trk .l { height:8px; margin-top:1px; }
+.trk .a { height:4px; margin-top:2px; opacity:.5; }
 .sw { display:inline-block; width:10px; height:10px; margin-right:8px; }
-.note { color:var(--mute); font-size:13px; max-width:70ch; margin:12px 0 0; }
-.up { color:var(--talk); }
+.note { color:var(--mute); font-size:14px; max-width:70ch; margin:12px 0 0; }
+.up { color:var(--talk); font-weight:600; }
 
 /* Jurors */
-.scroll { overflow-x:auto; }
-.jurors { min-width:720px; font-size:14px; }
-.jurors .who { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:var(--lock); color:var(--surface); font:600 11px var(--body); margin-right:8px; }
+.jurors { font-size:14px; }
+.jurors .who { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:var(--lock); color:var(--surface); font:600 12px var(--body); margin-right:8px; }
 .mono { font-family:var(--mono); font-size:12px; }
 .nowrap { white-space:nowrap; }
-.ok { color:var(--worker); } .warn { color:var(--bad); }
-.mini { display:flex; gap:3px; align-items:flex-end; height:30px; }
-.mini i { display:block; width:13px; min-height:1px; }
+.ok { color:var(--worker); font-weight:600; } .warn { color:var(--bad); font-weight:600; }
+.read { width:132px; max-width:100%; }
+.stack { display:flex; gap:1px; height:12px; background:var(--rule); }
+.stack i { display:block; min-width:2px; }
+.read .nums { display:block; margin-top:4px; color:var(--mute); white-space:nowrap; }
+.read .nums b { color:var(--ink); font-weight:400; }
 .gate { margin:14px 0 0; font-size:14px; }
 
 .evidence p { max-width:76ch; margin:0 0 10px; }
-blockquote { margin:8px 0; padding:2px 0 2px 14px; border-left:2px solid var(--rule); white-space:pre-wrap; max-width:76ch; }
-details { border-bottom:1px solid var(--rule); padding:8px 0; }
-summary { cursor:pointer; font-weight:600; }
-details p { color:var(--mute); font-size:13px; margin:10px 0 0; }
-.kept { background:var(--surface); border:1px dashed var(--rule); padding:16px 18px; }
+blockquote { margin:8px 0; padding:10px 14px; background:var(--surface); border-left:3px solid var(--rule); border-radius:0 6px 6px 0; white-space:pre-wrap; max-width:76ch; overflow-wrap:anywhere; }
+.texts { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 16px; }
+.texts h2 { margin:0; }
+details { border-bottom:1px solid var(--rule); }
+details:first-of-type { border-top:1px solid var(--rule); }
+summary { cursor:pointer; font-weight:600; padding:12px 0; }
+summary span { font-weight:400; color:var(--mute); margin-left:8px; }
+details[open] { padding-bottom:14px; }
+details p { color:var(--mute); font-size:13px; font-weight:600; margin:12px 0 0; }
+.kept { background:var(--surface); border:1px dashed var(--mute); border-radius:6px; padding:16px 18px; }
 .kept p { margin:0 0 6px; max-width:76ch; }
-.record p { margin:0 0 4px; font-size:13px; color:var(--mute); word-break:break-all; }
+.kept p:last-child { margin:0; }
+.same { display:inline-block; margin-left:8px; padding:1px 8px; border-radius:10px; font-size:13px; font-weight:600; color:var(--worker); border:1px solid currentColor; }
+.record dl { display:grid; grid-template-columns:max-content minmax(0, 1fr); gap:6px 18px; margin:0; font-size:13px; }
+.record dt { color:var(--mute); }
+.record dd { margin:0; overflow-wrap:anywhere; }
+.foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--rule); color:var(--mute); font-size:14px; }
+.foot p { margin:0; max-width:76ch; }
 
-@media (max-width: 860px) {
-  .shell { grid-template-columns:minmax(0, 1fr); gap:22px; }
-  .docket { position:static; }
-  .docket ol { display:flex; overflow-x:auto; border-top:0; gap:6px; padding-bottom:6px; }
-  .docket li { flex:0 0 150px; }
-  .docket button { border:1px solid var(--rule); height:100%; grid-template-columns:22px 1fr 12px; }
-  .stood { grid-template-columns:minmax(0, 1fr); }
+@media (max-width: 980px) {
   .facts { grid-template-columns:1fr 1fr; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+@media (max-width: 1120px) {
+  .stood { grid-template-columns:minmax(0, 1fr); gap:22px; }
+  svg.tri { max-width:440px; margin:0 auto; }
+}
+@media (max-width: 860px) {
+  .page { padding:22px 16px 40px; }
+  .top { grid-template-columns:minmax(0, 1fr); }
+  .top .links { padding-top:6px; grid-row:3; }
+  .top .lead { font-size:17px; }
+  .steps { grid-template-columns:minmax(0, 1fr); gap:0; margin-top:14px; border:1px solid var(--rule); border-radius:6px; background:var(--surface); }
+  .steps li { border:0; border-radius:0; background:none; padding:10px 12px; font-size:13px; }
+  .steps li + li { border-top:1px solid var(--rule); }
+  .steps b { display:inline; font-size:15px; margin-right:6px; }
+  .shell { grid-template-columns:minmax(0, 1fr); gap:24px; margin-top:22px; }
+  .docket { position:static; max-height:none; overflow:visible; }
+  .docket ol { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:6px; border-top:0; margin-top:12px; }
+  .docket ol button { display:flex; justify-content:center; align-items:center; gap:7px; border:1px solid var(--rule); border-radius:6px; padding:0; min-height:44px; }
+  .docket .what { display:none; }
+  .docket .mark { margin:0; }
+  .tally { grid-template-columns:repeat(4, auto); justify-content:start; gap:4px 16px; }
+  .tally b { margin-left:0; }
+  .verdict { padding:18px 18px 20px; }
+}
+@media (max-width: 1060px) {
+  .jurors thead { display:none; }
+  .jurors, .jurors tbody { display:block; }
+  .jurors tr { display:grid; grid-template-columns:minmax(0, 1.3fr) minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr) 56px; gap:10px 18px; padding:14px 0; border-bottom:1px solid var(--rule); }
+  .jurors tr:first-child { border-top:1px solid var(--rule); }
+  .jurors td { border:0; padding:0; text-align:left; min-width:0; }
+  .jurors td::before { content:attr(data-label); display:block; font-size:12px; font-weight:400; color:var(--mute); margin-bottom:2px; }
+  .jurors td:first-child { grid-column:1 / -1; }
+  .jurors td:first-child::before { display:none; }
+  .jurors td.r { text-align:left; padding:0; }
+  .read { width:auto; max-width:132px; }
+}
+@media (max-width: 720px) {
+  .jurors tr { grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:12px 16px; padding:16px 0; }
+  .pool .bar { display:none; }
+  .legend { grid-template-columns:1fr; }
+  .tally { grid-template-columns:1fr 1fr; }
+  .tally b { margin-left:auto; }
+  .head { align-items:flex-start; flex-direction:column; }
+  .record dl { grid-template-columns:minmax(0, 1fr); gap:0; }
+  .record dd { margin-bottom:8px; }
+}
+@media (max-width: 400px) {
+  .pool td { font-size:14px; }
+  .pool th, .pool td.nowrap { white-space:normal; }
+  .pool .sw { margin-right:5px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; scroll-behavior:auto !important; } }
 </style>
 </head>
 <body>
 <div class="page">
   <header class="top">
-    <h1>Lock Before You Talk</h1>
-    <p id="mode"></p>
+    <div>
+      <h1>Lock Before You Talk</h1>
+      <p class="lead">Six AI jurors lock a first read on NEAR before they talk. The locked reads make the ruling.</p>
+      <p class="mode" id="mode"></p>
+    </div>
+    <p class="links"><a href="https://github.com/vdimarco/near-hackathon-market#readme">How it works</a><a href="https://github.com/vdimarco/near-hackathon-market">Source on GitHub</a></p>
+    <ol class="steps">
+      <li><b>Lock</b>Each juror commits a hash of its first read on NEAR. No juror sees a first read until all six have committed.</li>
+      <li><b>Talk</b>The jurors read the messages of the panel. Then each juror gives a second read.</li>
+      <li><b>Rule</b>The contract counts only the locked reads. A ruling needs more than half of them.</li>
+    </ol>
   </header>
   <div class="shell">
     <nav class="docket" aria-label="Cases">
       <label for="run">Run</label>
       <select id="run"></select>
       <ol id="list"></ol>
-      <p class="key"><span class="mark Decided" style="color:var(--worker)"></span>worker wins <span class="mark Decided" style="color:var(--requester);margin-left:8px"></span>requester wins <span class="mark Decided" style="color:var(--redo);margin-left:8px"></span>redo <span class="mark" style="margin-left:8px"></span>no ruling</p>
+      <ul class="tally" id="tally" aria-label="Results of this run"></ul>
     </nav>
-    <main class="case" id="case"></main>
+    <main class="case" id="case" tabindex="-1"></main>
   </div>
+  <footer class="foot">
+    <p>This page holds its data and its fonts. It needs no server and no network. The build script checks each commitment hash again before it writes the page. <a href="https://github.com/vdimarco/near-hackathon-market">Read the source and the run records on GitHub.</a></p>
+  </footer>
 </div>
 <script id="data" type="application/json">/*__DATA__*/null</script>
 <script>
@@ -146,12 +252,12 @@ function topOf(sums) {
 
 /* The three rulings are the corners of a triangle. A read is a point inside it. */
 function triangle(c) {
-  const S = 380, H = S * Math.sqrt(3) / 2, px = 58, py = 34;
+  const S = 380, H = S * Math.sqrt(3) / 2, px = 50, py = 58;
   const A = [px, py + H], B = [px + S / 2, py], C = [px + S, py + H];
   const at = r => { const t = r[0] + r[1] + r[2]; return [(r[0] * A[0] + r[1] * B[0] + r[2] * C[0]) / t, (r[0] * A[1] + r[1] * B[1] + r[2] * C[1]) / t]; };
   const mid = (p, q) => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
   const pts = a => a.map(p => p.join(',')).join(' ');
-  const svg = sv('svg', { class: 'tri', viewBox: `0 0 ${S + 2 * px} ${H + py + 62}`, role: 'img',
+  const svg = sv('svg', { class: 'tri', viewBox: `0 0 ${S + 2 * px} ${H + py + 76}`, role: 'img',
     'aria-label': 'Each juror as a point between the three rulings, before and after the discussion' });
   const defs = sv('defs', {});
   const mk = sv('marker', { id: 'arr', viewBox: '0 0 8 8', refX: 7, refY: 4, markerWidth: 6, markerHeight: 6, orient: 'auto' });
@@ -163,21 +269,23 @@ function triangle(c) {
   svg.append(sv('polygon', { points: pts([mAB, mBC, mAC]), fill: 'none', stroke: 'var(--mute)', 'stroke-dasharray': '4 4' }));
   const ctr = at([1, 1, 1]);
   svg.append(sv('text', { x: ctr[0], y: ctr[1] + 4, 'text-anchor': 'middle', class: 'faint' }, 'no majority'));
-  svg.append(sv('text', { x: A[0] - 20, y: A[1] + 44, 'text-anchor': 'start', class: 'corner' }, c.options[0]));
-  svg.append(sv('text', { x: B[0], y: B[1] - 16, 'text-anchor': 'middle', class: 'corner' }, c.options[1]));
-  svg.append(sv('text', { x: C[0] + 20, y: C[1] + 44, 'text-anchor': 'end', class: 'corner' }, c.options[2]));
+  svg.append(sv('text', { x: A[0] - 30, y: A[1] + 58, 'text-anchor': 'start', class: 'corner' }, c.options[0]));
+  svg.append(sv('text', { x: B[0], y: B[1] - 38, 'text-anchor': 'middle', class: 'corner' }, c.options[1]));
+  svg.append(sv('text', { x: C[0] + 30, y: C[1] + 58, 'text-anchor': 'end', class: 'corner' }, c.options[2]));
 
   // Points that share a place are spread on a small circle.
-  const spread = reads => {
+  // The circle is large enough that the points do not cover each other.
+  const spread = (reads, rad) => {
     const groups = {};
     reads.forEach((r, i) => { if (r) (groups[r.join()] = groups[r.join()] || []).push(i); });
     return reads.map((r, i) => {
       if (!r) return null; const g = groups[r.join()], p = at(r);
       if (g.length === 1) return p; const k = g.indexOf(i), a = 2 * Math.PI * k / g.length - Math.PI / 2;
-      return [p[0] + 12 * Math.cos(a), p[1] + 12 * Math.sin(a)];
+      const R = Math.max(12, (rad + .5) / Math.sin(Math.PI / g.length));
+      return [p[0] + R * Math.cos(a), p[1] + R * Math.sin(a)];
     });
   };
-  const F = spread(c.jurors.map(j => j.first)), T = spread(c.jurors.map(j => j.audit));
+  const F = spread(c.jurors.map(j => j.first), 9), T = spread(c.jurors.map(j => j.audit), 9);
   const moving = [];
   c.jurors.forEach((j, i) => {
     if (!F[i] || !T[i]) return;
@@ -226,10 +334,18 @@ function triangle(c) {
   return svg;
 }
 
+/* One read is one bar of three parts. The numbers below give the same values. */
 function mini(read, options) {
-  const m = el('div', 'mini');
+  const m = el('div', 'read');
   if (!read) { m.append(el('span', 'warn', 'none')); return m; }
-  read.forEach((v, i) => { const b = el('i'); b.style.height = Math.max(1, v / 10000 * 30) + 'px'; b.style.background = hue(options[i]); b.title = options[i] + ': ' + v / 100 + '%'; m.append(b); });
+  const bar = el('div', 'stack'), nums = el('span', 'nums mono'), max = Math.max(...read);
+  read.forEach((v, i) => {
+    if (v > 0) { const b = el('i'); b.style.flex = `${v} 0 0`; b.style.background = hue(options[i]); bar.append(b); }
+    if (i) nums.append(' / ');
+    nums.append(v === max ? el('b', null, Math.round(v / 100)) : String(Math.round(v / 100)));
+  });
+  m.title = options.map((o, i) => `${o}: ${read[i] / 100}%`).join(', ');
+  m.append(bar, nums);
   return m;
 }
 
@@ -239,10 +355,21 @@ function show() {
   const ft = topOf(c.first_sums), at = topOf(c.audit_sums);
 
   const s1 = el('section');
-  s1.append(el('p', 'kicker', `Case ${caseIndex + 1} of ${run.cases.length}: ${c.pattern || c.case_key}`));
+  const head = el('div', 'head'), kick = el('p', 'kicker', `Case ${caseIndex + 1} of ${run.cases.length}: `);
+  kick.append(el('b', null, c.pattern || c.case_key));
+  const step = el('div', 'step');
+  [['Previous', -1], ['Next', 1]].forEach(([word, d]) => {
+    const b = el('button', null, d < 0 ? '\u2190 ' + word : word + ' \u2192'); b.type = 'button';
+    b.setAttribute('aria-label', word + ' case');
+    b.disabled = caseIndex + d < 0 || caseIndex + d >= run.cases.length;
+    b.addEventListener('click', () => go(caseIndex + d));
+    step.append(b);
+  });
+  head.append(kick, step); s1.append(head);
   const v = el('div', 'verdict');
-  let big, then;
+  let big, then, tag = 'No ruling';
   if (c.outcome === 'Decided') {
+    tag = 'Ruling';
     big = `The locked reads say: ${opt[c.ruling]}.`;
     then = at == null ? 'After the discussion no option led.' : at === c.ruling ? `After the discussion the panel still favoured "${opt[at]}".`
       : `After the discussion the panel favoured "${opt[at]}". The ruling comes from the locked reads, so it did not change.`;
@@ -256,10 +383,10 @@ function show() {
     then = 'A commit or a reveal is missing, so the contract made no ruling.';
     v.style.setProperty('--hue', 'var(--bad)');
   }
-  v.append(el('p', 'big', big), el('p', 'then', then)); s1.append(v);
+  v.append(el('p', 'tag', tag), el('p', 'big', big), el('p', 'then', then)); s1.append(v);
   const facts = el('dl', 'facts');
   const pay = { PaidWorker: 'Worker paid', RefundedRequester: 'Requester refunded', Held: 'Funds held' }[(c.escrow || {}).status] || 'No deal';
-  [['Sandbox payment', pay], ['Kind of case', c.fixture_type.replace(/^synthetic case/, 'Synthetic')], ['First reads held back until all six committed', c.gate && c.gate.release_after_5_commits === 'refused' ? 'Yes, tested' : 'Not tested'],
+  [['Sandbox payment', pay], ['Kind of case', c.fixture_type.replace(/^synthetic case/, 'Synthetic')], ['First reads held back until all six had committed', c.gate && c.gate.release_after_5_commits === 'refused' ? 'Yes, tested' : 'Not tested'],
    ['Reveals that match their commit', c.jurors.filter(j => j.verified).length + ' of ' + n]].forEach(([k, val]) => {
     const d = el('div'); d.append(el('dt', null, k), el('dd', null, val)); facts.append(d);
   });
@@ -278,24 +405,31 @@ function show() {
     left.append(lg);
   }
   const right = el('div'); const t = el('table', 'pool'); const h = el('tr');
-  ['Ruling', 'Locked', 'After talk', 'Change'].forEach((x, i) => h.append(el('th', i ? 'r' : null, x))); t.append(h);
+  ['Ruling', 'Share', 'Locked', 'After talk', 'Change'].forEach((x, i) => { const th = el('th', i > 1 ? 'r' : i ? 'bar' : null, x); th.scope = 'col'; h.append(th); });
+  const ph = el('thead'), pb = el('tbody'); ph.append(h); t.append(ph, pb);
   opt.forEach((o, i) => {
     const r = el('tr'); const name = el('td', 'nowrap'); const sw = el('span', 'sw'); sw.style.background = hue(o); name.append(sw, o); r.append(name);
     const f = c.first_sums ? c.first_sums[i] / n / 100 : null, a = c.audit_sums && c.audit_count ? c.audit_sums[i] / c.audit_count / 100 : null;
     const cell = (val, cls) => { const td = el('td', 'r' + (val != null && val > 50 ? ' maj' : '')); td.append(val == null ? 'none' : pc(val)); if (val != null && val > 50) td.append(el('small', null, 'more than half')); return td; };
+    const bar = el('td', 'bar'), trk = el('span', 'trk');
+    [['l', f], ['a', a]].forEach(([k, val]) => { if (val != null) { const b = el('i', k); b.style.width = val + '%'; b.style.background = hue(o); trk.append(b); } });
+    bar.append(trk); r.append(bar);
     r.append(cell(f), cell(a));
     const d = f != null && a != null ? a - f : null;
-    r.append(el('td', 'r' + (d != null && Math.abs(d) >= 5 ? ' up' : ''), d == null ? '' : (d > 0 ? '+' : '') + d.toFixed(1)));
-    t.append(r);
+    r.append(el('td', 'r' + (d != null && Math.abs(d) >= 5 ? ' up' : ''), d == null ? '' : (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d).toFixed(1)));
+    pb.append(r);
   });
   right.append(t);
   right.append(el('p', 'note', `${n} of ${n} jurors gave a first read. ${c.audit_count} of ${n} gave a read after the discussion. Only the locked first reads count. An option needs more than 50% of them.`));
+  right.append(el('p', 'note', 'In the table, the thick bar is the locked reads and the thin bar is the reads after the discussion. The line marks 50%. The change is in percentage points.'));
   right.append(el('p', 'note', 'A corner of the triangle is 100% for one ruling. In a shaded corner that ruling has more than half. A change of opinion does not show that the change was right.'));
   g.append(left, right); s2.append(g); root.append(s2);
 
   const s3 = el('section'); s3.append(el('h2', null, 'Each juror'));
-  const wrap = el('div', 'scroll'); const jt = el('table', 'jurors'); const jh = el('tr');
-  ['Juror', 'Model', 'Commit on NEAR', 'First read', 'After talk', 'Moved'].forEach((x, i) => jh.append(el('th', i === 5 ? 'r' : null, x))); jt.append(jh);
+  const jt = el('table', 'jurors'); const jh = el('tr');
+  const cols = ['Juror', 'Model', 'Commit on NEAR', 'First read, locked', 'After talk', 'Moved'];
+  cols.forEach((x, i) => { const th = el('th', i === 5 ? 'r' : null, x); th.scope = 'col'; jh.append(th); });
+  const jhd = el('thead'), jb = el('tbody'); jhd.append(jh); jt.append(jhd, jb);
   c.jurors.forEach((x, i) => {
     const r = el('tr'); const who = el('td', 'nowrap'); who.append(el('span', 'who', i + 1), el('span', 'mono', x.account)); r.append(who);
     r.append(el('td', null, x.model.replace(/^(adaption|near):/, '')));
@@ -304,11 +438,12 @@ function show() {
     if (x.commit_hash) cm.append(el('div', 'mono', x.commit_hash.slice(0, 14) + '…'));
     r.append(cm);
     const a = el('td'); a.append(mini(x.first, opt)); const b = el('td'); b.append(mini(x.audit, opt)); r.append(a, b);
-    r.append(el('td', 'r', x.moved_bps == null ? 'n/a' : pc(x.moved_bps / 100)));
-    jt.append(r);
+    r.append(el('td', 'r' + (x.moved_bps >= 2000 ? ' up' : ''), x.moved_bps == null ? 'n/a' : pc(x.moved_bps / 100)));
+    [...r.children].forEach((td, k) => td.setAttribute('data-label', cols[k]));
+    jb.append(r);
   });
-  wrap.append(jt); s3.append(wrap);
-  s3.append(el('p', 'note', `Bars, left to right: ${opt.join(', ')}. "Moved" is the share of probability that the juror moved between rulings.`));
+  s3.append(jt);
+  s3.append(el('p', 'note', `Each bar and each row of numbers shows percent, left to right: ${opt.join(', ')}. "Moved" is the share of probability that the juror moved between rulings.`));
   [['commit', c.missing_commits], ['reveal', c.missing_reveals], ['read after the discussion', c.missing_audit_reports]].forEach(([k, list]) => { if (list && list.length) s3.append(el('p', 'gate warn', `Missing ${k}: ${list.join(', ')}`)); });
   root.append(s3);
 
@@ -318,9 +453,12 @@ function show() {
   (c.evidence.messages || []).forEach(m => s4.append(el('blockquote', null, m)));
   root.append(s4);
 
-  const s5 = el('section'); s5.append(el('h2', null, 'What the jurors wrote'));
+  const s5 = el('section'); const th5 = el('div', 'texts'); th5.append(el('h2', null, 'What the jurors wrote'));
+  const all = el('button', 'tool', 'Open all'); all.type = 'button';
+  all.addEventListener('click', () => { const open = all.textContent === 'Open all'; s5.querySelectorAll('details').forEach(d => d.open = open); all.textContent = open ? 'Close all' : 'Open all'; });
+  th5.append(all); s5.append(th5);
   c.jurors.forEach((x, i) => {
-    const d = el('details'); d.append(el('summary', null, `Juror ${i + 1}, ${x.model.replace(/^(adaption|near):/, '')}`));
+    const d = el('details'), sm = el('summary', null, `Juror ${i + 1}`); sm.append(el('span', null, x.model.replace(/^(adaption|near):/, ''))); d.append(sm);
     [['First read, written alone', x.first_text], ['Message to the panel', x.message], ['After the discussion', x.audit_text]].forEach(([k, val]) => { if (val) { d.append(el('p', null, k)); d.append(el('blockquote', null, val)); } });
     s5.append(d);
   });
@@ -334,17 +472,19 @@ function show() {
     line('The author of the case expected:', c.comparison.expected_ruling + '.');
     if (c.comparison.reason) line('The author\'s reason:', c.comparison.reason);
     const exp = c.comparison.expected_ruling, got = c.outcome === 'Decided' ? opt[c.ruling] : 'no ruling';
-    line('The contract gave:', got + (got === exp ? ', the same.' : '.'));
+    line('The contract gave:', got + '.');
+    if (got === exp) k.lastChild.append(el('span', 'same', 'the same'));
     s6.append(k); root.append(s6);
   }
 
-  const s7 = el('section', 'record'); s7.append(el('h2', null, 'Record'));
+  const s7 = el('section', 'record'); s7.append(el('h2', null, 'Record')); const rec = el('dl');
   [['Case', c.case_key], ['Jury contract', `${c.contract}, case ${c.chain_case_id}`], ['Evidence hash', c.evidence_hash], ['Policy hash', c.policy_hash], ['Mode', c.mode]].forEach(([k, val]) => {
-    const p = el('p'); p.append(k + ': '); p.append(el('span', 'mono', val)); s7.append(p);
+    rec.append(el('dt', null, k), el('dd', 'mono', val));
   });
-  root.append(s7);
+  s7.append(rec); root.append(s7);
 
   document.querySelectorAll('#list button').forEach((b, i) => b.setAttribute('aria-current', i === caseIndex ? 'true' : 'false'));
+  document.title = `Case ${caseIndex + 1}: ${c.pattern || c.case_key} | Lock Before You Talk`;
   // A preview pane can run the page in a sandbox that refuses this call.
   try { history.replaceState(null, '', `#${runIndex + 1}-${caseIndex + 1}`); } catch (e) { /* the page works with no address */ }
 }
@@ -357,18 +497,47 @@ function list() {
     what.append(el('span', 'res', c.outcome === 'Decided' ? c.options[c.ruling] : 'no ruling'));
     const mark = el('span', 'mark ' + c.outcome); if (c.outcome === 'Decided') mark.style.color = hue(c.options[c.ruling]);
     b.append(el('span', 'n', String(i + 1).padStart(2, '0')), what, mark);
-    b.addEventListener('click', () => { caseIndex = i; show(); if (innerWidth < 861) document.getElementById('case').scrollIntoView({ behavior: still ? 'auto' : 'smooth' }); });
+    b.setAttribute('aria-label', `Case ${i + 1}: ${c.pattern || c.case_key}, ${c.outcome === 'Decided' ? c.options[c.ruling] : 'no ruling'}`);
+    b.addEventListener('click', () => go(i));
     li.append(b); ol.append(li);
   });
-  document.getElementById('mode').textContent = `Six AI jurors lock a first read on NEAR before they talk, and the locked reads make the ruling. ${run.note}`;
+  document.getElementById('mode').textContent = run.note;
+  // How many cases of this run ended with each result.
+  const tally = document.getElementById('tally'); tally.replaceChildren();
+  const names = [...run.cases[0].options, 'no ruling'];
+  names.forEach(name => {
+    const count = run.cases.filter(c => (c.outcome === 'Decided' ? c.options[c.ruling] : 'no ruling') === name).length;
+    const li = el('li'), mark = el('span', 'mark' + (name === 'no ruling' ? '' : ' Decided')); mark.style.color = hue(name);
+    li.append(mark, name, el('b', null, count)); tally.append(li);
+  });
+}
+
+/* Show another case. If the top of the case is above the window, go to it. */
+function go(i) {
+  const cases = D.runs[runIndex].cases;
+  if (i < 0 || i >= cases.length) return;
+  caseIndex = i; show();
+  const root = document.getElementById('case');
+  if (root.getBoundingClientRect().top < 0 || innerWidth < 861) root.scrollIntoView({ behavior: still ? 'auto' : 'smooth' });
+}
+function fromHash() {
+  const m = location.hash.match(/^#(\d+)-(\d+)$/);
+  if (!m) return false;
+  runIndex = Math.max(0, Math.min(D.runs.length, +m[1]) - 1); caseIndex = Math.max(0, Math.min(D.runs[runIndex].cases.length, +m[2]) - 1);
+  return true;
 }
 
 const pick = document.getElementById('run');
 D.runs.forEach((r, i) => { const o = el('option', null, r.label); o.value = i; pick.append(o); });
 pick.addEventListener('change', () => { runIndex = +pick.value; caseIndex = Math.min(caseIndex, D.runs[runIndex].cases.length - 1); list(); show(); });
-const m = location.hash.match(/^#(\d+)-(\d+)$/);
-if (m) { runIndex = Math.max(0, Math.min(D.runs.length, +m[1]) - 1); caseIndex = Math.max(0, Math.min(D.runs[runIndex].cases.length, +m[2]) - 1); }
+fromHash();
 pick.value = runIndex; list(); show();
+addEventListener('hashchange', () => { const r = runIndex, k = caseIndex; if (fromHash() && (r !== runIndex || k !== caseIndex)) { pick.value = runIndex; list(); show(); } });
+// The left and right arrow keys go to the previous and the next case.
+addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || /^(SELECT|INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if (e.key === 'ArrowLeft') go(caseIndex - 1); else if (e.key === 'ArrowRight') go(caseIndex + 1);
+});
 </script>
 </body>
 </html>
