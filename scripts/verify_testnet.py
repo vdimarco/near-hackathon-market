@@ -15,6 +15,7 @@ import json
 import os
 import sys
 import time
+import urllib.error
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +24,7 @@ from commit_hash import commitment_hash  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RPC = "https://rpc.testnet.fastnear.com"
 ARCHIVAL = "https://archival-rpc.testnet.fastnear.com"
+ARCHIVAL_FALLBACK = "https://archival-rpc.testnet.near.org"
 EXPLORER = "https://testnet.nearblocks.io"
 JUROR_METHODS = {"commit", "reveal", "final_read"}
 
@@ -49,8 +51,11 @@ def rpc(method, params, url=RPC):
             if "error" in out:
                 raise RuntimeError(json.dumps(out["error"])[:200])
             return out["result"]
-        except Exception:
+        except Exception as exc:
             if attempt == 2:
+                # shortcut: the fallback is rate-limited; use it only when FastNear returns 429.
+                if url == ARCHIVAL and isinstance(exc, urllib.error.HTTPError) and exc.code == 429:
+                    return rpc(method, params, ARCHIVAL_FALLBACK)
                 raise
             time.sleep(1.5 * (attempt + 1))
 
