@@ -10,11 +10,21 @@ Six AI jurors rule on a payment dispute between two agents. Each juror locks its
 
 Live viewer: https://lock-jury.vercel.app
 
+## For judges: three checks
+
+| Do this | See this |
+|---|---|
+| Open https://lock-jury.vercel.app/#2-9 | One dispute: the ruling, and each of the six jurors before and after the discussion. |
+| `python3 scripts/verify_testnet.py` (Python 3 only, no install, no key) | 15 lines that start with `ok`, then `all 15 checks passed`. It reads the live testnet run from the chain: no full-access keys, every reveal hashes to its commit, the sixth commit of each case lands before any juror reads the discussion, and each ruling is the majority of the first reads. |
+| `make check` (Rust through rustup, about 10 minutes the first time) | `ALL CHECKS PASSED` |
+
+[GitHub runs `make check` on a clean machine](https://github.com/vdimarco/near-hackathon-market/actions/workflows/checks.yml) for each change, and reads the testnet run with `scripts/verify_testnet.py`.
+
 ## The problem
 
 Agents now hire agents, and some jobs end in a dispute. A panel of AI jurors can rule on a dispute for cents. A panel has one weak point: after the jurors talk, nobody can tell which opinions a juror formed alone and which it copied.
 
-The picture shows this in one case from this repository. The jurors cannot see the submitted work. Their locked first reads give "worker wins" 59%. After the jurors read each other's first reads and messages, the panel is at 83%. No new evidence came in.
+The picture shows this in one case from this repository. The jurors cannot see the submitted work. Their locked first reads give "worker wins" 59%. After the jurors read each other's first reads and messages, the panel is at 83%. No new evidence came in. The case file expects "redo", so the locked ruling is not the expected one either. The lock does not make a panel right. It keeps a record of what each juror thought before the talk, so anyone can see how far the talk moved the panel.
 
 In an exploratory study I ran at the Apart Research hackathon ([apart-swarm-alignment](https://github.com/vdimarco/apart-swarm-alignment)), measured error correlation between model pairs went from 0.42 to 0.77 after free discussion. The estimate used five model pairs, and its 95% interval includes no change. In that study the lock was a sentence in the prompt. Here the lock is a record on NEAR that nobody can change.
 
@@ -32,7 +42,10 @@ In an exploratory study I ran at the Apart Research hackathon ([apart-swarm-alig
 
 ## Run it
 
-You need Rust (rustup), Python 3, and Node.js 22. You do not need an API key, a wallet, or a NEAR account. `rust-toolchain.toml` selects Rust 1.97.0 and the `wasm32-unknown-unknown` target.
+You need Rust (rustup), Python 3, Node.js 22, and `make`. You do not need an API key, a wallet, or a NEAR account. `rust-toolchain.toml` selects Rust 1.97.0 and the `wasm32-unknown-unknown` target.
+
+- Install Rust with [rustup](https://rustup.rs). A Rust from a system package manager ignores `rust-toolchain.toml`, and an older one stops the build. With Rust 1.85, cargo stops with "Either upgrade rustc or select compatible dependency versions".
+- On Linux, the sandbox client links OpenSSL. Install `pkg-config` and `libssl-dev`, or point the build at the system copy: `export OPENSSL_DIR=/usr OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu OPENSSL_INCLUDE_DIR=/usr/include`.
 
 ```bash
 git clone https://github.com/vdimarco/near-hackathon-market
@@ -57,7 +70,8 @@ More steps:
 |---|---|
 | `make demo` | The replay of all 47 recorded panels, about 2 minutes. `contract result equals the offline calculation: 47 of 47` |
 | `make fresh-one` | One dispute with six new model calls. Needs a key in `.env`. See `.env.example`. |
-| `make evaluator-live` | A live run on NEAR testnet. The testnet faucet funds the accounts. |
+| `make verify-testnet` | The same as `python3 scripts/verify_testnet.py`: 15 checks on the live testnet run, read from a NEAR archival node. |
+| `make evaluator-live` | A new live run on NEAR testnet. The testnet faucet funds the accounts. |
 
 Each program exits with an error if a result differs from the expected result. [docs/RUN.md](docs/RUN.md) lists every step with its full expected output.
 
@@ -88,11 +102,38 @@ In a fresh run the harness also tries to release the first reads after five of s
 | Recorded replay, `cases/pushJ/` | 47 puzzle panels from the Apart study, six open-weight models | The contract equals the offline calculation in 47 of 47. Decided and correct: 42. Decided and wrong: 0. Inconclusive: 5. |
 | Fresh run, models on Adaption, 10 November | 10 synthetic disputes | Contract equals offline in 10 of 10. The expected ruling in 8. Case 09: no majority. Case 10: a different ruling. |
 | Fresh run, models on NEAR AI Cloud, 11 November | The same 10 disputes | Contract equals offline in 10 of 10. The expected ruling in 8. Case 09: a different ruling. Case 10: no majority. |
-| Live run on NEAR testnet, 11 November | 2 recorded disputes | The signer network signed both rulings. [Transaction 1](https://testnet.nearblocks.io/txns/8sYBBtB3APXufNL4pA3p73Sbaw6wo7txxR6DHNpGEk48), [transaction 2](https://testnet.nearblocks.io/txns/6xEw5SePD5pDiBov3xsXvXZ1ozNB3CZ4iiCfvJkca6PF). |
+| Live run on NEAR testnet, 11 November | 2 recorded disputes | 12 commits, 12 audit reads and 12 reveals from six juror accounts. Both cases decided. The signer network signed both rulings. [Transaction 1](https://testnet.nearblocks.io/txns/8sYBBtB3APXufNL4pA3p73Sbaw6wo7txxR6DHNpGEk48), [transaction 2](https://testnet.nearblocks.io/txns/6xEw5SePD5pDiBov3xsXvXZ1ozNB3CZ4iiCfvJkca6PF). |
 
 Read these numbers with care. The puzzles are not market disputes. One person wrote the ten disputes, and model answers change from run to run. These runs test the contract and the harness. They do not show that locked first reads give better rulings. On the puzzle panels the same jurors were right 44 times with first reads and 42 times after talk, and that gap is small.
 
 The viewer shows both fresh runs. Case 10 of the Adaption run is a case where the locked ruling differs from the fixture and the discussion moved the panel toward it. Case 09 of the NEAR AI Cloud run is the case in the picture.
+
+## See it on NEAR testnet
+
+The live run of 11 November is still on testnet. `python3 scripts/verify_testnet.py` checks all of it. To look by hand:
+
+| Do this | See this |
+|---|---|
+| Open the [jury contract](https://testnet.nearblocks.io/address/dev-20261111042208-14186395012630.testnet) | 2 `open_case`, 12 `commit`, 12 `final_read` and 12 `reveal` calls. In each case the six commits come first. |
+| Open [juror j1](https://testnet.nearblocks.io/address/j1.dev-20261111042208-14186395012630.testnet) and its keys | One function-call key for `commit`, `reveal` and `final_read` on the jury. It cannot send NEAR. |
+| Open the [evaluator contract](https://testnet.nearblocks.io/address/dev-20261111042213-22311744102799.testnet) | Two `sign_ruling` calls, each answered by `v1.signer-prod.testnet`. |
+| Check the keys of the jury and the evaluator | No keys at all. The full-access keys were deleted after setup: [jury](https://testnet.nearblocks.io/txns/Dvs35aDmMYEK5neYF4vT7MmR9GcQ4mZHjF5SvGmQygBZ), [evaluator](https://testnet.nearblocks.io/txns/8NDScsa5fVyyASRGNCPYeEfV7sqqcdEj8od9m1cpEA4B). Nobody can change either contract. |
+
+`fixtures/evaluator/testnet-jury-txs.json` lists the hash of each transaction the run sent to the jury. The script reads each one again from an archival node, so it does not trust the explorer or the list.
+
+## Track hints
+
+The organizers list hints for each track. This table says which ones this project uses.
+
+| Track | Hint | Here |
+|---|---|---|
+| AI Swarms | Multi-agent systems | Yes. Six model jurors, a commit phase, a discussion, and a ruling from the pooled first reads. |
+| AI Swarms | Sub-accounts | Yes. Jurors are `j1.<jury>` to `j6.<jury>`. |
+| AI Swarms | NEAR Intents | No. The escrow pays in NEAR. |
+| AI Security & Defense | Agent security, function call keys | Yes. Each juror key can call three methods on one contract and cannot attach NEAR. The node refuses a transfer and a call to `open_case` (`make demo-quick`). |
+| AI Security & Defense | Policy engines, spending limits | Partly. The escrow pays only on a decided ruling and holds the funds in every other case. There is no spending cap. |
+| AI Security & Defense | TEE attestation | No. One fresh run used models on NEAR AI Cloud, but this repository does not check an attestation. |
+| Both | Chain Signatures | Yes. The evaluator contract has the NEAR signer network sign each decided ruling, for an ERC-8183 escrow on an EVM chain. |
 
 ## How NEAR is used
 
@@ -123,7 +164,7 @@ The viewer shows both fresh runs. Case 10 of the Adaption run is a case where th
 - **Earlier work.** The Apart study ran on 7 and 8 November 2026 in its own repository. This repository uses its recorded model outputs as test data (`cases/pushJ/`) and no code from it.
 - **Other chains.** `evm/` holds a Solidity adapter and tests. The NEAR work in that part is the `evaluator/` contract and its use of Chain Signatures. `evm/lib/erc-8183/` is the ERC-8183 reference contract, copied from erc-8183/base-contracts at commit 142e669 under its MIT license.
 - **Libraries.** Rust: `near-sdk`, `near-workspaces`, `tokio`, `reqwest`, `serde`, `serde_json`, `borsh`, `sha2`, `sha3`, `bs58`, `getrandom`, `futures`, `anyhow`. EVM: Foundry, `forge-std`, OpenZeppelin Contracts. The viewer embeds Bricolage Grotesque and IBM Plex under the SIL Open Font License.
-- **Second entry by the same author.** [Pay on Proof](https://github.com/vdimarco/rouge-warden/tree/main/pop) is in the Agent Economy track. It is an escrow on NEAR that pays an agent when its work passes a check that the contract runs. The two projects are independent: they share no code and no contract.
+- **Second entry by the same author (rule Q-015).** [Pay on Proof](https://github.com/vdimarco/rouge-warden/tree/main/pop) is in the Agent Economy track. It is an escrow on NEAR mainnet that pays an agent when its work passes a check that the contract runs. The two projects are independent: they share no code and no contract. The author's other NEAR repository, [near-agent-thesis](https://github.com/vdimarco/near-agent-thesis), is research and is not submitted.
 - **AI-generated code.** AI coding agents wrote most of the code and the text in this repository, under the direction of the author. Each number in this README comes from a command in this repository.
 
 ## Files

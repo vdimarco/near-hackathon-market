@@ -1,5 +1,6 @@
 # Runs the README steps that need no key, on a clean machine.
-# Steps 4 and 6 are not here: Step 4 needs an API key, and Step 6 uses NEAR testnet.
+# Steps 4 and 6 are not here: Step 4 needs an API key, and Step 6 sends transactions on NEAR testnet.
+# The job testnet-run reads the live testnet run. It is read-only and needs no key.
 name: checks
 
 on:
@@ -59,3 +60,12 @@ jobs:
         run: |
           cargo test -p demo --lib
           make sandbox-limit-check
+
+  testnet-run:
+    name: Read the live testnet run from the chain
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: verify_testnet.py
+        run: python3 scripts/verify_testnet.py
